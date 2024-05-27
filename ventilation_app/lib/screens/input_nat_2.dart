@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
+import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 
 class InputNat2 extends StatelessWidget {
   @override
@@ -10,6 +12,7 @@ class InputNat2 extends StatelessWidget {
     return MaterialApp(
       title: 'Ventilation Calculator',
       home: Scaffold(
+        appBar: MyAppBar(),
         backgroundColor: Colors.white,
         body: Center(
           child: SingleChildScrollView(
@@ -20,39 +23,6 @@ class InputNat2 extends StatelessWidget {
                 children: [
                   const SizedBox(height: 30.0),
                   _buildGreetingRow(screenHeight),
-                  const SizedBox(height: 10.0),
-                  _buildInstructionRow(),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(screenWidth),
-                  const SizedBox(height: 20.0),
-                  _buildSettingSelectionRow(),
-                  const SizedBox(height: 10.0),
-                  const DropdownMenuExample(
-                    dropdownWidth: 0.85,
-                    items: ['Residential Setting', 'Hospital Setting'],
-                  ),
-                  const SizedBox(height: 30.0),
-                  _buildRoomDimensionsSection(),
-                  const SizedBox(height: 15.0),
-                  _buildRoomImage(screenWidth),
-                  const SizedBox(height: 15.0),
-                  _buildEnterDimensionsLabel(),
-                  const SizedBox(height: 15.0),
-                  _buildDimensionInputRow(
-                      'Length', ['meters', 'inches', 'centimeters']),
-                  const SizedBox(height: 10.0),
-                  _buildDimensionInputRow(
-                      'Height', ['meters', 'inches', 'centimeters']),
-                  const SizedBox(height: 10.0),
-                  _buildDimensionInputRow(
-                      'Width', ['meters', 'inches', 'centimeters']),
-                  const SizedBox(height: 20.0),
-                  _buildVentilationTypeLabel(),
-                  const SizedBox(height: 10.0),
-                  _buildVentilationTypeButtons(screenWidth),
-                  const SizedBox(height: 20.0),
-                  _buildNextButton(context),
-                  const SizedBox(height: 30.0),
                 ],
               ),
             ),
