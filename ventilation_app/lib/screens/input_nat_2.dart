@@ -21,8 +21,7 @@ class InputNat2 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 30.0),
-                  _buildGreetingRow(screenHeight),
+                  _buildInstructionsContent(context),
                 ],
               ),
             ),
@@ -32,43 +31,80 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildGreetingRow(double screenHeight) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(width: 20.0),
-        const Text(
-          'Hey, there',
-          style: TextStyle(
-            fontSize: 30.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-            fontWeight: FontWeight.bold,
+  Widget _buildInstructionsContent(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTitleText('Opening Characteristics'),
+          const SizedBox(height: 20.0),
+          _buildRichTextContent(
+            'We are now referring to the ',
+            'facade toward the exterior. ',
+            'Note that several typologies of opening could be available on the same wall (i.e. two different types of window or one window and one door).',
           ),
-        ),
-        const SizedBox(width: 5.0),
-        Image.asset(
-          'assets/waving_hand.png',
-          width: screenHeight * 0.03,
-          height: screenHeight * 0.03,
-        ),
-        const SizedBox(width: 10.0),
-      ],
+          const SizedBox(height: 20.0),
+          _buildOpeningImage(screenWidth),
+        ],
+      ),
     );
   }
 
-  Widget _buildInstructionRow() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'SHADOW O OURIÇO',
-          style: TextStyle(
-            fontSize: 20.0,
-            color: Color.fromARGB(255, 7, 59, 91),
+  Widget _buildTitleText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 20.0,
+        color: Color.fromARGB(255, 255, 109, 29),
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildContentText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 15.0,
+        color: Color.fromARGB(255, 102, 112, 133),
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildRichTextContent(
+      String normalText1, String boldText, String normalText2) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: normalText1,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+            ),
           ),
-        ),
-      ],
+          TextSpan(
+            text: boldText,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextSpan(
+            text: normalText2,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -116,11 +152,11 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildRoomImage(double screenWidth) {
+  Widget _buildOpeningImage(double screenWidth) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15.0),
       child: Image.asset(
-        'assets/room.jpg',
+        'assets/opening_natural_1.jpg',
         width: screenWidth * 0.90,
       ),
     );
