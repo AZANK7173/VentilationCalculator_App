@@ -112,8 +112,7 @@ class Instructions extends StatelessWidget {
                   height: 30.0), // Add spacing between image and text
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to the next page (to be implemented later)
-                  // You can use Navigator.push or a similar method here
+                  Navigator.of(context).pushNamed('/input_1');
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 255, 109, 29),
