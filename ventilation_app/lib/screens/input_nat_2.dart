@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InputNat2 extends StatelessWidget {
   @override
@@ -49,6 +51,13 @@ class InputNat2 extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
           _buildOpeningImage(screenWidth),
+          const SizedBox(height: 20.0),
+          _buildHyperLinkText(
+              'What does “typologies of opening “ mean? ', 'Learn more'),
+          const SizedBox(height: 20.0),
+          _buildDivider(screenWidth),
+          const SizedBox(height: 10.0),
+          _buildContentText('Door/window number 1'),
         ],
       ),
     );
@@ -65,12 +74,42 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
+  Widget _buildHyperLinkText(String boldText1, String boldText2) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: boldText1,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextSpan(
+            text: boldText2,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 255, 109, 29),
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                launch('https://www.google.com');
+              },
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildContentText(String text) {
     return Text(
       text,
       style: const TextStyle(
-        fontSize: 15.0,
-        color: Color.fromARGB(255, 102, 112, 133),
+        fontSize: 17.0,
+        color: Color.fromARGB(255, 67, 150, 199),
         fontWeight: FontWeight.bold,
       ),
     );
