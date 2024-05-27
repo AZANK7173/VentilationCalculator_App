@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ventilation_app/elements/bottom_who_message.dart';
 
 class Instructions extends StatelessWidget {
   @override
@@ -129,44 +130,7 @@ class Instructions extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          height: 60.0,
-          child: Center(
-            child: Container(
-              alignment: Alignment.center,
-              width: screenWidth * 0.90, // Set your desired width
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'ⓘ We use formulas by the ',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromARGB(255, 242, 244, 247),
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'World Health Organization (WHO)',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromARGB(255, 242, 244, 247),
-                        fontWeight: FontWeight.bold, // Make this part bold
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' to calculate ventilation rates.',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromARGB(255, 242, 244, 247),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        bottomNavigationBar: BottomWhoMessage(),
       ),
     );
   }

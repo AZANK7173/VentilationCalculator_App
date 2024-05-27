@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ventilation_app/elements/bottom_who_message.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -81,44 +82,7 @@ class SplashScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          height: 60.0,
-          child: Center(
-            child: Container(
-              alignment: Alignment.center,
-              width: screenWidth * 0.90, // Set your desired width
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'ⓘ We use formulas by the ',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromARGB(255, 16, 24, 40),
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'World Health Organization (WHO)',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromARGB(255, 16, 24, 40),
-                        fontWeight: FontWeight.bold, // Make this part bold
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' to calculate ventilation rates.',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color.fromARGB(255, 16, 24, 40),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        bottomNavigationBar: BottomWhoMessage(),
       ),
     );
   }
