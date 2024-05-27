@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 
-class Input1 extends StatelessWidget {
+class InputNat2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -92,7 +92,7 @@ class Input1 extends StatelessWidget {
       children: [
         SizedBox(width: 20.0),
         Text(
-          'Let’s calculate your room ventilation!',
+          'SHADOW O OURIÇO',
           style: TextStyle(
             fontSize: 20.0,
             color: Color.fromARGB(255, 7, 59, 91),
@@ -284,7 +284,7 @@ class Input1 extends StatelessWidget {
   Widget _buildNextButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.of(context).pushNamed('/input_nat_2');
+        Navigator.of(context).pushNamed('/second');
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 45, 133, 185),
