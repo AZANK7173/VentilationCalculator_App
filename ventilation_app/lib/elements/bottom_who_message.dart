@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BottomWhoMessage extends StatelessWidget {
+  final Color myColor;
+
+  const BottomWhoMessage({
+    required this.myColor
+  });
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -12,20 +18,20 @@ class BottomWhoMessage extends StatelessWidget {
           width: screenWidth * 0.90, // Set your desired width
           child: RichText(
             textAlign: TextAlign.center,
-            text: const TextSpan(
+            text: TextSpan(
               children: [
                 TextSpan(
                   text: 'ⓘ We use formulas by the ',
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: Color.fromARGB(255, 16, 24, 40),
+                    color: myColor,
                   ),
                 ),
                 TextSpan(
                   text: 'World Health Organization (WHO)',
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: Color.fromARGB(255, 16, 24, 40),
+                    color: myColor,
                     fontWeight: FontWeight.bold, // Make this part bold
                   ),
                 ),
@@ -33,7 +39,7 @@ class BottomWhoMessage extends StatelessWidget {
                   text: ' to calculate ventilation rates.',
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: Color.fromARGB(255, 16, 24, 40),
+                    color: myColor,
                   ),
                 ),
               ],
