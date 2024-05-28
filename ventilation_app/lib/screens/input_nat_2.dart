@@ -304,7 +304,7 @@ Widget _buildNextButton(BuildContext context) {
   return Center(
     child: ElevatedButton(
       onPressed: () {
-        Navigator.of(context).pushNamed('/second');
+        Navigator.of(context).pushNamed('/nat_wind_speed');
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 45, 133, 185),

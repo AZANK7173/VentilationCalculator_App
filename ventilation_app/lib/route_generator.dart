@@ -3,6 +3,7 @@ import 'package:ventilation_app/screens/instructions.dart';
 import 'package:ventilation_app/screens/splash_screen.dart';
 import 'package:ventilation_app/screens/input_1.dart';
 import 'package:ventilation_app/screens/input_nat_2.dart';
+import 'package:ventilation_app/screens/nat_wind_speed.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,6 +20,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Input1());
       case '/input_nat_2':
         return MaterialPageRoute(builder: (_) => InputNat2());
+      case '/nat_wind_speed':
+        return MaterialPageRoute(builder: (_) => NatWindSpeed());
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.
       default:
