@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
@@ -24,6 +25,9 @@ class InputNat2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildInstructionsContent(context),
+                  const SizedBox(height: 20.0),
+                  _buildInput1('Number of openings with the same size: '),
+                  const SizedBox(height: 20.0),
                 ],
               ),
             ),
@@ -58,6 +62,7 @@ class InputNat2 extends StatelessWidget {
           _buildDivider(screenWidth),
           const SizedBox(height: 10.0),
           _buildContentText('Door/window number 1'),
+          const SizedBox(height: 10.0),
         ],
       ),
     );
@@ -157,193 +162,230 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingSelectionRow() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+  Widget _buildInput1(String inputText) {
+    return Row(
       children: [
-        SizedBox(width: 20.0),
         Text(
-          'Select your setting of interest',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRoomDimensionsSection() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'What are the room\'s dimensions?',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildOpeningImage(double screenWidth) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Image.asset(
-        'assets/opening_natural_1.jpg',
-        width: screenWidth * 0.90,
-      ),
-    );
-  }
-
-  Widget _buildEnterDimensionsLabel() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'Enter dimensions',
-          style: TextStyle(
+          inputText,
+          style: const TextStyle(
             fontSize: 15.0,
             color: Color.fromARGB(255, 102, 112, 133),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDimensionInputRow(String labelText, List<String> dropdownItems) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(width: 20.0),
-        SizedBox(
-          width: 150.0,
-          child: TextField(
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              labelText: labelText,
-            ),
-            keyboardType: TextInputType.number,
-          ),
-        ),
-        const SizedBox(width: 20.0),
-        DropdownMenuExample(
-          dropdownWidth: 0.4,
-          items: dropdownItems,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildVentilationTypeLabel() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'How is your room ventilated?',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 7, 59, 91),
             fontWeight: FontWeight.bold,
           ),
         ),
+        const SizedBox(width: 10.0),
+        const Expanded(
+          child: SizedBox(
+            height: 30,
+            child: TextField(
+              style:
+                  TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 214, 220, 220)),
+                ),
+                contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
+                isDense: true,
+                labelText: '',
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+        ),
       ],
     );
   }
+}
 
-  Widget _buildVentilationTypeButtons(double screenWidth) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(width: 20.0),
-        _buildVentilationTypeButton(
-          text: 'Naturally \nIntentional building openings',
-          backgroundColor: const Color.fromARGB(255, 67, 150, 199),
-          textColor: Colors.white,
-          screenWidth: screenWidth,
-        ),
-        const SizedBox(width: 15.0),
-        _buildVentilationTypeButton(
-          text: 'Mechanically \nPowered fans or blowers',
-          backgroundColor: Colors.white,
-          textColor: Colors.black,
-          screenWidth: screenWidth,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildVentilationTypeButton({
-    required String text,
-    required Color backgroundColor,
-    required Color textColor,
-    required double screenWidth,
-  }) {
-    return TextButton(
-      onPressed: () {
-        // Change button color on click
-        // (consider using a state management solution for complex scenarios)
-        print('Button Clicked!'); // Replace with your desired action
-      },
-      style: TextButton.styleFrom(
-        minimumSize: const Size(80, 80),
-        fixedSize: Size(screenWidth * 0.4, screenWidth * 0.4),
-        padding: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(color: Colors.grey, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        backgroundColor: backgroundColor,
-        overlayColor: Colors.blueAccent,
-      ),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: text.split(' ')[0] + '\n',
-              style: TextStyle(
-                color: textColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            TextSpan(
-              text: text.split('\n')[1],
-              style: TextStyle(
-                color: textColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNextButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).pushNamed('/second');
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 45, 133, 185),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-      ),
-      child: const Text(
-        'Next',
+Widget _buildSettingSelectionRow() {
+  return const Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      SizedBox(width: 20.0),
+      Text(
+        'Select your setting of interest',
         style: TextStyle(
-          color: Color.fromARGB(255, 242, 244, 247),
+          fontSize: 15.0,
+          color: Color.fromARGB(255, 7, 59, 91),
+          fontWeight: FontWeight.bold,
         ),
       ),
-    );
-  }
+    ],
+  );
+}
+
+Widget _buildRoomDimensionsSection() {
+  return const Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      SizedBox(width: 20.0),
+      Text(
+        'What are the room\'s dimensions?',
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Color.fromARGB(255, 7, 59, 91),
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildOpeningImage(double screenWidth) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(15.0),
+    child: Image.asset(
+      'assets/opening_natural_1.jpg',
+      width: screenWidth * 0.90,
+    ),
+  );
+}
+
+Widget _buildEnterDimensionsLabel() {
+  return const Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      SizedBox(width: 20.0),
+      Text(
+        'Enter dimensions',
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Color.fromARGB(255, 102, 112, 133),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildDimensionInputRow(String labelText, List<String> dropdownItems) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      const SizedBox(width: 20.0),
+      SizedBox(
+        width: 150.0,
+        child: TextField(
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: labelText,
+          ),
+          keyboardType: TextInputType.number,
+        ),
+      ),
+      const SizedBox(width: 20.0),
+      DropdownMenuExample(
+        dropdownWidth: 0.4,
+        items: dropdownItems,
+      ),
+    ],
+  );
+}
+
+Widget _buildVentilationTypeLabel() {
+  return const Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      SizedBox(width: 20.0),
+      Text(
+        'How is your room ventilated?',
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Color.fromARGB(255, 7, 59, 91),
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildVentilationTypeButtons(double screenWidth) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      const SizedBox(width: 20.0),
+      _buildVentilationTypeButton(
+        text: 'Naturally \nIntentional building openings',
+        backgroundColor: const Color.fromARGB(255, 67, 150, 199),
+        textColor: Colors.white,
+        screenWidth: screenWidth,
+      ),
+      const SizedBox(width: 15.0),
+      _buildVentilationTypeButton(
+        text: 'Mechanically \nPowered fans or blowers',
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        screenWidth: screenWidth,
+      ),
+    ],
+  );
+}
+
+Widget _buildVentilationTypeButton({
+  required String text,
+  required Color backgroundColor,
+  required Color textColor,
+  required double screenWidth,
+}) {
+  return TextButton(
+    onPressed: () {
+      // Change button color on click
+      // (consider using a state management solution for complex scenarios)
+      print('Button Clicked!'); // Replace with your desired action
+    },
+    style: TextButton.styleFrom(
+      minimumSize: const Size(80, 80),
+      fixedSize: Size(screenWidth * 0.4, screenWidth * 0.4),
+      padding: EdgeInsets.zero,
+      shape: const RoundedRectangleBorder(
+        side: BorderSide(color: Colors.grey, width: 2.0),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      backgroundColor: backgroundColor,
+      overlayColor: Colors.blueAccent,
+    ),
+    child: RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: text.split(' ')[0] + '\n',
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextSpan(
+            text: text.split('\n')[1],
+            style: TextStyle(
+              color: textColor,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildNextButton(BuildContext context) {
+  return ElevatedButton(
+    onPressed: () {
+      Navigator.of(context).pushNamed('/second');
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color.fromARGB(255, 45, 133, 185),
+      minimumSize: const Size(350, 55.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    ),
+    child: const Text(
+      'Next',
+      style: TextStyle(
+        color: Color.fromARGB(255, 242, 244, 247),
+      ),
+    ),
+  );
 }
