@@ -282,21 +282,23 @@ class Input1 extends StatelessWidget {
   }
 
   Widget _buildNextButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).pushNamed('/input_nat_2');
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 45, 133, 185),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('/input_nat_2');
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 45, 133, 185),
+          minimumSize: const Size(350, 55.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
         ),
-      ),
-      child: const Text(
-        'Next',
-        style: TextStyle(
-          color: Color.fromARGB(255, 242, 244, 247),
+        child: const Text(
+          'Next',
+          style: TextStyle(
+            color: Color.fromARGB(255, 242, 244, 247),
+          ),
         ),
       ),
     );
