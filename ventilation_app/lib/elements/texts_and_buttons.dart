@@ -80,11 +80,13 @@ class DimensionInputRow extends StatelessWidget {
 class NextButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color myColor;
 
   const NextButton({
     Key? key,
     required this.text,
     required this.onPressed,
+    this.myColor = const Color.fromARGB(255, 45, 133, 185),
   }) : super(key: key);
 
   @override
@@ -93,7 +95,7 @@ class NextButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 45, 133, 185),
+          backgroundColor: myColor,
           minimumSize: const Size(350, 55.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
