@@ -15,7 +15,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case '/second':
         // Validation of correct data type
-        return MaterialPageRoute(builder: (_) => Instructions());
+        return MaterialPageRoute(builder: (_) => const Instructions());
       case '/input_1':
         return MaterialPageRoute(builder: (_) => Input1());
       case '/input_nat_2':
