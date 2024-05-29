@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final VoidCallback onPressed1;
+  final VoidCallback onPressed2;
+
+  const MyAppBar({
+    required this.onPressed1,
+    required this.onPressed2,
+  });
+
   @override
   Size get preferredSize => const Size.fromHeight(50);
 
@@ -8,10 +16,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.of(context).pushNamed('/second');
-        },
+        icon: const Icon(Icons.arrow_back),
+        onPressed: onPressed1,
       ),
       title: const Center(
         child: Text(
@@ -24,10 +30,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.home),
-          onPressed: () {
-            Navigator.of(context).pushNamed('/second');
-          },
+          icon: const Icon(Icons.home),
+          onPressed: onPressed2,
         ),
       ],
     );

@@ -11,7 +11,14 @@ class NatWindSpeed extends StatelessWidget {
     return MaterialApp(
       title: 'Wind Speed Input',
       home: Scaffold(
-        appBar: MyAppBar(),
+        appBar: MyAppBar(
+          onPressed1: () {
+            Navigator.of(context).pushNamed('/input_nat_2');
+          },
+          onPressed2: () {
+            Navigator.of(context).pushNamed('/');
+          },
+        ),
         backgroundColor: Colors.white,
         body: Center(
           child: SingleChildScrollView(
