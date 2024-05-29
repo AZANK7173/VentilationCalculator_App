@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
+import 'package:ventilation_app/elements/texts_and_buttons.dart';
 
 class InputNat2 extends StatelessWidget {
   @override
@@ -36,7 +36,12 @@ class InputNat2 extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   _buildAddNewWindowButton(context),
                   const SizedBox(height: 20.0),
-                  _buildNextButton(context),
+                  NextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/nat_wind_speed');
+                    },
+                    text: 'Next',
+                  ),
                   const SizedBox(height: 30.0),
                 ],
               ),
@@ -56,7 +61,12 @@ class InputNat2 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitleText('Opening Characteristics'),
+          const TextEntry(
+            myColor: Color.fromARGB(255, 255, 109, 29),
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            text: 'Opening Characteristics',
+          ),
           const SizedBox(height: 20.0),
           _buildRichTextContent(
             'We are now referring to the ',
@@ -69,20 +79,9 @@ class InputNat2 extends StatelessWidget {
           _buildHyperLinkText(
               'What does “typologies of opening “ mean? ', 'Learn more'),
           const SizedBox(height: 20.0),
-          _buildDivider(screenWidth),
+          DividerWidget(screenWidth),
           const SizedBox(height: 10.0),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTitleText(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 20.0,
-        color: Color.fromARGB(255, 255, 109, 29),
-        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -113,17 +112,6 @@ class InputNat2 extends StatelessWidget {
               },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildContentText(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 17.0,
-        color: Color.fromARGB(255, 67, 150, 199),
-        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -160,32 +148,35 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildDivider(double screenWidth) {
-    return SizedBox(
-      width: screenWidth * 0.92,
-      child: const Divider(
-        color: Color.fromARGB(255, 223, 241, 255),
-        thickness: 1,
-      ),
-    );
-  }
-
   Widget _buildWindowInputWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildContentText(
-            'Door/window number 1'), //unica coisa que vai mudar na hora de fazer a logica de adicionar mais janelas
+        const TextEntry(
+          myColor: Color.fromARGB(255, 67, 150, 199),
+          text: 'Door/window number 1',
+          fontSize: 17.0,
+          fontWeight: FontWeight.bold,
+        ),
+        //unica coisa que vai mudar na hora de fazer a logica de adicionar mais janelas
         const SizedBox(height: 10.0),
         _buildInput1('Number of openings with the same size: '),
         const SizedBox(height: 20.0),
         Slider0To100(dragText: 'How much do you usually open it?'),
         const SizedBox(height: 20.0),
-        _buildEnterDimensionsLabel(),
+        const TextEntry(
+            myColor: Color.fromARGB(255, 102, 112, 133),
+            text: 'Enter dimensions',
+            fontSize: 15,
+            fontWeight: FontWeight.normal),
         const SizedBox(height: 20.0),
-        _buildDimensionInputRow('Length', ['meters', 'inches', 'centimeters']),
+        const DimensionInputRow(
+            dropdownItems: ['meters', 'inches', 'centimeters'],
+            labelText: 'Length'),
         const SizedBox(height: 10.0),
-        _buildDimensionInputRow('Height', ['meters', 'inches', 'centimeters']),
+        const DimensionInputRow(
+            dropdownItems: ['meters', 'inches', 'centimeters'],
+            labelText: 'Height'),
         const SizedBox(height: 10.0),
         Switcher(
           switchText: 'Does it have a mosquito net?',
@@ -197,13 +188,11 @@ class InputNat2 extends StatelessWidget {
   Widget _buildInput1(String inputText) {
     return Row(
       children: [
-        Text(
-          inputText,
-          style: const TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 102, 112, 133),
-            fontWeight: FontWeight.bold,
-          ),
+        TextEntry(
+          myColor: const Color.fromARGB(255, 102, 112, 133),
+          text: inputText,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
         ),
         const SizedBox(width: 10.0),
         const Expanded(
@@ -232,30 +221,6 @@ class InputNat2 extends StatelessWidget {
   }
 }
 
-Widget _buildDimensionInputRow(String labelText, List<String> dropdownItems) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      const SizedBox(width: 20.0),
-      SizedBox(
-        width: 150.0,
-        child: TextField(
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: labelText,
-          ),
-          keyboardType: TextInputType.number,
-        ),
-      ),
-      const SizedBox(width: 20.0),
-      DropdownMenuExample(
-        dropdownWidth: 0.4,
-        items: dropdownItems,
-      ),
-    ],
-  );
-}
-
 Widget _buildOpeningImage(double screenWidth) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(15.0),
@@ -263,21 +228,6 @@ Widget _buildOpeningImage(double screenWidth) {
       'assets/opening_natural_1.jpg',
       width: screenWidth * 0.90,
     ),
-  );
-}
-
-Widget _buildEnterDimensionsLabel() {
-  return const Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Text(
-        'Enter dimensions',
-        style: TextStyle(
-          fontSize: 15.0,
-          color: Color.fromARGB(255, 102, 112, 133),
-        ),
-      ),
-    ],
   );
 }
 
@@ -301,29 +251,6 @@ Widget _buildAddNewWindowButton(BuildContext context) {
         '+ Add new openning type',
         style: TextStyle(
           color: Color.fromARGB(255, 45, 133, 185),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget _buildNextButton(BuildContext context) {
-  return Center(
-    child: ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).pushNamed('/nat_wind_speed');
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 45, 133, 185),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-      ),
-      child: const Text(
-        'Next',
-        style: TextStyle(
-          color: Color.fromARGB(255, 242, 244, 247),
         ),
       ),
     ),
