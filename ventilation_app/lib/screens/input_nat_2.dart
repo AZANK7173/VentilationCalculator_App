@@ -108,7 +108,7 @@ class InputNat2 extends StatelessWidget {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                launch('https://www.google.com');
+                launchUrl(Uri.parse('https://www.youtube.com/watch?v=KWP8pQnGoBw'));
               },
           ),
         ],
