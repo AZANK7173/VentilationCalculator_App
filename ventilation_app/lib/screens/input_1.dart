@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
+import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 
 class Input1 extends StatelessWidget {
   @override
@@ -10,6 +12,14 @@ class Input1 extends StatelessWidget {
     return MaterialApp(
       title: 'Ventilation Calculator',
       home: Scaffold(
+        appBar: MyAppBar(
+          onPressed1: () {
+            Navigator.of(context).pushNamed('/second');
+          },
+          onPressed2: () {
+            Navigator.of(context).pushNamed('/');
+          },
+        ),
         backgroundColor: Colors.white,
         body: Center(
           child: SingleChildScrollView(
@@ -21,34 +31,67 @@ class Input1 extends StatelessWidget {
                   const SizedBox(height: 30.0),
                   _buildGreetingRow(screenHeight),
                   const SizedBox(height: 10.0),
-                  _buildInstructionRow(),
+                  const TextEntry(
+                      myColor: Color.fromARGB(255, 7, 59, 91),
+                      text: 'Let’s calculate your room ventilation!',
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.normal),
                   const SizedBox(height: 20.0),
-                  _buildDivider(screenWidth),
+                  DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildSettingSelectionRow(),
+                  const TextEntry(
+                    myColor: Color.fromARGB(255, 7, 59, 91),
+                    text: 'Select your setting of interest',
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                   const SizedBox(height: 10.0),
                   const DropdownMenuExample(
                     dropdownWidth: 0.85,
                     items: ['Residential Setting', 'Hospital Setting'],
                   ),
                   const SizedBox(height: 30.0),
-                  _buildRoomDimensionsSection(),
+                  const TextEntry(
+                      myColor: Color.fromARGB(255, 7, 59, 91),
+                      text: 'What are the room\'s dimensions?',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
                   const SizedBox(height: 15.0),
                   _buildRoomImage(screenWidth),
                   const SizedBox(height: 15.0),
-                  _buildEnterDimensionsLabel(),
+                  const TextEntry(
+                      myColor: Color.fromARGB(255, 102, 112, 133),
+                      text: 'Enter dimensions',
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal),
                   const SizedBox(height: 15.0),
-                  _buildDimensionInputRow('Length', ['meters', 'inches', 'centimeters']),
+                  const DimensionInputRow(
+                      labelText: 'Length',
+                      dropdownItems: ['meters', 'inches', 'centimeters']),
                   const SizedBox(height: 10.0),
-                  _buildDimensionInputRow('Height', ['meters', 'inches', 'centimeters']),
+                  const DimensionInputRow(
+                      labelText: 'Height',
+                      dropdownItems: ['meters', 'inches', 'centimeters']),
                   const SizedBox(height: 10.0),
-                  _buildDimensionInputRow('Width', ['meters', 'inches', 'centimeters']),
+                  const DimensionInputRow(
+                      labelText: 'Width',
+                      dropdownItems: ['meters', 'inches', 'centimeters']),
                   const SizedBox(height: 20.0),
-                  _buildVentilationTypeLabel(),
+                  const TextEntry(
+                    text: 'How is your room ventilated?',
+                    fontSize: 15.0,
+                    myColor: Color.fromARGB(255, 7, 59, 91),
+                    fontWeight: FontWeight.bold,
+                  ),
                   const SizedBox(height: 10.0),
                   _buildVentilationTypeButtons(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildNextButton(context),
+                  NextButton(
+                    text: 'Next',
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/input_nat_2');
+                    },
+                  ),
                   const SizedBox(height: 30.0),
                 ],
               ),
@@ -63,14 +106,11 @@ class Input1 extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(width: 20.0),
-        const Text(
-          'Hey, there',
-          style: TextStyle(
-            fontSize: 30.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-            fontWeight: FontWeight.bold,
-          ),
+        const TextEntry(
+          text: 'Hey, there',
+          fontSize: 30.0,
+          myColor: Color.fromARGB(255, 7, 59, 91),
+          fontWeight: FontWeight.bold,
         ),
         const SizedBox(width: 5.0),
         Image.asset(
@@ -83,66 +123,6 @@ class Input1 extends StatelessWidget {
     );
   }
 
-  Widget _buildInstructionRow() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'Let’s calculate your room ventilation!',
-          style: TextStyle(
-            fontSize: 20.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDivider(double screenWidth) {
-    return SizedBox(
-      width: screenWidth * 0.92,
-      child: const Divider(
-        color: Color.fromARGB(255, 223, 241, 255),
-        thickness: 1,
-      ),
-    );
-  }
-
-  Widget _buildSettingSelectionRow() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'Select your setting of interest',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRoomDimensionsSection() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'What are the room\'s dimensions?',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildRoomImage(double screenWidth) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15.0),
@@ -150,63 +130,6 @@ class Input1 extends StatelessWidget {
         'assets/room.jpg',
         width: screenWidth * 0.90,
       ),
-    );
-  }
-
-  Widget _buildEnterDimensionsLabel() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'Enter dimensions',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 102, 112, 133),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDimensionInputRow(String labelText, List<String> dropdownItems) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(width: 20.0),
-        SizedBox(
-          width: 150.0,
-          child: TextField(
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              labelText: labelText,
-            ),
-            keyboardType: TextInputType.number,
-          ),
-        ),
-        const SizedBox(width: 20.0),
-        DropdownMenuExample(
-          dropdownWidth: 0.4,
-          items: dropdownItems,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildVentilationTypeLabel() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 20.0),
-        Text(
-          'How is your room ventilated?',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 7, 59, 91),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 
@@ -273,27 +196,6 @@ class Input1 extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNextButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).pushNamed('/second');
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 45, 133, 185),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-      ),
-      child: const Text(
-        'Next',
-        style: TextStyle(
-          color: Color.fromARGB(255, 242, 244, 247),
         ),
       ),
     );

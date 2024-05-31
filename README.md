@@ -1,18 +1,21 @@
 # VentilationCalculator_App
 
 ## TODOS atual:
-1 - Salvar os dados em um arquivo ou variáveis [ ] B
-2 - Montar as outras telas [ ] A e B
-3 - Arrumar o alinhamento da segunda tela [ ] A
-4 - Arrumar a imagem do comodo (fica preto na borda se puxa) [ ] A ou B
-5 - Montar o routing da próxima tela do navigation bar [ ] A e B 
 
+* Salvar os dados em um arquivo ou variáveis
 
+* Arrumar a imagem do comodo (fica preto na borda se puxa)
 
-## Description
-5 - atual problema na upper Nav Bar, por algum motivo, tem esse problema aqui no routing: 
+* toda a lógica do aplicativo
 
-```
-Another exception was thrown: Could not find a generator for route
-RouteSettings("/second", null) in the _WidgetsAppState.
-```
+* fazer a tela de resultados e ver com a Iplinsky se ficou designer o suficiente
+
+* arrumar a dimensão do botão pra mudar junto com o tamanho da tela (e de alguma forma alinhar o tamanho com o texto, creio que seja fácil)
+
+* fazer o aplicativo mais independente de tela de celular (later on)
+
+* eliminar shadow (o ouriço)
+
+* montar as telas de mecanical (vai ser mais fácil que de ventilation)
+
+* entender no excel como faz as contas e passar pra uma linguagem de programação

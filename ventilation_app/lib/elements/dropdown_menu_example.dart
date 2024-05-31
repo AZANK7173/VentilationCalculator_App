@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class DropdownMenuExample extends StatefulWidget {
   final double dropdownWidth;
   final List<String> items;
@@ -28,7 +29,8 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
           dropdownValue = value!;
         });
       },
-      dropdownMenuEntries: widget.items.map<DropdownMenuEntry<String>>((String value) {
+      dropdownMenuEntries:
+          widget.items.map<DropdownMenuEntry<String>>((String value) {
         return DropdownMenuEntry<String>(value: value, label: value);
       }).toList(),
     );
