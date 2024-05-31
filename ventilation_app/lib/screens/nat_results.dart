@@ -3,7 +3,7 @@ import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 
-class NatWindSpeed extends StatelessWidget {
+class NatResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -13,7 +13,7 @@ class NatWindSpeed extends StatelessWidget {
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
-            Navigator.of(context).pushNamed('/input_nat_2');
+            Navigator.of(context).pushNamed('/nat_wind_speed');
           },
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
@@ -29,7 +29,7 @@ class NatWindSpeed extends StatelessWidget {
                 children: [
                   const TextEntry(
                     myColor: Color.fromARGB(255, 255, 109, 29),
-                    text: 'Opening Characteristics',
+                    text: 'RESULTADOS',
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -65,7 +65,7 @@ class NatWindSpeed extends StatelessWidget {
                   const SizedBox(height: 50.0),
                   NextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/nat_results');
+                      Navigator.of(context).pushNamed('/second');
                     },
                     text: 'See Results',
                   )
