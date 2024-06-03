@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 
 class TextEntry extends StatelessWidget {
@@ -108,6 +109,43 @@ class NextButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DisplayVentilationInprovement extends StatelessWidget {
+  final String labelText;
+  final List<String> dropdownItems;
+
+  const DisplayVentilationInprovement({
+    required this.labelText,
+    required this.dropdownItems,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 150.0,
+          height: 50.0,
+          child: Container(
+            alignment: Alignment.center, // Add this line
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(labelText),
+          ),
+        ),
+        const SizedBox(width: 20.0),
+        DropdownMenuExample(
+          dropdownWidth: 0.4,
+          items: dropdownItems,
+        ),
+      ],
     );
   }
 }
