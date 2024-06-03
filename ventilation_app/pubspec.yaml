@@ -67,6 +67,7 @@ flutter:
      - assets/opening_natural_1.jpg
      - assets/single_sided.png
      - assets/cross_sided.png
+     - assets/mecanical_manual.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

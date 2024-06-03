@@ -87,9 +87,16 @@ class Input1 extends StatelessWidget {
                   _buildVentilationTypeButtons(screenWidth),
                   const SizedBox(height: 20.0),
                   NextButton(
-                    text: 'Next',
+                    text: 'Next (Natural)',
                     onPressed: () {
                       Navigator.of(context).pushNamed('/input_nat_2');
+                    },
+                  ),
+                  const SizedBox(height: 20.0),
+                  NextButton(
+                    text: 'Next (Mechanical)',
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/input_mech_2');
                     },
                   ),
                   const SizedBox(height: 30.0),
