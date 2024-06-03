@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 
-class NatResultsCross extends StatelessWidget {
+class MecResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
-      title: 'Results Page - Natural Ventilation Cross Sided',
+      title: 'Results Page - Natural Ventilation',
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
-            Navigator.of(context).pushNamed('/nat_results_single');
+            Navigator.of(context).pushNamed('/input_mech_2');
           },
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
           },
-          title: "Cross Sided Results",
+          title: "Ventilation Results",
         ),
         backgroundColor: Colors.white,
         body: Center(
@@ -29,39 +29,42 @@ class NatResultsCross extends StatelessWidget {
                 children: [
                   const TextEntry(
                     myColor: Color.fromARGB(255, 255, 109, 29),
-                    text: 'Cross sided ventilation',
+                    text: 'Healthcare Settings',
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: 20.0),
+                  _buildRichTextContent('The ', 'Air Changes per Hour (ACH) ',
+                      'value shows how many times the air in your room is completely replaced with outdoor air in one hour. Here\'s what we found:'),
+                  const SizedBox(height: 20.0),
+                  _buildRichTextContent('a )The ', 'current ventilation ',
+                      'based on the data provided.'),
+                  const SizedBox(height: 20.0),
                   _buildRichTextContent(
-                      'The tool shows the ',
-                      'current ventilation rate ',
-                      'and the maximum number of people the room can safely hold.'),
-                  const SizedBox(height: 20.0),
-                  _buildOpeningImage(screenWidth, 'assets/cross_sided.png'),
-                  const SizedBox(height: 20.0),
-                  const TextEntry(
-                      myColor: Color.fromARGB(255, 102, 112, 133),
-                      text:
-                          'Note: This is based on ventilation only. You still need to maintain physical distancing.',
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal),
+                      'b) How your ventilation compares to WHO\'s ',
+                      'recommended levels.',
+                      ''),
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
+                  const TextEntry(
+                      myColor: Color.fromARGB(255, 7, 59, 91),
+                      text: 'Actual ventilation estimate',
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                  const SizedBox(height: 20.0),
                   _buildResult('Estimated Ventilation:', 0, 'I/s'),
                   _buildResult('WHO recommendation:', 0, 'I/s'),
-                  _buildResult('Possible Occupancy:', 0, 'people'),
+                  _buildResult('Requirement:', 0, 'people'),
                   const SizedBox(height: 10.0),
                   _buildAccomodatePeopleButton(context),
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
                   const TextEntry(
-                      myColor: Color.fromARGB(255, 102, 112, 133),
+                      myColor: Color.fromARGB(255, 7, 59, 91),
                       text:
-                          'You need this much more ventilation for your desired number of people:',
+                          'How much you need to improve the ventilation to meet WHO standard.',
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 20.0),

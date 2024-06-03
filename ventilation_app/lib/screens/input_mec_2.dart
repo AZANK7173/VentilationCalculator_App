@@ -18,6 +18,7 @@ class InputMec2 extends StatelessWidget {
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
           },
+          title: "Mechanical Ventilation",
         ),
         backgroundColor: Colors.white,
         body: Center(
@@ -28,8 +29,11 @@ class InputMec2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildInstructionsContent(context),
+                  const DimensionInputRow(
+                      labelText: '',
+                      dropdownItems: ['I/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
-                  _buildAddNewWindowButton(context),
+                  _buildManualCalcButton(context),
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
@@ -46,9 +50,9 @@ class InputMec2 extends StatelessWidget {
                   const SizedBox(height: 30.0),
                   NextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/nat_wind_speed');
+                      Navigator.of(context).pushNamed('/mec_results');
                     },
-                    text: 'Next',
+                    text: 'See Results',
                   ),
                   const SizedBox(height: 30.0),
                 ],
@@ -133,8 +137,6 @@ class InputMec2 extends StatelessWidget {
               fontSize: 17,
               fontWeight: FontWeight.bold),
           const SizedBox(height: 10.0),
-          const DimensionInputRow(
-              labelText: '', dropdownItems: ['I/s', 'm³/s']),
         ],
       ),
     );
@@ -197,74 +199,39 @@ class InputMec2 extends StatelessWidget {
     );
   }
 
-  Widget _buildInput1(String inputText) {
-    return Row(
-      children: [
-        TextEntry(
-          myColor: const Color.fromARGB(255, 102, 112, 133),
-          text: inputText,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-        ),
-        const SizedBox(width: 10.0),
-        const Expanded(
-          child: SizedBox(
-            height: 30,
-            child: TextField(
-              style:
-                  TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 214, 220, 220)),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
-                isDense: true,
-                labelText: '',
-              ),
-              keyboardType: TextInputType.number,
+  Widget _buildOpeningImage(double screenWidth, String filepath) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15.0),
+      child: Image.asset(
+        filepath,
+        width: screenWidth * 0.90,
+      ),
+    );
+  }
+
+  Widget _buildManualCalcButton(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          //TODO add new window
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          minimumSize: const Size(350, 55.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: const BorderSide(
+              color: Color.fromARGB(255, 45, 133, 185),
             ),
           ),
         ),
-      ],
-    );
-  }
-}
-
-Widget _buildOpeningImage(double screenWidth, String filepath) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(15.0),
-    child: Image.asset(
-      filepath,
-      width: screenWidth * 0.90,
-    ),
-  );
-}
-
-Widget _buildAddNewWindowButton(BuildContext context) {
-  return Center(
-    child: ElevatedButton(
-      onPressed: () {
-        //TODO add new window
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: const BorderSide(
+        child: const Text(
+          'Calculate manually',
+          style: TextStyle(
             color: Color.fromARGB(255, 45, 133, 185),
           ),
         ),
       ),
-      child: const Text(
-        'Calculate manually',
-        style: TextStyle(
-          color: Color.fromARGB(255, 45, 133, 185),
-        ),
-      ),
-    ),
-  );
+    );
+  }
 }

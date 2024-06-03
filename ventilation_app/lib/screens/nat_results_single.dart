@@ -17,6 +17,7 @@ class NatResultsSingle extends StatelessWidget {
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
           },
+          title: "Single Sided Results",
         ),
         backgroundColor: Colors.white,
         body: Center(

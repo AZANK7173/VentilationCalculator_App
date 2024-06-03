@@ -18,6 +18,7 @@ class NatWindSpeed extends StatelessWidget {
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
           },
+          title: "Natural Wind Speed",
         ),
         backgroundColor: Colors.white,
         body: Center(

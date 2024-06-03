@@ -21,6 +21,7 @@ class InputNat2 extends StatelessWidget {
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
           },
+          title: "Natural Ventilation",
         ),
         backgroundColor: Colors.white,
         body: Center(
@@ -108,7 +109,8 @@ class InputNat2 extends StatelessWidget {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                launchUrl(Uri.parse('https://www.youtube.com/watch?v=KWP8pQnGoBw'));
+                launchUrl(
+                    Uri.parse('https://www.youtube.com/watch?v=KWP8pQnGoBw'));
               },
           ),
         ],
