@@ -8,6 +8,7 @@ import 'package:ventilation_app/screens/nat_results_single.dart';
 import 'package:ventilation_app/screens/nat_results_cross.dart';
 import 'package:ventilation_app/screens/input_mec_2.dart';
 import 'package:ventilation_app/screens/mec_results.dart';
+import 'package:ventilation_app/screens/input_nat_more_opens.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -34,6 +35,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => InputMec2());
       case '/mec_results':
         return MaterialPageRoute(builder: (_) => MecResults());
+      case '/input_nat_more_opens':
+        return MaterialPageRoute(builder: (_) => InputNatMoreOpens());
       // If args is not of the correct type, return an error page.
       // You can also throw an exception while in development.
       default:

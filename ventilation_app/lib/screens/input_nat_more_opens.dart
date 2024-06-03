@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/elements/carossel.dart';
 
-class InputNat2 extends StatelessWidget {
+class InputNatMoreOpens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
@@ -14,12 +17,12 @@ class InputNat2 extends StatelessWidget {
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
-            Navigator.of(context).pushNamed('/input_1');
+            Navigator.of(context).pushNamed('/input_nat_2');
           },
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
           },
-          title: "Natural Ventilation",
+          title: "Opening Typologies",
         ),
         backgroundColor: Colors.white,
         body: Center(
@@ -31,13 +34,9 @@ class InputNat2 extends StatelessWidget {
                 children: [
                   _buildInstructionsContent(context),
                   const SizedBox(height: 20.0),
-                  _buildWindowInputWidget(),
-                  const SizedBox(height: 20.0),
-                  _buildAddNewWindowButton(context),
-                  const SizedBox(height: 20.0),
                   NextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/nat_wind_speed');
+                      Navigator.of(context).pushNamed('/input_nat_2');
                     },
                     text: 'Next',
                   ),
@@ -64,55 +63,119 @@ class InputNat2 extends StatelessWidget {
             myColor: Color.fromARGB(255, 255, 109, 29),
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
-            text: 'Opening Characteristics',
+            text: 'Overview',
+          ),
+          const SizedBox(height: 20.0),
+          const TextEntry(
+              myColor: Color.fromARGB(255, 102, 112, 133),
+              text:
+                  'In a room, several openings (like windows and doors) may be available. Each opening can have different characteristics:',
+              fontSize: 15,
+              fontWeight: FontWeight.normal),
+          const SizedBox(height: 20.0),
+          _buildRichTextContent(
+            '',
+            '1. Geometry/Dimensions: ',
+            'The size and shape of the opening.',
           ),
           const SizedBox(height: 20.0),
           _buildRichTextContent(
-            'We are now referring to the ',
-            'facade toward the exterior. ',
-            'Note that several typologies of opening could be available on the same wall (i.e. two different types of window or one window and one door).',
+            '',
+            '2. Opening Mode: ',
+            'How the opening operates, such as sliding, pivot, or hung windows.',
           ),
           const SizedBox(height: 20.0),
-          _buildOpeningImage(screenWidth),
+          const CarouselImageSlider(
+            imageAssetPaths: [
+              'assets/typology/horizontal_vertical.jpg',
+              'assets/typology/slide.jpg',
+              'assets/typology/tilt_and_turn.jpg',
+              'assets/typology/top_bottom.jpg'
+            ],
+          ),
           const SizedBox(height: 20.0),
-          _buildHyperLinkText('What does “typologies of opening “ mean? ',
-              'Learn more', context),
+          _buildRichTextContent(
+            '',
+            '3. Mosquito Net: ',
+            'Whether the opening has a mosquito net or not.',
+          ),
           const SizedBox(height: 20.0),
           DividerWidget(screenWidth),
+          const SizedBox(height: 20.0),
+          const TextEntry(
+              myColor: Color.fromARGB(255, 67, 150, 199),
+              text: 'Important Points:',
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
+          const SizedBox(height: 20.0),
+          _buildRichTextContent(
+            '',
+            '• Operable Openings: ',
+            'Only consider windows and doors that can be opened to increase ventilation. Fixed windows that provide light but cannot be opened should not be included.',
+          ),
           const SizedBox(height: 10.0),
+          _buildRichTextContent(
+            '',
+            '• Location: ',
+            'This tool only considers openings located in walls, not the roof.',
+          ),
+          const SizedBox(height: 20.0),
+          DividerWidget(screenWidth),
+          const SizedBox(height: 20.0),
+          _buildOpeningImage(screenWidth, 'assets/typology_types.jpg'),
+          const SizedBox(height: 20.0),
+          const TextEntry(
+              myColor: Color.fromARGB(255, 67, 150, 199),
+              text: 'What to Include:',
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
+          const SizedBox(height: 20.0),
+          const TextEntry(
+              myColor: Color.fromARGB(255, 102, 112, 133),
+              text: '• Windows and doors that can be opened.',
+              fontSize: 15,
+              fontWeight: FontWeight.normal),
+          const SizedBox(height: 10.0),
+          const TextEntry(
+              myColor: Color.fromARGB(255, 102, 112, 133),
+              text:
+                  '• Openings with different characteristics or multiple openings of the same type',
+              fontSize: 15,
+              fontWeight: FontWeight.normal),
+          const SizedBox(height: 20.0),
+          DividerWidget(screenWidth),
         ],
       ),
     );
   }
 
-  Widget _buildHyperLinkText(
-      String boldText1, String boldText2, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed('/input_nat_more_opens');
-      },
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: boldText1,
-              style: const TextStyle(
-                fontSize: 15.0,
-                color: Color.fromARGB(255, 102, 112, 133),
-                fontWeight: FontWeight.bold,
-              ),
+  Widget _buildHyperLinkText(String boldText1, String boldText2) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: boldText1,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+              fontWeight: FontWeight.bold,
             ),
-            TextSpan(
-              text: boldText2,
-              style: const TextStyle(
-                fontSize: 15.0,
-                color: Color.fromARGB(255, 255, 109, 29),
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-              ),
+          ),
+          TextSpan(
+            text: boldText2,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 255, 109, 29),
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
             ),
-          ],
-        ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                launchUrl(
+                    Uri.parse('https://www.youtube.com/watch?v=KWP8pQnGoBw'));
+              },
+          ),
+        ],
       ),
     );
   }
@@ -222,11 +285,11 @@ class InputNat2 extends StatelessWidget {
   }
 }
 
-Widget _buildOpeningImage(double screenWidth) {
+Widget _buildOpeningImage(double screenWidth, String filepath) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(15.0),
     child: Image.asset(
-      'assets/opening_natural_1.jpg',
+      filepath,
       width: screenWidth * 0.90,
     ),
   );
