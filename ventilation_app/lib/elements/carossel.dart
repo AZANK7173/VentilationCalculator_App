@@ -16,6 +16,7 @@ class CarouselImageSlider extends StatefulWidget {
 }
 
 class _CarouselImageSliderState extends State<CarouselImageSlider> {
+  // ignore: unused_field
   int _currentImageIndex = 0;
 
   @override

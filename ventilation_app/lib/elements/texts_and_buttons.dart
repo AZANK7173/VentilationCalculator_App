@@ -97,7 +97,7 @@ class NextButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: myColor,
-          minimumSize: const Size(350, 55.0),
+          minimumSize: const Size(double.infinity, 55.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
