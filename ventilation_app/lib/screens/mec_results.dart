@@ -111,71 +111,61 @@ class MecResults extends StatelessWidget {
     );
   }
 
-  Widget _buildOpeningImage(double screenWidth, String imagePath) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Image.asset(
-        imagePath,
-        width: screenWidth * 0.90,
+  Widget _buildRichTextContent(
+      String normalText1, String boldText, String normalText2) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: normalText1,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+            ),
+          ),
+          TextSpan(
+            text: boldText,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextSpan(
+            text: normalText2,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Color.fromARGB(255, 102, 112, 133),
+            ),
+          ),
+        ],
       ),
     );
   }
-}
 
-Widget _buildRichTextContent(
-    String normalText1, String boldText, String normalText2) {
-  return RichText(
-    text: TextSpan(
-      children: [
-        TextSpan(
-          text: normalText1,
-          style: const TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 102, 112, 133),
+  Widget _buildAccomodatePeopleButton(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          //TODO add new window
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          minimumSize: const Size(350, 55.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: const BorderSide(
+              color: Color.fromARGB(255, 45, 133, 185),
+            ),
           ),
         ),
-        TextSpan(
-          text: boldText,
-          style: const TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 102, 112, 133),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        TextSpan(
-          text: normalText2,
-          style: const TextStyle(
-            fontSize: 15.0,
-            color: Color.fromARGB(255, 102, 112, 133),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _buildAccomodatePeopleButton(BuildContext context) {
-  return Center(
-    child: ElevatedButton(
-      onPressed: () {
-        //TODO add new window
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: const BorderSide(
+        child: const Text(
+          '+ Accomodate more people',
+          style: TextStyle(
             color: Color.fromARGB(255, 45, 133, 185),
           ),
         ),
       ),
-      child: const Text(
-        '+ Accomodate more people',
-        style: TextStyle(
-          color: Color.fromARGB(255, 45, 133, 185),
-        ),
-      ),
-    ),
-  );
+    );
+  }
 }

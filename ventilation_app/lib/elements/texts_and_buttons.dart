@@ -149,3 +149,28 @@ class DisplayVentilationInprovement extends StatelessWidget {
     );
   }
 }
+
+class OpeningImage extends StatelessWidget {
+  final double screenWidth;
+  final String filepath;
+  final double borderRadius; // Optional parameter for customization
+
+  const OpeningImage({
+    Key? key,
+    required this.screenWidth,
+    required this.filepath,
+    this.borderRadius = 15.0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: Image.asset(
+        filepath,
+        width: screenWidth * 0.90,
+        fit: BoxFit.cover, // Adjust fit as needed
+      ),
+    );
+  }
+}

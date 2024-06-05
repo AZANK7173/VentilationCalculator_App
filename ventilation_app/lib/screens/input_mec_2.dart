@@ -124,7 +124,9 @@ class InputMec2 extends StatelessWidget {
               fontSize: 15,
               fontWeight: FontWeight.normal),
           const SizedBox(height: 20.0),
-          _buildOpeningImage(screenWidth, 'assets/mecanical_manual.jpg'),
+          OpeningImage(
+              screenWidth: screenWidth,
+              filepath: 'assets/mecanical_manual.jpg'),
           const SizedBox(height: 20.0),
           _buildExampleString(
               'Example: ', 'Total ventilation rate = A + B + C + D + E + F'),

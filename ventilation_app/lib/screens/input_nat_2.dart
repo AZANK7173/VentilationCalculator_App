@@ -73,7 +73,8 @@ class InputNat2 extends StatelessWidget {
             'Note that several typologies of opening could be available on the same wall (i.e. two different types of window or one window and one door).',
           ),
           const SizedBox(height: 20.0),
-          _buildOpeningImage(screenWidth),
+          OpeningImage(
+                      screenWidth: screenWidth, filepath: 'assets/opening_natural_1.jpg'),
           const SizedBox(height: 20.0),
           _buildHyperLinkText('What does “typologies of opening “ mean? ',
               'Learn more', context),
@@ -220,16 +221,6 @@ class InputNat2 extends StatelessWidget {
       ],
     );
   }
-}
-
-Widget _buildOpeningImage(double screenWidth) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(15.0),
-    child: Image.asset(
-      'assets/opening_natural_1.jpg',
-      width: screenWidth * 0.90,
-    ),
-  );
 }
 
 Widget _buildAddNewWindowButton(BuildContext context) {

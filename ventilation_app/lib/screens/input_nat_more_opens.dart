@@ -122,7 +122,8 @@ class InputNatMoreOpens extends StatelessWidget {
           const SizedBox(height: 20.0),
           DividerWidget(screenWidth),
           const SizedBox(height: 20.0),
-          _buildOpeningImage(screenWidth, 'assets/typology_types.jpg'),
+          OpeningImage(
+              screenWidth: screenWidth, filepath: 'assets/typology_types.jpg'),
           const SizedBox(height: 20.0),
           const TextEntry(
               myColor: Color.fromARGB(255, 67, 150, 199),

@@ -57,7 +57,8 @@ class Input1 extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 15.0),
-                  _buildRoomImage(screenWidth),
+                  OpeningImage(
+                      screenWidth: screenWidth, filepath: 'assets/room.jpg'),
                   const SizedBox(height: 15.0),
                   const TextEntry(
                       myColor: Color.fromARGB(255, 102, 112, 133),
@@ -127,16 +128,6 @@ class Input1 extends StatelessWidget {
         ),
         const SizedBox(width: 10.0),
       ],
-    );
-  }
-
-  Widget _buildRoomImage(double screenWidth) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Image.asset(
-        'assets/room.jpg',
-        width: screenWidth * 0.90,
-      ),
     );
   }
 
