@@ -198,25 +198,23 @@ class InputNat2 extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         const SizedBox(width: 10.0),
-        const Expanded(
-          child: SizedBox(
-            height: 30,
-            child: TextField(
-              style:
-                  TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 214, 220, 220)),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
-                isDense: true,
-                labelText: '',
+        const SizedBox(
+          width: 60,
+          height: 30,
+          child: TextField(
+            style: TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide:
+                    BorderSide(color: Color.fromARGB(255, 214, 220, 220)),
               ),
-              keyboardType: TextInputType.number,
+              contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
+              isDense: true,
+              labelText: '',
             ),
+            keyboardType: TextInputType.number,
           ),
         ),
       ],

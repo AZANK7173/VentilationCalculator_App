@@ -3,16 +3,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class CarouselImageSlider extends StatefulWidget {
   final List<String> imageAssetPaths;
-  final List<String> imageTexts; // Add a list for image text
+  final List<String> imageTexts; 
   final double height;
-  final double borderRadius; // Add a parameter for border radius
+  final double borderRadius; 
 
   const CarouselImageSlider({
     Key? key,
     required this.imageAssetPaths,
-    required this.imageTexts, // Pass the text list
+    required this.imageTexts, 
     this.height = 170.0,
-    this.borderRadius = 15.0, // Set default border radius
+    this.borderRadius = 15.0, 
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class _CarouselImageSliderState extends State<CarouselImageSlider> {
           builder: (BuildContext context) => ClipRRect(
             // Wrap with ClipRRect
             borderRadius:
-                BorderRadius.circular(widget.borderRadius), // Set border radius
+                BorderRadius.circular(widget.borderRadius), 
             child: Stack(
               children: [
                 Image.asset(
@@ -44,8 +44,8 @@ class _CarouselImageSliderState extends State<CarouselImageSlider> {
                       const Center(child: CircularProgressIndicator()),
                 ),
                 Positioned(
-                  bottom: 10.0, // Adjust padding (optional)
-                  left: 10.0, // Adjust padding (optional)
+                  bottom: 10.0, 
+                  left: 10.0, 
                   child: Text(
                     widget.imageTexts[index],
                     style: const TextStyle(color: Colors.white),
@@ -61,8 +61,8 @@ class _CarouselImageSliderState extends State<CarouselImageSlider> {
         autoPlay: true,
         autoPlayInterval: const Duration(seconds: 3),
         height: widget.height,
-        aspectRatio: 16 / 9, // Adjust aspect ratio as needed
-        viewportFraction: 1, // Adjust visible portion of each image
+        aspectRatio: 16 / 9, 
+        viewportFraction: 1, 
         enableInfiniteScroll: widget.imageAssetPaths.length > 1,
         onPageChanged: (index, reason) =>
             setState(() => _currentImageIndex = index),
