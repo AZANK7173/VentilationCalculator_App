@@ -57,7 +57,8 @@ class _SwitcherState extends State<Switcher> {
       crossAxisAlignment: CrossAxisAlignment.start, // Add this line
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center, // Add this line
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround, // Add this line
           children: [
             Text(
               widget.switchText,
@@ -66,7 +67,7 @@ class _SwitcherState extends State<Switcher> {
                 color: Color.fromARGB(255, 102, 112, 133),
               ),
             ),
-            const SizedBox(width: 60.0),
+            const Spacer(), // Add this line
             Switch(
               value: _isSwitched,
               onChanged: (value) {
