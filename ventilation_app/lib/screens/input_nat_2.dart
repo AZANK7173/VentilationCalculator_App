@@ -74,7 +74,8 @@ class InputNat2 extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
           OpeningImage(
-                      screenWidth: screenWidth, filepath: 'assets/opening_natural_1.jpg'),
+              screenWidth: screenWidth,
+              filepath: 'assets/opening_natural_1.jpg'),
           const SizedBox(height: 20.0),
           _buildHyperLinkText('What does “typologies of opening “ mean? ',
               'Learn more', context),

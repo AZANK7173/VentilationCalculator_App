@@ -49,8 +49,7 @@ class Input1 extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: 10.0),
-                  const DropdownMenuExample(
-                    dropdownWidth: 0.85,
+                  const DropdownButtonExample(
                     items: ['Residential Setting', 'Hospital Setting'],
                   ),
                   const SizedBox(height: 30.0),

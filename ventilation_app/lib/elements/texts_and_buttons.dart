@@ -69,8 +69,7 @@ class DimensionInputRow extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20.0),
-        DropdownMenuExample(
-          dropdownWidth: 0.4,
+        DropdownButtonExample(
           items: dropdownItems,
         ),
       ],
@@ -141,10 +140,7 @@ class DisplayVentilationInprovement extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20.0),
-        DropdownMenuExample(
-          dropdownWidth: 0.4,
-          items: dropdownItems,
-        ),
+        DropdownButtonExample(items: dropdownItems),
       ],
     );
   }

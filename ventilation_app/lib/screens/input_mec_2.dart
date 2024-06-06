@@ -43,8 +43,7 @@ class InputMec2 extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 10.0),
-                  const DropdownMenuExample(
-                    dropdownWidth: 0.85,
+                  const DropdownButtonExample(
                     items: ['Healthcare', 'Residential', 'Non-residential'],
                   ),
                   const SizedBox(height: 30.0),
