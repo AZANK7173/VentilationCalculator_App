@@ -39,7 +39,9 @@ class NatResultsCross extends StatelessWidget {
                       'current ventilation rate ',
                       'and the maximum number of people the room can safely hold.'),
                   const SizedBox(height: 20.0),
-                  _buildOpeningImage(screenWidth, 'assets/cross_sided.png'),
+                  OpeningImage(
+                      screenWidth: screenWidth,
+                      filepath: 'assets/cross_sided.png'),
                   const SizedBox(height: 20.0),
                   const TextEntry(
                       myColor: Color.fromARGB(255, 102, 112, 133),
@@ -105,16 +107,6 @@ class NatResultsCross extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildOpeningImage(double screenWidth, String imagePath) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Image.asset(
-        imagePath,
-        width: screenWidth * 0.90,
-      ),
     );
   }
 }

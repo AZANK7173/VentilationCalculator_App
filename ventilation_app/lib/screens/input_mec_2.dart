@@ -200,16 +200,6 @@ class InputMec2 extends StatelessWidget {
     );
   }
 
-  Widget _buildOpeningImage(double screenWidth, String filepath) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Image.asset(
-        filepath,
-        width: screenWidth * 0.90,
-      ),
-    );
-  }
-
   Widget _buildManualCalcButton(BuildContext context) {
     return Center(
       child: ElevatedButton(
