@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
-import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 
@@ -21,6 +19,7 @@ class InputNat2 extends StatelessWidget {
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
           },
+          title: "Natural Ventilation",
         ),
         backgroundColor: Colors.white,
         body: Center(
@@ -74,10 +73,12 @@ class InputNat2 extends StatelessWidget {
             'Note that several typologies of opening could be available on the same wall (i.e. two different types of window or one window and one door).',
           ),
           const SizedBox(height: 20.0),
-          _buildOpeningImage(screenWidth),
+          OpeningImage(
+              screenWidth: screenWidth,
+              filepath: 'assets/opening_natural_1.jpg'),
           const SizedBox(height: 20.0),
-          _buildHyperLinkText(
-              'What does “typologies of opening “ mean? ', 'Learn more'),
+          _buildHyperLinkText('What does “typologies of opening “ mean? ',
+              'Learn more', context),
           const SizedBox(height: 20.0),
           DividerWidget(screenWidth),
           const SizedBox(height: 10.0),
@@ -86,32 +87,34 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildHyperLinkText(String boldText1, String boldText2) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: boldText1,
-            style: const TextStyle(
-              fontSize: 15.0,
-              color: Color.fromARGB(255, 102, 112, 133),
-              fontWeight: FontWeight.bold,
+  Widget _buildHyperLinkText(
+      String boldText1, String boldText2, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed('/input_nat_more_opens');
+      },
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: boldText1,
+              style: const TextStyle(
+                fontSize: 15.0,
+                color: Color.fromARGB(255, 102, 112, 133),
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          TextSpan(
-            text: boldText2,
-            style: const TextStyle(
-              fontSize: 15.0,
-              color: Color.fromARGB(255, 255, 109, 29),
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline,
+            TextSpan(
+              text: boldText2,
+              style: const TextStyle(
+                fontSize: 15.0,
+                color: Color.fromARGB(255, 255, 109, 29),
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
             ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                launchUrl(Uri.parse('https://www.youtube.com/watch?v=KWP8pQnGoBw'));
-              },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -195,40 +198,28 @@ class InputNat2 extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         const SizedBox(width: 10.0),
-        const Expanded(
-          child: SizedBox(
-            height: 30,
-            child: TextField(
-              style:
-                  TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide:
-                      BorderSide(color: Color.fromARGB(255, 214, 220, 220)),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
-                isDense: true,
-                labelText: '',
+        const SizedBox(
+          width: 60,
+          height: 30,
+          child: TextField(
+            style: TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide:
+                    BorderSide(color: Color.fromARGB(255, 214, 220, 220)),
               ),
-              keyboardType: TextInputType.number,
+              contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
+              isDense: true,
+              labelText: '',
             ),
+            keyboardType: TextInputType.number,
           ),
         ),
       ],
     );
   }
-}
-
-Widget _buildOpeningImage(double screenWidth) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(15.0),
-    child: Image.asset(
-      'assets/opening_natural_1.jpg',
-      width: screenWidth * 0.90,
-    ),
-  );
 }
 
 Widget _buildAddNewWindowButton(BuildContext context) {

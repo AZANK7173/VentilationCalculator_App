@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onPressed1;
   final VoidCallback onPressed2;
+  final String title;
 
   const MyAppBar({
     required this.onPressed1,
     required this.onPressed2,
+    this.title = "Ventilation Calculator",
   });
 
   @override
@@ -19,10 +21,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.arrow_back),
         onPressed: onPressed1,
       ),
-      title: const Center(
+      title: Center(
         child: Text(
-          "Ventilation Calculator",
-          style: TextStyle(
+          title,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

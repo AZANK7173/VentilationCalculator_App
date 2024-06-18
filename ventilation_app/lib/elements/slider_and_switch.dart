@@ -25,6 +25,7 @@ class _Slider0To100State extends State<Slider0To100> {
           ),
         ),
         Slider(
+          activeColor: const Color.fromARGB(255, 67, 150, 199),
           value: _value,
           min: 0,
           max: 100,
@@ -33,7 +34,7 @@ class _Slider0To100State extends State<Slider0To100> {
               _value = newValue;
             });
           },
-          divisions: 100,
+          divisions: 10,
           label: '${_value.round()}%',
         ),
       ],
@@ -57,7 +58,8 @@ class _SwitcherState extends State<Switcher> {
       crossAxisAlignment: CrossAxisAlignment.start, // Add this line
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center, // Add this line
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround, // Add this line
           children: [
             Text(
               widget.switchText,
@@ -66,7 +68,7 @@ class _SwitcherState extends State<Switcher> {
                 color: Color.fromARGB(255, 102, 112, 133),
               ),
             ),
-            const SizedBox(width: 60.0),
+            const Spacer(), // Add this line
             Switch(
               value: _isSwitched,
               onChanged: (value) {

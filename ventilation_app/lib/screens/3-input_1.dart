@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
+import 'package:ventilation_app/elements/mec_or_nat.dart';
 
 class Input1 extends StatelessWidget {
+  final GlobalKey<MecOrNatToggleButtonsState> _toggleButtonKey =
+      GlobalKey<MecOrNatToggleButtonsState>();
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -46,8 +49,7 @@ class Input1 extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: 10.0),
-                  const DropdownMenuExample(
-                    dropdownWidth: 0.85,
+                  const DropdownButtonExample(
                     items: ['Residential Setting', 'Hospital Setting'],
                   ),
                   const SizedBox(height: 30.0),
@@ -57,7 +59,8 @@ class Input1 extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 15.0),
-                  _buildRoomImage(screenWidth),
+                  OpeningImage(
+                      screenWidth: screenWidth, filepath: 'assets/room.jpg'),
                   const SizedBox(height: 15.0),
                   const TextEntry(
                       myColor: Color.fromARGB(255, 102, 112, 133),
@@ -84,12 +87,19 @@ class Input1 extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: 10.0),
-                  _buildVentilationTypeButtons(screenWidth),
+                  MecOrNatToggleButtons(key: _toggleButtonKey),
                   const SizedBox(height: 20.0),
                   NextButton(
                     text: 'Next',
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/input_nat_2');
+                      // Access the nat variable using the GlobalKey
+                      bool natValue =
+                          _toggleButtonKey.currentState?.isNat ?? false;
+                      if (natValue) {
+                        Navigator.of(context).pushNamed('/input_nat_2');
+                      } else {
+                        Navigator.of(context).pushNamed('/input_mech_2');
+                      }
                     },
                   ),
                   const SizedBox(height: 30.0),
@@ -120,84 +130,6 @@ class Input1 extends StatelessWidget {
         ),
         const SizedBox(width: 10.0),
       ],
-    );
-  }
-
-  Widget _buildRoomImage(double screenWidth) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Image.asset(
-        'assets/room.jpg',
-        width: screenWidth * 0.90,
-      ),
-    );
-  }
-
-  Widget _buildVentilationTypeButtons(double screenWidth) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(width: 20.0),
-        _buildVentilationTypeButton(
-          text: 'Naturally \nIntentional building openings',
-          backgroundColor: const Color.fromARGB(255, 67, 150, 199),
-          textColor: Colors.white,
-          screenWidth: screenWidth,
-        ),
-        const SizedBox(width: 15.0),
-        _buildVentilationTypeButton(
-          text: 'Mechanically \nPowered fans or blowers',
-          backgroundColor: Colors.white,
-          textColor: Colors.black,
-          screenWidth: screenWidth,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildVentilationTypeButton({
-    required String text,
-    required Color backgroundColor,
-    required Color textColor,
-    required double screenWidth,
-  }) {
-    return TextButton(
-      onPressed: () {
-        // Change button color on click
-        // (consider using a state management solution for complex scenarios)
-        print('Button Clicked!'); // Replace with your desired action
-      },
-      style: TextButton.styleFrom(
-        minimumSize: const Size(80, 80),
-        fixedSize: Size(screenWidth * 0.4, screenWidth * 0.4),
-        padding: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(color: Colors.grey, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        backgroundColor: backgroundColor,
-        overlayColor: Colors.blueAccent,
-      ),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: text.split(' ')[0] + '\n',
-              style: TextStyle(
-                color: textColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            TextSpan(
-              text: text.split('\n')[1],
-              style: TextStyle(
-                color: textColor,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
