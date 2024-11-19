@@ -50,7 +50,7 @@ class Input1 extends StatelessWidget {
                   ),
                   const SizedBox(height: 10.0),
                   const DropdownButtonExample(
-                    items: ['Residential Setting', 'Hospital Setting'],
+                    items: [' Residential Setting', 'Hospital Setting'],
                   ),
                   const SizedBox(height: 30.0),
                   const TextEntry(
@@ -70,15 +70,14 @@ class Input1 extends StatelessWidget {
                   const SizedBox(height: 15.0),
                   const DimensionInputRow(
                       labelText: 'Length',
-                      dropdownItems: ['meters', 'inches', 'centimeters']),
+                      dropdownItems: [' meters', 'inches']),
                   const SizedBox(height: 10.0),
                   const DimensionInputRow(
                       labelText: 'Height',
-                      dropdownItems: ['meters', 'inches', 'centimeters']),
+                      dropdownItems: [' meters', 'inches']),
                   const SizedBox(height: 10.0),
                   const DimensionInputRow(
-                      labelText: 'Width',
-                      dropdownItems: ['meters', 'inches', 'centimeters']),
+                      labelText: 'Width', dropdownItems: [' meters', 'inches']),
                   const SizedBox(height: 20.0),
                   const TextEntry(
                     text: 'How is your room ventilated?',

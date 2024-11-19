@@ -174,12 +174,10 @@ class InputNat2 extends StatelessWidget {
             fontWeight: FontWeight.normal),
         const SizedBox(height: 20.0),
         const DimensionInputRow(
-            dropdownItems: ['meters', 'inches', 'centimeters'],
-            labelText: 'Length'),
+            dropdownItems: [' meters', 'inches'], labelText: 'Length'),
         const SizedBox(height: 10.0),
         const DimensionInputRow(
-            dropdownItems: ['meters', 'inches', 'centimeters'],
-            labelText: 'Height'),
+            dropdownItems: [' meters', 'inches'], labelText: 'Height'),
         const SizedBox(height: 10.0),
         Switcher(
           switchText: 'Does it have a mosquito net?',
