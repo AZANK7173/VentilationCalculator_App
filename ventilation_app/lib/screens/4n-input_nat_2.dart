@@ -3,16 +3,12 @@ import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 
-class InputNat2 extends StatefulWidget {
-  @override
-  _InputNat2State createState() => _InputNat2State();
-}
-
-class _InputNat2State extends State<InputNat2> {
+class InputNat2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
+    
     return MaterialApp(
       title: 'Ventilation Calculator',
       home: Scaffold(
