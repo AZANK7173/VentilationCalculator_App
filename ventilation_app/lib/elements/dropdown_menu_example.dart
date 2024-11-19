@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 
 class DropdownButtonExample extends StatefulWidget {
   final List<String> items;
+
   const DropdownButtonExample({
     super.key,
     required this.items,
   });
 
   @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+  DropdownButtonExampleState createState() => DropdownButtonExampleState();
 }
 
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  late String dropdownValue;
+class DropdownButtonExampleState extends State<DropdownButtonExample> {
+  String? selectedValue;
 
   @override
   void initState() {
     super.initState();
-    dropdownValue = widget.items.first;
+    selectedValue = widget.items.first;
   }
 
   Widget build(BuildContext context) {
@@ -28,14 +29,14 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
       ),
       //width: widget.dropdownWidth * screenWidth,
       child: DropdownButton<String>(
-        value: dropdownValue,
+        value: selectedValue,
         alignment: Alignment.center,
         underline: Container(),
         elevation: 16,
         onChanged: (String? value) {
           // This is called when the user selects an item.
           setState(() {
-            dropdownValue = value!;
+            selectedValue = value!;
           });
         },
         items: widget.items.map<DropdownMenuItem<String>>((String value) {
@@ -52,4 +53,6 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
       ),
     );
   }
+
+  String get dropValue => selectedValue!;
 }

@@ -166,7 +166,7 @@ class DisplayVentilationInprovement extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20.0),
-        DropdownButtonExample(items: dropdownItems),
+        //DropdownButtonExample(items: dropdownItems),
       ],
     );
   }

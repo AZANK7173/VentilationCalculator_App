@@ -9,6 +9,10 @@ import 'package:ventilation_app/state_manager.dart';
 class Input1 extends StatelessWidget {
   final GlobalKey<MecOrNatToggleButtonsState> _toggleButtonKey =
       GlobalKey<MecOrNatToggleButtonsState>();
+
+  final GlobalKey<DropdownButtonExampleState> _dropdownButtonKey =
+      GlobalKey<DropdownButtonExampleState>();
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -53,7 +57,8 @@ class Input1 extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: 10.0),
-                  const DropdownButtonExample(
+                  DropdownButtonExample(
+                    key: _dropdownButtonKey,
                     items: [' Residential Setting', 'Hospital Setting'],
                   ),
                   const SizedBox(height: 30.0),
@@ -95,6 +100,12 @@ class Input1 extends StatelessWidget {
                   NextButton(
                     text: 'Next',
                     onPressed: () {
+                      // Access dropdown value using the GlobalKey
+                      final dropdownValue =
+                          _dropdownButtonKey.currentState?.dropValue;
+                      bool res = dropdownValue == ' Residential Setting';
+                      calculationState.updateSetOfInterest(res);
+
                       // Access the nat variable using the GlobalKey
                       bool natValue =
                           _toggleButtonKey.currentState?.isNat ?? false;
