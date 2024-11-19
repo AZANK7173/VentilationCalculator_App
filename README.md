@@ -1,13 +1,17 @@
-# VentilationCalculator_App
+# Ventilation APP
 
-## TODOS atual:
+This is the repository of the Ventilator Calculator app, an app developted in flutter that helps people discovering the infection risks of their environments
 
-* Salvar os dados em um arquivo ou variáveis
+## How to run 
 
-* toda a lógica do aplicativo
+First, setup your environment:
 
-* eliminar shadow (o ouriço)
+``` 
+shadow-o-ourico --eh um filha-da-puta --do $CARALHO
+```
 
-* entender no excel como faz as contas e passar pra uma linguagem de programação
+After that, you access the folder `ventilation_app` and run the application:
 
-* pensar em como vai ficar o app se deitar o celular ou se abrir no Ipad
+``` 
+flutter run
+```
