@@ -44,14 +44,23 @@ class DividerWidget extends StatelessWidget {
   }
 }
 
-class DimensionInputRow extends StatelessWidget {
+class DimensionInputRow extends StatefulWidget {
   final String labelText;
   final List<String> dropdownItems;
+  final Function(String?)? onChanged; // Callback for the parent
 
   const DimensionInputRow({
     required this.labelText,
     required this.dropdownItems,
+    this.onChanged,
   });
+
+  @override
+  _DimensionInputRowState createState() => _DimensionInputRowState();
+}
+
+class _DimensionInputRowState extends State<DimensionInputRow> {
+  String? _selectedDropdownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +72,31 @@ class DimensionInputRow extends StatelessWidget {
           child: TextField(
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              labelText: labelText,
+              labelText: widget.labelText,
             ),
             keyboardType: TextInputType.number,
           ),
         ),
         const SizedBox(width: 20.0),
-        DropdownButtonExample(
-          items: dropdownItems,
+        Flexible(
+          child: DropdownButtonFormField<String>(
+            value: _selectedDropdownValue,
+            items: widget.dropdownItems.map((item) {
+              return DropdownMenuItem(
+                value: item,
+                child: Text(item),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedDropdownValue = value;
+              });
+              // Pass the value to the parent callback
+              if (widget.onChanged != null) {
+                widget.onChanged!(value);
+              }
+            },
+          ),
         ),
       ],
     );

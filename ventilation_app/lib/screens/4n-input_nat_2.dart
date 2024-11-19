@@ -3,10 +3,14 @@ import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 
-class InputNat2 extends StatelessWidget {
+class InputNat2 extends StatefulWidget {
+  @override
+  _InputNat2State createState() => _InputNat2State();
+}
+
+class _InputNat2State extends State<InputNat2> {
   @override
   Widget build(BuildContext context) {
-    //final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
@@ -161,7 +165,6 @@ class InputNat2 extends StatelessWidget {
           fontSize: 17.0,
           fontWeight: FontWeight.bold,
         ),
-        //unica coisa que vai mudar na hora de fazer a logica de adicionar mais janelas
         const SizedBox(height: 10.0),
         _buildInput1('Number of openings with the same size: '),
         const SizedBox(height: 20.0),
@@ -173,8 +176,15 @@ class InputNat2 extends StatelessWidget {
             fontSize: 15,
             fontWeight: FontWeight.normal),
         const SizedBox(height: 20.0),
-        const DimensionInputRow(
-            dropdownItems: [' meters', 'inches'], labelText: 'Length'),
+        DimensionInputRow(
+          labelText: 'Length',
+          dropdownItems: [' meters', 'inches'],
+          onChanged: (value) {
+            // Access the selected value here
+            print(value);
+            // Pass it to the next page using Navigator.push or other navigation methods
+          },
+        ),
         const SizedBox(height: 10.0),
         const DimensionInputRow(
             dropdownItems: [' meters', 'inches'], labelText: 'Height'),
