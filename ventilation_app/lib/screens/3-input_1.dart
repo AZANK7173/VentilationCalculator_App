@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/mec_or_nat.dart';
+import 'package:ventilation_app/state_manager.dart';
 
 class Input1 extends StatelessWidget {
   final GlobalKey<MecOrNatToggleButtonsState> _toggleButtonKey =
@@ -11,6 +13,8 @@ class Input1 extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+
+    final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
       title: 'Ventilation Calculator',
@@ -95,10 +99,13 @@ class Input1 extends StatelessWidget {
                       // Access the nat variable using the GlobalKey
                       bool natValue =
                           _toggleButtonKey.currentState?.isNat ?? false;
+                      calculationState.updateVentType(natValue);
                       if (natValue) {
                         Navigator.of(context).pushNamed('/input_nat_2');
                       } else {
-                        Navigator.of(context).pushNamed('/input_mech_2');
+                        Navigator.of(context).pushNamed(
+                          '/input_mech_2',
+                        );
                       }
                     },
                   ),

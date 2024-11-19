@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/state_manager.dart';
 
 class InputNat2 extends StatelessWidget {
+
+  // final String data;
+  // const InputNat2({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    // final natValue = ModalRoute.of(context)?.settings.arguments as bool;
+    final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
       title: 'Ventilation Calculator',
@@ -30,6 +38,7 @@ class InputNat2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildInstructionsContent(context),
+                  Text("VENT TYPE: ${calculationState.ventType}", style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
                   _buildWindowInputWidget(),
                   const SizedBox(height: 20.0),
