@@ -11,23 +11,11 @@ class CalculationState with ChangeNotifier {
   double _height = 0;
   double _width = 0;
 
-  Map<String, bool> _unitLeght = {
-    'meters': false,
-    'inches': false,
-    'centimeters': false
-  };
+  Map<String, bool> _unitLeght = {'meters': false, 'inches': false};
 
-  Map<String, bool> _unitHeight = {
-    'meters': false,
-    'inches': false,
-    'centimeters': false
-  };
+  Map<String, bool> _unitHeight = {'meters': false, 'inches': false};
 
-  Map<String, bool> _unitWidth = {
-    'meters': false,
-    'inches': false,
-    'centimeters': false
-  };
+  Map<String, bool> _unitWidth = {'meters': false, 'inches': false};
 
   Map<String, bool> _ventType = {'nat': false, 'mec': false};
 
@@ -46,7 +34,8 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateRoomDimensions(double h, double l, double w, Map unitH, Map unitL, Map unitW) {
+  void updateRoomDimensions(
+      double h, double l, double w, Map unitH, Map unitL, Map unitW) {
     notifyListeners();
   }
 
