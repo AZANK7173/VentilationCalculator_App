@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/elements/dropdown_menu_example.dart';
+import 'package:ventilation_app/state_manager.dart';
 
 class InputMec2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+
+    final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
       title: 'Input Mechanical 2',
@@ -33,8 +37,9 @@ class InputMec2 extends StatelessWidget {
                       labelText: '',
                       dropdownItems: ['I/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
-                  _buildManualCalcButton(context),
+                  _buildManualCalcButton(context), 
                   const SizedBox(height: 20.0),
+                  Text("VENT TYPE: ${calculationState.ventType}", style: const TextStyle(fontSize: 24)),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
                   const TextEntry(
