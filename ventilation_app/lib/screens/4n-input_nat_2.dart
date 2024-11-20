@@ -187,11 +187,6 @@ class InputNat2 extends StatelessWidget {
         DimensionInputRow(
           labelText: 'Length',
           dropdownItems: [' meters', 'inches'],
-          onChanged: (value) {
-            // Access the selected value here
-            print(value);
-            // Pass it to the next page using Navigator.push or other navigation methods
-          },
         ),
         const SizedBox(height: 10.0),
         const DimensionInputRow(

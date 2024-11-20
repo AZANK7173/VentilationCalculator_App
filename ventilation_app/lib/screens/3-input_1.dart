@@ -13,6 +13,15 @@ class Input1 extends StatelessWidget {
   final GlobalKey<DropdownButtonExampleState> _dropdownButtonKey =
       GlobalKey<DropdownButtonExampleState>();
 
+  final GlobalKey<DimensionInputRowState> _dimensionLengthKey =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _dimensionHeightKey =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _dimensionWidthKey =
+      GlobalKey<DimensionInputRowState>();
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -59,7 +68,7 @@ class Input1 extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   DropdownButtonExample(
                     key: _dropdownButtonKey,
-                    items: [' Residential Setting', 'Hospital Setting'],
+                    items: [' Residential/Comercial', 'Hospital Setting'],
                   ),
                   const SizedBox(height: 30.0),
                   const TextEntry(
@@ -77,16 +86,20 @@ class Input1 extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.normal),
                   const SizedBox(height: 15.0),
-                  const DimensionInputRow(
+                  DimensionInputRow(
+                      key: _dimensionLengthKey,
                       labelText: 'Length',
-                      dropdownItems: [' meters', 'inches']),
+                      dropdownItems: ['meters', 'inches']),
                   const SizedBox(height: 10.0),
-                  const DimensionInputRow(
+                  DimensionInputRow(
+                      key: _dimensionHeightKey,
                       labelText: 'Height',
-                      dropdownItems: [' meters', 'inches']),
+                      dropdownItems: ['meters', 'inches']),
                   const SizedBox(height: 10.0),
-                  const DimensionInputRow(
-                      labelText: 'Width', dropdownItems: [' meters', 'inches']),
+                  DimensionInputRow(
+                      key: _dimensionWidthKey,
+                      labelText: 'Width',
+                      dropdownItems: ['meters', 'inches']),
                   const SizedBox(height: 20.0),
                   const TextEntry(
                     text: 'How is your room ventilated?',
@@ -100,16 +113,41 @@ class Input1 extends StatelessWidget {
                   NextButton(
                     text: 'Next',
                     onPressed: () {
+                      // length data
+                      final dataLength =
+                          _dimensionLengthKey.currentState?.dimensionData;
+                      final dataHeight =
+                          _dimensionHeightKey.currentState?.dimensionData;
+                      final dataWidth =
+                          _dimensionWidthKey.currentState?.dimensionData;
+
+                      if (dataLength != null &&
+                          dataHeight != null &&
+                          dataWidth != null) {
+                        calculationState.updateRoomDimensions(
+                          dataHeight['number'] ?? '0', // Default to '0' if null
+                          dataLength['number'] ?? '0',
+                          dataWidth['number'] ?? '0',
+                          createUnitMap(dataHeight['unit']),
+                          createUnitMap(dataLength['unit']),
+                          createUnitMap(dataWidth['unit']),
+                        );
+                      } else {
+                        print('One or more dimensions are missing.');
+                      }
+
                       // Access dropdown value using the GlobalKey
                       final dropdownValue =
                           _dropdownButtonKey.currentState?.dropValue;
-                      bool res = dropdownValue == ' Residential Setting';
+                      bool res = dropdownValue == ' Residential/Comercial';
                       calculationState.updateSetOfInterest(res);
 
                       // Access the nat variable using the GlobalKey
                       bool natValue =
                           _toggleButtonKey.currentState?.isNat ?? false;
                       calculationState.updateVentType(natValue);
+
+                      // Navigate to the next screen
                       if (natValue) {
                         Navigator.of(context).pushNamed('/input_nat_2');
                       } else {

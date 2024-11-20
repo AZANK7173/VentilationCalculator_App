@@ -47,20 +47,22 @@ class DividerWidget extends StatelessWidget {
 class DimensionInputRow extends StatefulWidget {
   final String labelText;
   final List<String> dropdownItems;
-  final Function(String?)? onChanged; // Callback for the parent
+  final Function(String?, String?)? onChanged; // Callback for the parent
 
   const DimensionInputRow({
+    super.key,
     required this.labelText,
     required this.dropdownItems,
     this.onChanged,
   });
 
   @override
-  _DimensionInputRowState createState() => _DimensionInputRowState();
+  DimensionInputRowState createState() => DimensionInputRowState();
 }
 
-class _DimensionInputRowState extends State<DimensionInputRow> {
-  String? _selectedDropdownValue;
+class DimensionInputRowState extends State<DimensionInputRow> {
+  String? selectedDimensionValue;
+  String? enteredNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +77,21 @@ class _DimensionInputRowState extends State<DimensionInputRow> {
               labelText: widget.labelText,
             ),
             keyboardType: TextInputType.number,
+            onChanged: (value) {
+              setState(() {
+                enteredNumber = value;
+              });
+              // Notify parent whenever either value changes
+              if (widget.onChanged != null) {
+                widget.onChanged!(enteredNumber, selectedDimensionValue);
+              }
+            },
           ),
         ),
         const SizedBox(width: 20.0),
         Flexible(
           child: DropdownButtonFormField<String>(
-            value: _selectedDropdownValue,
+            value: selectedDimensionValue,
             items: widget.dropdownItems.map((item) {
               return DropdownMenuItem(
                 value: item,
@@ -89,11 +100,11 @@ class _DimensionInputRowState extends State<DimensionInputRow> {
             }).toList(),
             onChanged: (value) {
               setState(() {
-                _selectedDropdownValue = value;
+                selectedDimensionValue = value;
               });
-              // Pass the value to the parent callback
+              // Notify parent whenever either value changes
               if (widget.onChanged != null) {
-                widget.onChanged!(value);
+                widget.onChanged!(enteredNumber, selectedDimensionValue);
               }
             },
           ),
@@ -101,7 +112,21 @@ class _DimensionInputRowState extends State<DimensionInputRow> {
       ],
     );
   }
+
+  // Method to get both the number and the unit
+  Map<String, String?> get dimensionData => {
+        'number': enteredNumber,
+        'unit': selectedDimensionValue,
+      };
 }
+
+Map<String, bool> createUnitMap(String? unit) {
+  return {
+    'meters': unit == 'meters',
+    'inches': unit == 'inches',
+  };
+}
+
 
 class NextButton extends StatelessWidget {
   final String text;

@@ -7,9 +7,9 @@ class CalculationState with ChangeNotifier {
     'hospital': false
   };
 
-  double _lenght = 0;
-  double _height = 0;
-  double _width = 0;
+  String _lenght = '0';
+  String _height = '0';
+  String _width = '0';
 
   Map<String, bool> _unitLeght = {'meters': false, 'inches': false};
 
@@ -20,9 +20,9 @@ class CalculationState with ChangeNotifier {
   Map<String, bool> _ventType = {'nat': false, 'mec': false};
 
   Map<String, bool> get settingOfInterest => _settingOfInterest;
-  double get lenght => _lenght;
-  double get height => _height;
-  double get width => _width;
+  String get lenght => _lenght;
+  String get height => _height;
+  String get width => _width;
   Map<String, bool> get unitLeght => _unitLeght;
   Map<String, bool> get unitHeight => _unitHeight;
   Map<String, bool> get unitWidth => _unitWidth;
@@ -35,7 +35,13 @@ class CalculationState with ChangeNotifier {
   }
 
   void updateRoomDimensions(
-      double h, double l, double w, Map unitH, Map unitL, Map unitW) {
+      String h, String l, String w, Map unitH, Map unitL, Map unitW) {
+    _lenght = l;
+    _height = h;
+    _width = w;
+    _unitLeght = unitL.cast<String, bool>();
+    _unitHeight = unitH.cast<String, bool>();
+    _unitWidth = unitW.cast<String, bool>();
     notifyListeners();
   }
 
