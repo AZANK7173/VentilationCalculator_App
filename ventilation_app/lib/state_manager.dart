@@ -101,4 +101,23 @@ class CalculationState with ChangeNotifier {
     _openpercentage = p;
     notifyListeners();
   }
+
+  String _windowheight = '0';
+  String _windowwidth = '0';
+
+  Map<String, bool> _unitWindowHeight = {'meters': false, 'inches': false};
+  Map<String, bool> _unitWindowWidth = {'meters': false, 'inches': false};
+
+  String get windowheight => _windowheight;
+  String get windowwidth => _windowwidth;
+  Map<String, bool> get unitWindowHeight => _unitWindowHeight;
+  Map<String, bool> get unitWindowWidth => _unitWindowWidth;
+
+  void updateWindowDimensions(String h, String w, Map unitH, Map unitW) {
+    _windowheight = h;
+    _windowwidth = w;
+    _unitWindowHeight = unitH.cast<String, bool>();
+    _unitWindowWidth = unitW.cast<String, bool>();
+    notifyListeners();
+  }
 }

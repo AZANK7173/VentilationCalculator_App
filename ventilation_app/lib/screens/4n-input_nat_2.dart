@@ -15,6 +15,12 @@ class InputNat2 extends StatelessWidget {
   final GlobalKey<Slider0To100State> _openingPercentage =
       GlobalKey<Slider0To100State>();
 
+  final GlobalKey<DimensionInputRowState> _windowHeightKey =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _windowWidthKey =
+      GlobalKey<DimensionInputRowState>();
+
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
@@ -84,6 +90,23 @@ class InputNat2 extends StatelessWidget {
 
                       calculationState
                           .updateOpeningPercentage(openingPercentage);
+
+                      final dataWindowWidth =
+                          _windowWidthKey.currentState?.dimensionData;
+
+                      final dataWindowHeight =
+                          _windowHeightKey.currentState?.dimensionData;
+
+                      if (dataWindowHeight != null && dataWindowWidth != null) {
+                        calculationState.updateWindowDimensions(
+                          dataWindowHeight['number'] ?? '0',
+                          dataWindowWidth['number'] ?? '0',
+                          createUnitMap(dataWindowHeight['unit']),
+                          createUnitMap(dataWindowWidth['unit']),
+                        );
+                      } else {
+                        print('One or more dimensions are missing.');
+                      }
 
                       Navigator.of(context).pushNamed('/nat_wind_speed');
                     },
@@ -225,12 +248,15 @@ class InputNat2 extends StatelessWidget {
             fontWeight: FontWeight.normal),
         const SizedBox(height: 20.0),
         DimensionInputRow(
-          labelText: 'Length',
-          dropdownItems: [' meters', 'inches'],
+          key: _windowWidthKey,
+          labelText: 'Width',
+          dropdownItems: ['meters', 'inches'],
         ),
         const SizedBox(height: 10.0),
-        const DimensionInputRow(
-            dropdownItems: [' meters', 'inches'], labelText: 'Height'),
+        DimensionInputRow(
+            key: _windowHeightKey,
+            dropdownItems: ['meters', 'inches'],
+            labelText: 'Height'),
         const SizedBox(height: 10.0),
         Switcher(
           switchText: 'Does it have a mosquito net?',
