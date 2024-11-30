@@ -9,6 +9,9 @@ class InputNat2 extends StatelessWidget {
   // final String data;
   // const InputNat2({Key key, this.data}) : super(key: key);
 
+  final GlobalKey<CustomInputWidgetState> _openingNumKey =
+      GlobalKey<CustomInputWidgetState>();
+
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
@@ -68,6 +71,11 @@ class InputNat2 extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   NextButton(
                     onPressed: () {
+                      final openingNum =
+                          _openingNumKey.currentState?.currettext ?? '0';
+
+                      calculationState.updateOpeningNum(openingNum);
+
                       Navigator.of(context).pushNamed('/nat_wind_speed');
                     },
                     text: 'Next',
@@ -193,7 +201,9 @@ class InputNat2 extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         const SizedBox(height: 10.0),
-        _buildInput1('Number of openings with the same size: '),
+        CustomInputWidget(
+            key: _openingNumKey,
+            inputText: 'Number of openings with the same size: '),
         const SizedBox(height: 20.0),
         Slider0To100(dragText: 'How much do you usually open it?'),
         const SizedBox(height: 20.0),
@@ -218,62 +228,29 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildInput1(String inputText) {
-    return Row(
-      children: [
-        TextEntry(
-          myColor: const Color.fromARGB(255, 102, 112, 133),
-          text: inputText,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-        ),
-        const SizedBox(width: 10.0),
-        const SizedBox(
-          width: 60,
-          height: 30,
-          child: TextField(
-            style: TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide:
-                    BorderSide(color: Color.fromARGB(255, 214, 220, 220)),
-              ),
-              contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
-              isDense: true,
-              labelText: '',
+  Widget _buildAddNewWindowButton(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          //TODO add new window
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          minimumSize: const Size(350, 55.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: const BorderSide(
+              color: Color.fromARGB(255, 45, 133, 185),
             ),
-            keyboardType: TextInputType.number,
           ),
         ),
-      ],
-    );
-  }
-}
-
-Widget _buildAddNewWindowButton(BuildContext context) {
-  return Center(
-    child: ElevatedButton(
-      onPressed: () {
-        //TODO add new window
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: const BorderSide(
+        child: const Text(
+          '+ Add new openning type',
+          style: TextStyle(
             color: Color.fromARGB(255, 45, 133, 185),
           ),
         ),
       ),
-      child: const Text(
-        '+ Add new openning type',
-        style: TextStyle(
-          color: Color.fromARGB(255, 45, 133, 185),
-        ),
-      ),
-    ),
-  );
+    );
+  }
 }

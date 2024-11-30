@@ -68,7 +68,13 @@ class CalculationState with ChangeNotifier {
   //4m-input_mec_2
   String _ventrate = '0';
 
-  Map<String, bool> _unitVentRate = {'I/s': false, 'm³/s': false, 'm³/h': false, 'ACH': false, 'CFM': false};
+  Map<String, bool> _unitVentRate = {
+    'I/s': false,
+    'm³/s': false,
+    'm³/h': false,
+    'ACH': false,
+    'CFM': false
+  };
 
   String get ventrate => _ventrate;
   Map<String, bool> get unitVentRate => _unitVentRate;
@@ -79,4 +85,13 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 
+  //4n-input_nat_2
+  String _openingsnum = '0';
+
+  String get openingsnum => _openingsnum;
+
+  void updateOpeningNum(String w) {
+    _openingsnum = w;
+    notifyListeners();
+  }
 }

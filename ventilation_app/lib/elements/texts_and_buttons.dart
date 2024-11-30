@@ -136,9 +136,6 @@ Map<String, bool> createVentRateUnitMap(String? unit) {
   };
 }
 
-
-
-
 class NextButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -231,4 +228,70 @@ class OpeningImage extends StatelessWidget {
       ),
     );
   }
+}
+
+// second natural input screen
+
+class CustomInputWidget extends StatefulWidget {
+  final String inputText;
+  final Function(String)? onTextChanged; // Callback for text input change
+
+  const CustomInputWidget({
+    super.key,
+    required this.inputText,
+    this.onTextChanged,
+  });
+
+  @override
+  CustomInputWidgetState createState() => CustomInputWidgetState();
+}
+
+class CustomInputWidgetState extends State<CustomInputWidget> {
+  String? enteredText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // Assuming TextEntry is a custom widget you have created
+        TextEntry(
+          myColor: const Color.fromARGB(255, 102, 112, 133),
+          text: widget.inputText,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+        const SizedBox(width: 10.0),
+        SizedBox(
+          width: 60,
+          height: 30,
+          child: TextField(
+            style: const TextStyle(
+                fontSize: 12.0, height: 2.0, color: Colors.black),
+            textAlign: TextAlign.center,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide: BorderSide(
+                  color: Color.fromARGB(255, 214, 220, 220),
+                ),
+              ),
+              contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
+              isDense: true,
+              labelText: '',
+            ),
+            keyboardType: TextInputType.number,
+            onChanged: (value) {
+              setState(() {
+                enteredText = value;
+              });
+              if (widget.onTextChanged != null) {
+                widget.onTextChanged!(value);
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+  String? get currettext => enteredText;
 }

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/state_manager.dart';
 
 class NatWindSpeed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+
+    final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
       title: 'Wind Speed Input',
@@ -41,6 +45,9 @@ class NatWindSpeed extends StatelessWidget {
                   ),
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
+                  const SizedBox(height: 20.0),
+                  Text("Openings: ${calculationState.openingsnum}",
+                      style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
                   const TextEntry(
                       fontSize: 17.0,
