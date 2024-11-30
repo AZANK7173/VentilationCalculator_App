@@ -9,6 +9,8 @@ class NatWindSpeed extends StatelessWidget {
   final GlobalKey<DimensionInputRowState> _windSpeedKey =
       GlobalKey<DimensionInputRowState>();
 
+  final GlobalKey<SwitcherState> _sideOfTheRoomKey = GlobalKey<SwitcherState>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -43,6 +45,7 @@ class NatWindSpeed extends StatelessWidget {
                   ),
                   const SizedBox(height: 20.0),
                   Switcher(
+                    key: _sideOfTheRoomKey,
                     switchText:
                         'Are there openings available in other \n side of the room? ',
                   ),
@@ -89,9 +92,13 @@ class NatWindSpeed extends StatelessWidget {
                       labelText: 'Wind Speed',
                       dropdownItems: ['m/s', 'km/h']),
                   const SizedBox(height: 50.0),
-
                   NextButton(
                     onPressed: () {
+                      final sideOfTheRoom =
+                          _sideOfTheRoomKey.currentState?.isOn ?? false;
+
+                      calculationState.updateSideOfTheRoom(sideOfTheRoom);
+
                       final dataWindSpeed =
                           _windSpeedKey.currentState?.dimensionData;
 
@@ -103,7 +110,6 @@ class NatWindSpeed extends StatelessWidget {
                       } else {
                         print('One or more dimensions are missing.');
                       }
-
 
                       Navigator.of(context).pushNamed('/nat_results_single');
                     },

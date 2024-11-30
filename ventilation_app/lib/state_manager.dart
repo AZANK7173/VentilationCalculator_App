@@ -141,5 +141,12 @@ class CalculationState with ChangeNotifier {
     _unitWindSpeed = unitW.cast<String, bool>();
     notifyListeners();
   }
-  
+
+  bool _sideofroom = false;
+  bool get sideofroom => _sideofroom;
+
+  void updateSideOfTheRoom(bool s) {
+    _sideofroom = s;
+    notifyListeners();
+  }
 }

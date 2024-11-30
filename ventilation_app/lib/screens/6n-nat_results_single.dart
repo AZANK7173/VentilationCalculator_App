@@ -43,6 +43,8 @@ class NatResultsSingle extends StatelessWidget {
                   Text("WIND UNIT: ${calculationState.unitWindSpeed}",
                       style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
+                  Text("Checked Side of Room: ${calculationState.sideofroom}",
+                      style: const TextStyle(fontSize: 24)),
                   _buildRichTextContent(
                       'The tool automatically calculates the ',
                       'current ventilation rate ',
