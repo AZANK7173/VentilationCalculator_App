@@ -136,6 +136,14 @@ Map<String, bool> createVentRateUnitMap(String? unit) {
   };
 }
 
+Map<String, bool> createWindSpeedUnitMap(String? unit) {
+  return {
+    'm/s': unit == 'm/s',
+    'km/h': unit == 'km/h',
+  };
+}
+
+
 class NextButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;

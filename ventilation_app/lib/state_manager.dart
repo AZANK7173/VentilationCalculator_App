@@ -128,6 +128,18 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 
+  //5n-nat_wind_speed
 
+  String _windspeed = '0';
+  Map<String, bool> _unitWindSpeed = {'m/s': false, 'km/h': false};
+
+  String get windspeed => _windspeed;
+  Map<String, bool> get unitWindSpeed => _unitWindSpeed;
+
+  void updateWindSpeed(String w, Map unitW) {
+    _windspeed = w;
+    _unitWindSpeed = unitW.cast<String, bool>();
+    notifyListeners();
+  }
   
 }

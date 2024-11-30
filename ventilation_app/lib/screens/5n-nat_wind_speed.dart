@@ -6,6 +6,9 @@ import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/state_manager.dart';
 
 class NatWindSpeed extends StatelessWidget {
+  final GlobalKey<DimensionInputRowState> _windSpeedKey =
+      GlobalKey<DimensionInputRowState>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -81,11 +84,27 @@ class NatWindSpeed extends StatelessWidget {
                       myColor: Color.fromARGB(255, 152, 162, 179),
                       fontWeight: FontWeight.normal),
                   const SizedBox(height: 20.0),
-                  const DimensionInputRow(
-                      labelText: 'Wind Speed', dropdownItems: ['m/s', 'km/h']),
+                  DimensionInputRow(
+                      key: _windSpeedKey,
+                      labelText: 'Wind Speed',
+                      dropdownItems: ['m/s', 'km/h']),
                   const SizedBox(height: 50.0),
+
                   NextButton(
                     onPressed: () {
+                      final dataWindSpeed =
+                          _windSpeedKey.currentState?.dimensionData;
+
+                      if (dataWindSpeed != null) {
+                        calculationState.updateWindSpeed(
+                          dataWindSpeed['number'] ?? '0',
+                          createWindSpeedUnitMap(dataWindSpeed['unit']),
+                        );
+                      } else {
+                        print('One or more dimensions are missing.');
+                      }
+
+
                       Navigator.of(context).pushNamed('/nat_results_single');
                     },
                     text: 'See Results',

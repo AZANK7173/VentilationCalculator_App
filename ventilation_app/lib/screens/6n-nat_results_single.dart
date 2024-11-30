@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/state_manager.dart';
 
 class NatResultsSingle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+
+    final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
       title: 'Results Page - Natural Ventilation',
@@ -33,6 +37,11 @@ class NatResultsSingle extends StatelessWidget {
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
+                  const SizedBox(height: 20.0),
+                  Text("WIND NUM: ${calculationState.windspeed}",
+                      style: const TextStyle(fontSize: 24)),
+                  Text("WIND UNIT: ${calculationState.unitWindSpeed}",
+                      style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
                   _buildRichTextContent(
                       'The tool automatically calculates the ',
