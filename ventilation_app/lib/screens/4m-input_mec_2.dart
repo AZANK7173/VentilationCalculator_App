@@ -38,7 +38,7 @@ class InputMec2 extends StatelessWidget {
                   DimensionInputRow(
                       key: _dimensionVentRate,
                       labelText: '',
-                      dropdownItems: ['I/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
                   _buildManualCalcButton(context),
                   const SizedBox(height: 20.0),

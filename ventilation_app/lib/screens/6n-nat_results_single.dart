@@ -68,8 +68,8 @@ class NatResultsSingle extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildResult('Estimated Ventilation:', 0, 'I/s'),
-                  _buildResult('WHO recommendation:', 0, 'I/s'),
+                  _buildResult('Estimated Ventilation:', 0, 'l/s'),
+                  _buildResult('WHO recommendation:', 0, 'l/s'),
                   _buildResult('Possible Occupancy:', 0, 'people'),
                   const SizedBox(height: 10.0),
                   _buildAccomodatePeopleButton(context),
@@ -85,7 +85,7 @@ class NatResultsSingle extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   const DisplayVentilationInprovement(
                     labelText: '[Calculated Value]',
-                    dropdownItems: ['I/s', 'm³/s'],
+                    dropdownItems: ['l/s', 'm³/s'],
                   ),
                   const SizedBox(height: 30.0),
                   NextButton(

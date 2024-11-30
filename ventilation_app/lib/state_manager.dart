@@ -69,7 +69,7 @@ class CalculationState with ChangeNotifier {
   String _ventrate = '0';
 
   Map<String, bool> _unitVentRate = {
-    'I/s': false,
+    'l/s': false,
     'm³/s': false,
     'm³/h': false,
     'ACH': false,

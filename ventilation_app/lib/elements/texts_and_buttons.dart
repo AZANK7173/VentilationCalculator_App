@@ -128,7 +128,7 @@ Map<String, bool> createUnitMap(String? unit) {
 
 Map<String, bool> createVentRateUnitMap(String? unit) {
   return {
-    'I/s': unit == 'I/s',
+    'l/s': unit == 'l/s',
     'm³/s': unit == 'm³/s',
     'm³/h': unit == 'm³/h',
     'ACH': unit == 'ACH',
