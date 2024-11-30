@@ -64,4 +64,19 @@ class CalculationState with ChangeNotifier {
     _value2 = newValue2;
     notifyListeners(); // Notify all listeners about the change
   }
+
+  //4m-input_mec_2
+  String _ventrate = '0';
+
+  Map<String, bool> _unitVentRate = {'I/s': false, 'm³/s': false, 'm³/h': false, 'ACH': false, 'CFM': false};
+
+  String get ventrate => _ventrate;
+  Map<String, bool> get unitVentRate => _unitVentRate;
+
+  void updateVentRate(String w, Map unitW) {
+    _ventrate = w;
+    _unitVentRate = unitW.cast<String, bool>();
+    notifyListeners();
+  }
+
 }

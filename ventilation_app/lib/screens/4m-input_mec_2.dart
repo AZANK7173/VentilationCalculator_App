@@ -6,6 +6,9 @@ import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 import 'package:ventilation_app/state_manager.dart';
 
 class InputMec2 extends StatelessWidget {
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate =
+      GlobalKey<DimensionInputRowState>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -33,7 +36,8 @@ class InputMec2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildInstructionsContent(context),
-                  const DimensionInputRow(
+                  DimensionInputRow(
+                      key: _dimensionVentRate,
                       labelText: '',
                       dropdownItems: ['I/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
@@ -71,6 +75,15 @@ class InputMec2 extends StatelessWidget {
                   const SizedBox(height: 30.0),
                   NextButton(
                     onPressed: () {
+                      final dataVentRate =
+                          _dimensionVentRate.currentState?.dimensionData;
+
+                      if (dataVentRate != null) {
+                        calculationState.updateVentRate(
+                            dataVentRate['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate['unit']));
+                      }
+
                       Navigator.of(context).pushNamed('/mec_results');
                     },
                     text: 'See Results',

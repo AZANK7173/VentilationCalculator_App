@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/state_manager.dart';
 
 class MecResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    final calculationState = Provider.of<CalculationState>(context);
+
     return MaterialApp(
-      title: 'Results Page - Natural Ventilation',
+      title: 'Results Page - Mec Ventilation',
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
@@ -52,6 +56,12 @@ class MecResults extends StatelessWidget {
                       text: 'Actual ventilation estimate',
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
+                  const SizedBox(height: 20.0),
+                  Text("RATE NUM: ${calculationState.ventrate}",
+                      style: const TextStyle(fontSize: 24)),
+                  const SizedBox(height: 20.0),
+                  Text("RATE UNIT: ${calculationState.unitVentRate}",
+                      style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
                   _buildResult('Estimated Ventilation:', 0, 'I/s'),
                   _buildResult('WHO recommendation:', 0, 'I/s'),
