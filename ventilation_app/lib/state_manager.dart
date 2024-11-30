@@ -88,7 +88,9 @@ class CalculationState with ChangeNotifier {
   //4n-input_nat_2
   String _openingsnum = '0';
   double _openpercentage = 0;
+  bool _mosquitonet = false;
 
+  bool get mosquitonets => _mosquitonet;
   String get openingsnum => _openingsnum;
   double get openpercentage => _openpercentage;
 
@@ -99,6 +101,11 @@ class CalculationState with ChangeNotifier {
 
   void updateOpeningPercentage(double p) {
     _openpercentage = p;
+    notifyListeners();
+  }
+
+  void updateMosquitoNet(bool m) {
+    _mosquitonet = m;
     notifyListeners();
   }
 
@@ -120,4 +127,7 @@ class CalculationState with ChangeNotifier {
     _unitWindowWidth = unitW.cast<String, bool>();
     notifyListeners();
   }
+
+
+  
 }

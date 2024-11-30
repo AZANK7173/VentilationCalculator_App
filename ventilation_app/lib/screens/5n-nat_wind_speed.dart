@@ -59,6 +59,8 @@ class NatWindSpeed extends StatelessWidget {
                       style: const TextStyle(fontSize: 24)),
                   Text("HEIGHT NUM: ${calculationState.windowheight}",
                       style: const TextStyle(fontSize: 24)),
+                  Text("mosquito net: ${calculationState.mosquitonets}",
+                      style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
                   const TextEntry(
                       fontSize: 17.0,

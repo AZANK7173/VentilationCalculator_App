@@ -21,6 +21,8 @@ class InputNat2 extends StatelessWidget {
   final GlobalKey<DimensionInputRowState> _windowWidthKey =
       GlobalKey<DimensionInputRowState>();
 
+  final GlobalKey<SwitcherState> _mosquitoNetKey = GlobalKey<SwitcherState>();
+
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
@@ -96,6 +98,11 @@ class InputNat2 extends StatelessWidget {
 
                       final dataWindowHeight =
                           _windowHeightKey.currentState?.dimensionData;
+
+                      final mosquitoNet =
+                          _mosquitoNetKey.currentState?.isOn ?? false;
+                      
+                      calculationState.updateMosquitoNet(mosquitoNet);
 
                       if (dataWindowHeight != null && dataWindowWidth != null) {
                         calculationState.updateWindowDimensions(
@@ -259,6 +266,7 @@ class InputNat2 extends StatelessWidget {
             labelText: 'Height'),
         const SizedBox(height: 10.0),
         Switcher(
+          key: _mosquitoNetKey,
           switchText: 'Does it have a mosquito net?',
         ),
       ],

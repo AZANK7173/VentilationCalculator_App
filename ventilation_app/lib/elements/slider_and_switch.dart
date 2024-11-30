@@ -45,16 +45,16 @@ class Slider0To100State extends State<Slider0To100> {
   double get sliderValue => value;
 }
 
-// Switcher widget for screen
+// Switcher widget for screen 4n-input_nat_2.dart and 5n-nat_wind_speed.dart
 class Switcher extends StatefulWidget {
   final String switchText;
-  Switcher({required this.switchText});
+  Switcher({super.key, required this.switchText});
   @override
-  _SwitcherState createState() => _SwitcherState();
+  SwitcherState createState() => SwitcherState();
 }
 
-class _SwitcherState extends State<Switcher> {
-  bool _isSwitched = false;
+class SwitcherState extends State<Switcher> {
+  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +74,10 @@ class _SwitcherState extends State<Switcher> {
             ),
             const Spacer(), // Add this line
             Switch(
-              value: _isSwitched,
+              value: isSwitched,
               onChanged: (value) {
                 setState(() {
-                  _isSwitched = value;
+                  isSwitched = value;
                 });
               },
             ),
@@ -86,4 +86,5 @@ class _SwitcherState extends State<Switcher> {
       ],
     );
   }
+  bool get isOn => isSwitched;
 }
