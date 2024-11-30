@@ -87,11 +87,18 @@ class CalculationState with ChangeNotifier {
 
   //4n-input_nat_2
   String _openingsnum = '0';
+  double _openpercentage = 0;
 
   String get openingsnum => _openingsnum;
+  double get openpercentage => _openpercentage;
 
   void updateOpeningNum(String w) {
     _openingsnum = w;
+    notifyListeners();
+  }
+
+  void updateOpeningPercentage(double p) {
+    _openpercentage = p;
     notifyListeners();
   }
 }

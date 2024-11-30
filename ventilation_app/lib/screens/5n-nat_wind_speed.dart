@@ -49,6 +49,9 @@ class NatWindSpeed extends StatelessWidget {
                   Text("Openings: ${calculationState.openingsnum}",
                       style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
+                  Text("Opening percentage: ${calculationState.openpercentage}",
+                      style: const TextStyle(fontSize: 24)),
+                  const SizedBox(height: 20.0),
                   const TextEntry(
                       fontSize: 17.0,
                       text: 'Wind Speed',

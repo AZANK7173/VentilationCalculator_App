@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
+// Slider widget for screen 4n-input_nat_2.dart
 class Slider0To100 extends StatefulWidget {
   final String dragText;
 
-  Slider0To100({required this.dragText});
+  Slider0To100({super.key, required this.dragText});
 
   @override
-  _Slider0To100State createState() => _Slider0To100State();
+  Slider0To100State createState() => Slider0To100State();
 }
 
-class _Slider0To100State extends State<Slider0To100> {
-  double _value = 0;
+class Slider0To100State extends State<Slider0To100> {
+  double value = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,22 +27,25 @@ class _Slider0To100State extends State<Slider0To100> {
         ),
         Slider(
           activeColor: const Color.fromARGB(255, 67, 150, 199),
-          value: _value,
+          value: value,
           min: 0,
           max: 100,
           onChanged: (newValue) {
             setState(() {
-              _value = newValue;
+              value = newValue;
             });
           },
           divisions: 10,
-          label: '${_value.round()}%',
+          label: '${value.round()}%',
         ),
       ],
     );
   }
+
+  double get sliderValue => value;
 }
 
+// Switcher widget for screen
 class Switcher extends StatefulWidget {
   final String switchText;
   Switcher({required this.switchText});

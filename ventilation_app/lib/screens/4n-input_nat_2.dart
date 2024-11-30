@@ -12,6 +12,9 @@ class InputNat2 extends StatelessWidget {
   final GlobalKey<CustomInputWidgetState> _openingNumKey =
       GlobalKey<CustomInputWidgetState>();
 
+  final GlobalKey<Slider0To100State> _openingPercentage =
+      GlobalKey<Slider0To100State>();
+
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
@@ -75,6 +78,12 @@ class InputNat2 extends StatelessWidget {
                           _openingNumKey.currentState?.currettext ?? '0';
 
                       calculationState.updateOpeningNum(openingNum);
+
+                      final openingPercentage =
+                          _openingPercentage.currentState?.sliderValue ?? 0;
+
+                      calculationState
+                          .updateOpeningPercentage(openingPercentage);
 
                       Navigator.of(context).pushNamed('/nat_wind_speed');
                     },
@@ -205,7 +214,9 @@ class InputNat2 extends StatelessWidget {
             key: _openingNumKey,
             inputText: 'Number of openings with the same size: '),
         const SizedBox(height: 20.0),
-        Slider0To100(dragText: 'How much do you usually open it?'),
+        Slider0To100(
+            key: _openingPercentage,
+            dragText: 'How much do you usually open it?'),
         const SizedBox(height: 20.0),
         const TextEntry(
             myColor: Color.fromARGB(255, 102, 112, 133),
