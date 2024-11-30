@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
-import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 import 'package:ventilation_app/state_manager.dart';
 
 class InputMec2 extends StatelessWidget {
