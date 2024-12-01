@@ -48,6 +48,16 @@ double convertAirChangesPerHourToLitersPerSecond(
   return (airChangesPerHour * volume) / 3.6;
 }
 
+// convert °C to Kelvin
+double convertCelsiusToKelvin(double celsius) {
+  return celsius + 273.15;
+}
+
+// convert °F to Kelvin
+double convertFahrenheitToKelvin(double fahrenheit) {
+  return (fahrenheit - 32) * 5 / 9 + 273.15;
+}
+
 /// ROOM VALUES
 // Calculate the surface of a wall.
 double computeSurface(String? width, String? height) {
@@ -67,6 +77,37 @@ double computeVolume(String? width, String? height, String? length) {
 // NOTE, AT THE BEGINNING: CONVERT ALL VALUES FROM ROOM TO METRIC SYSTEM
 // THAT INCLUDES WINDSPEED, TEMPERATURE, HEIGHT, ETC.
 
+/// Opening calculations
+double calculateOpeningArea(double width, double height, int numberOfOpenings, double openingPercentage) {
+  return width * height * numberOfOpenings * openingPercentage / 100;
+}
+
+double convertToMeters(double value, Map<String, bool> unit) {
+  if (unit['meters'] == true) {
+    return value;
+  } else {
+    return convertInchesToMeters(value);
+  }
+}
+
+double convertToMetersPerSecond(double value, Map<String, bool> unit) {
+  if (unit['m/s'] == true) {
+    return value;
+  } else {
+    return convertKilometersPerHourToMetersPerSecond(value);
+  }
+}
+
+double convertTemperature(double value, Map<String, bool> unit) {
+  if (unit['°F'] == true) {
+    return convertFahrenheitToKelvin(value);
+  } else if (unit['°C'] == true) {
+    return convertCelsiusToKelvin(value);
+  } else {
+    return value; // Assuming the value is already in Kelvin
+  }
+}
+
 /// NATURAL VENTILATION
 
 /// 1 - ONE SIDED
@@ -74,26 +115,22 @@ double computeVolume(String? width, String? height, String? length) {
 double computeEstimatedVentilationSingleNat(
     double surface,
     double openingSurface,
-    String? temperatureIn,
-    String? height,
-    String? temperatureOut) {
-  double temperatureInValue = double.tryParse(temperatureIn ?? '') ?? 0;
-  double heightValue = double.tryParse(height ?? '') ?? 0;
-  double temperatureOutValue = double.tryParse(temperatureOut ?? '') ?? 0;
+    double temperatureIn,
+    double height,
+    double temperatureOut) {
 
-  double deltaT = (temperatureInValue - temperatureOutValue).abs();
+  double deltaT = (temperatureIn - temperatureOut).abs();
 
   return 0.25 *
       surface *
-      sqrt(9.81 * (heightValue * deltaT) / temperatureInValue) *
+      sqrt(9.81 * (height * deltaT) / temperatureIn) *
       1000;
 }
 
 /// 2 - TWO SIDED (CROSS VENTILATION)
 // Estimated Ventilation (surface in m^2, windspeed in m/s, result in l/s)
-double computeEstimatedVentilationCrossNat(double surface, String? windspeed) {
-  double windspeedValue = double.tryParse(windspeed ?? '') ?? 0;
-  return 0.65 * surface * windspeedValue * 1000;
+double computeEstimatedVentilationCrossNat(double surface, double windspeed) {
+  return 0.65 * surface * windspeed * 1000;
 }
 
 /// MECHANICAL VENTILATION

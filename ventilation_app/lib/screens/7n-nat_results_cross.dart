@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ventilation_app/elements/formulas.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/state_manager.dart';
+import 'dart:math';
 
 class NatResultsCross extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+
+    final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
       title: 'Results Page - Natural Ventilation Cross Sided',
@@ -52,7 +58,8 @@ class NatResultsCross extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildResult('Estimated Ventilation:', 0, 'l/s'),
+                  _buildResult('Estimated Ventilation:',
+                      ComputerVentilationCross(calculationState), 'l/s'),
                   _buildResult('WHO recommendation:', 0, 'l/s'),
                   _buildResult('Possible Occupancy:', 0, 'people'),
                   const SizedBox(height: 10.0),
@@ -88,7 +95,7 @@ class NatResultsCross extends StatelessWidget {
     );
   }
 
-  Widget _buildResult(String boldText, int number, String unit) {
+  Widget _buildResult(String boldText, double number, String unit) {
     return Row(
       children: [
         TextEntry(
@@ -167,4 +174,54 @@ Widget _buildAccomodatePeopleButton(BuildContext context) {
       ),
     ),
   );
+}
+
+double ComputerVentilationCross(CalculationState calculationState) {
+  double windspeed = convertToMetersPerSecond(
+      double.parse(calculationState.windspeed), calculationState.unitWindSpeed);
+
+  double windowheight = convertToMeters(
+      double.parse(calculationState.windowheight),
+      calculationState.unitWindowHeight);
+
+  double windowwidth = convertToMeters(
+      double.parse(calculationState.windowwidth),
+      calculationState.unitWindowWidth);
+
+  double windowheight2 = convertToMeters(
+      double.parse(calculationState.windowheight2),
+      calculationState.unitWindowHeight2);
+
+  double windowwidth2 = convertToMeters(
+      double.parse(calculationState.windowwidth2),
+      calculationState.unitWindowWidth2);
+
+  double windowheight3 = convertToMeters(
+      double.parse(calculationState.windowheight3),
+      calculationState.unitWindowHeight3);
+
+  double windowwidth3 = convertToMeters(
+      double.parse(calculationState.windowwidth3),
+      calculationState.unitWindowWidth3);
+
+  int openingsnum = int.parse(calculationState.openingsnum);
+  int openingsnum2 = int.parse(calculationState.openingsnum2);
+  int openingsnum3 = int.parse(calculationState.openingsnum3);
+
+  double openingpercent1 = calculationState.openpercentage;
+  double openingpercent2 = calculationState.openpercentage2;
+  double openingpercent3 = calculationState.openpercentage3;
+
+  double totalOpening1 = calculateOpeningArea(
+      windowwidth, windowheight, openingsnum, openingpercent1);
+
+  double totalOpening2 = calculateOpeningArea(
+      windowwidth2, windowheight2, openingsnum2, openingpercent2);
+
+  double totalOpening3 = calculateOpeningArea(
+      windowwidth3, windowheight3, openingsnum3, openingpercent3);
+
+  double minOpening = min(totalOpening1, min(totalOpening2, totalOpening3));
+
+  return 0.65 * windspeed * minOpening * 1000;
 }

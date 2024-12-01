@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ventilation_app/elements/formulas.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/state_manager.dart';
+import 'dart:math';
 
 class NatResultsSingle extends StatelessWidget {
   @override
@@ -183,4 +185,41 @@ class NatResultsSingle extends StatelessWidget {
       ),
     );
   }
+}
+
+double ComputerVentilationSingle(CalculationState calculationState) {
+  double windspeed = convertToMetersPerSecond(
+      double.parse(calculationState.windspeed), calculationState.unitWindSpeed);
+
+  double windowheight = convertToMeters(
+      double.parse(calculationState.windowheight),
+      calculationState.unitWindowHeight);
+
+  double windowwidth = convertToMeters(
+      double.parse(calculationState.windowwidth),
+      calculationState.unitWindowWidth);
+
+  double windowheight2 = convertToMeters(
+      double.parse(calculationState.windowheight2),
+      calculationState.unitWindowHeight2);
+
+  double windowwidth2 = convertToMeters(
+      double.parse(calculationState.windowwidth2),
+      calculationState.unitWindowWidth2);
+
+  int openingsnum = int.parse(calculationState.openingsnum);
+  int openingsnum2 = int.parse(calculationState.openingsnum2);
+
+  double openingpercent1 = calculationState.openpercentage;
+  double openingpercent2 = calculationState.openpercentage2;
+
+  double totalOpening1 = calculateOpeningArea(
+      windowwidth, windowheight, openingsnum, openingpercent1);
+
+  double totalOpening2 = calculateOpeningArea(
+      windowwidth2, windowheight2, openingsnum2, openingpercent2);
+
+  double minOpening = min(totalOpening1,totalOpening2);
+
+  return 0.65 * windspeed * minOpening * 1000;
 }

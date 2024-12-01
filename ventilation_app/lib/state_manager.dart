@@ -210,16 +210,35 @@ class CalculationState with ChangeNotifier {
   }
 
   //5n-nat_wind_speed
-
+  String _tempIn = '0';
+  String _tempout = '0';
   String _windspeed = '0';
   Map<String, bool> _unitWindSpeed = {'m/s': false, 'km/h': false};
+  Map<String, bool> _unitTempIn = {'C': false, 'F': false};
+  Map<String, bool> _unitTempOut = {'C': false, 'F': false};
 
+  String get tempIn => _tempIn;
+  String get tempout => _tempout;
   String get windspeed => _windspeed;
   Map<String, bool> get unitWindSpeed => _unitWindSpeed;
+  Map<String, bool> get unitTempIn => _unitTempIn;
+  Map<String, bool> get unitTempOut => _unitTempOut;
 
   void updateWindSpeed(String w, Map unitW) {
     _windspeed = w;
     _unitWindSpeed = unitW.cast<String, bool>();
+    notifyListeners();
+  }
+
+  void updateTempIn(String w, Map unitW) {
+    _tempIn = w;
+    _unitTempIn = unitW.cast<String, bool>();
+    notifyListeners();
+  }
+
+  void updateTempOut(String w, Map unitW) {
+    _tempout = w;
+    _unitTempOut = unitW.cast<String, bool>();
     notifyListeners();
   }
 
@@ -231,3 +250,5 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 }
+
+

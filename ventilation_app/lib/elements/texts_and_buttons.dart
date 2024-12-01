@@ -143,6 +143,12 @@ Map<String, bool> createWindSpeedUnitMap(String? unit) {
   };
 }
 
+Map<String, bool> createTempUnitMap(String? unit) {
+  return {
+    '°C': unit == '°C',
+    '°F': unit == '°F',
+  };
+}
 
 class NextButton extends StatelessWidget {
   final String text;
