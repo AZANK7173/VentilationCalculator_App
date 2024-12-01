@@ -8,6 +8,15 @@ class InputMec2 extends StatelessWidget {
   final GlobalKey<DimensionInputRowState> _dimensionVentRate =
       GlobalKey<DimensionInputRowState>();
 
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate2 =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate3 =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate4 =
+      GlobalKey<DimensionInputRowState>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -37,33 +46,26 @@ class InputMec2 extends StatelessWidget {
                   _buildInstructionsContent(context),
                   DimensionInputRow(
                       key: _dimensionVentRate,
-                      labelText: '',
+                      labelText: 'ventilator 1',
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
+                  const SizedBox(height: 20.0),
+                  DimensionInputRow(
+                      key: _dimensionVentRate2,
+                      labelText: 'ventilator 2',
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
+                  const SizedBox(height: 20.0),
+                  DimensionInputRow(
+                      key: _dimensionVentRate3,
+                      labelText: 'ventilator 3',
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
+                  const SizedBox(height: 20.0),
+                  DimensionInputRow(
+                      key: _dimensionVentRate4,
+                      labelText: 'ventilator 4',
                       dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
                   _buildManualCalcButton(context),
                   const SizedBox(height: 20.0),
-                  Text("VENT TYPE: ${calculationState.ventType}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("VENT TYPE: ${calculationState.settingOfInterest}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("LEN NUM: ${calculationState.lenght}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("HEI NUM: ${calculationState.height}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("WID NUM: ${calculationState.width}",
-                      style: const TextStyle(fontSize: 24)),
-                  Text("LEN UNIT: ${calculationState.unitLeght}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("HEI UNIT: ${calculationState.unitHeight}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("WID UNIT: ${calculationState.unitWidth}",
-                      style: const TextStyle(fontSize: 24)),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
                   const TextEntry(
@@ -76,11 +78,35 @@ class InputMec2 extends StatelessWidget {
                     onPressed: () {
                       final dataVentRate =
                           _dimensionVentRate.currentState?.dimensionData;
+                      final dataVentRate2 =
+                          _dimensionVentRate2.currentState?.dimensionData;
+                      final dataVentRate3 =
+                          _dimensionVentRate3.currentState?.dimensionData;
+                      final dataVentRate4 =
+                          _dimensionVentRate4.currentState?.dimensionData;
 
                       if (dataVentRate != null) {
                         calculationState.updateVentRate(
                             dataVentRate['number'] ?? '0',
                             createVentRateUnitMap(dataVentRate['unit']));
+                      }
+
+                      if (dataVentRate2 != null) {
+                        calculationState.updateVentRate2(
+                            dataVentRate2['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate2['unit']));
+                      }
+
+                      if (dataVentRate3 != null) {
+                        calculationState.updateVentRate3(
+                            dataVentRate3['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate3['unit']));
+                      }
+
+                      if (dataVentRate4 != null) {
+                        calculationState.updateVentRate4(
+                            dataVentRate4['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate4['unit']));
                       }
 
                       Navigator.of(context).pushNamed('/mec_results');

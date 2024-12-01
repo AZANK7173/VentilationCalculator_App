@@ -135,36 +135,20 @@ double computeEstimatedVentilationCrossNat(double surface, double windspeed) {
 /// MECHANICAL VENTILATION
 // Estimated Ventilation (vent rate in l/s, result in l/s)
 // Calculate the sum of all the mecanical ventilation rates
-double computeTotalVentilationMec(
-    Map<String, bool> flowUnits, Map<String, double> values, double volume) {
-  double totalVentilation = 0;
-
-  values.forEach((key, value) {
-    if (flowUnits[key] == true) {
-      switch (key) {
-        case 'l/s':
-          totalVentilation += value;
-          break;
-        case 'm³/s':
-          totalVentilation +=
-              convertCubicMetersPerSecondToLitersPerSecond(value);
-          break;
-        case 'm³/h':
-          totalVentilation += convertCubicMetersPerHourToLitersPerSecond(value);
-          break;
-        case 'cfm':
-          totalVentilation += convertCubicFeetPerMinuteToLitersPerSecond(value);
-          break;
-        case 'ACH':
-          totalVentilation +=
-              convertAirChangesPerHourToLitersPerSecond(value, volume);
-          break;
-        default:
-          break;
-      }
-    }
-  });
-  return totalVentilation;
+double convertFlowRate(double value, Map<String, bool> unit, double volume) {
+  if (unit['l/s'] == true) {
+    return value;
+  } else if (unit['m³/s'] == true) {
+    return convertCubicMetersPerSecondToLitersPerSecond(value);
+  } else if (unit['m³/h'] == true) {
+    return convertCubicMetersPerHourToLitersPerSecond(value);
+  } else if (unit['cfm'] == true) {
+    return convertCubicFeetPerMinuteToLitersPerSecond(value);
+  } else if (unit['ACH'] == true) {
+    return convertAirChangesPerHourToLitersPerSecond(value, volume);
+  } else {
+    return value; // Assuming the value is already in l/s
+  }
 }
 
 /// GENERAL OUTPUT FORMULAS

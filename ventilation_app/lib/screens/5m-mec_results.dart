@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ventilation_app/elements/formulas.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/state_manager.dart';
@@ -63,7 +64,8 @@ class MecResults extends StatelessWidget {
                   Text("RATE UNIT: ${calculationState.unitVentRate}",
                       style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
-                  _buildResult('Estimated Ventilation:', 0, 'l/s'),
+                  _buildResult('Estimated Ventilation:',
+                      computerVentilationMecanical(calculationState), 'l/s'),
                   _buildResult('WHO recommendation:', 0, 'l/s'),
                   _buildResult('Requirement:', 0, 'people'),
                   const SizedBox(height: 10.0),
@@ -99,7 +101,7 @@ class MecResults extends StatelessWidget {
     );
   }
 
-  Widget _buildResult(String boldText, int number, String unit) {
+  Widget _buildResult(String boldText, double number, String unit) {
     return Row(
       children: [
         TextEntry(
@@ -178,4 +180,33 @@ class MecResults extends StatelessWidget {
       ),
     );
   }
+}
+
+double computerVentilationMecanical(CalculationState calculationState) {
+  double roomheight = convertToMeters(
+      double.parse(calculationState.height), calculationState.unitHeight);
+  double roomwidth = convertToMeters(
+      double.parse(calculationState.width), calculationState.unitWidth);
+  double roomlength = convertToMeters(
+      double.parse(calculationState.lenght), calculationState.unitLeght);
+
+  double roomVolume = roomlength * roomwidth * roomheight;
+
+  double flow1 = convertFlowRate(double.parse(calculationState.ventrate),
+      calculationState.unitVentRate, roomVolume);
+
+  double flow2 = convertFlowRate(double.parse(calculationState.ventrate2),
+      calculationState.unitVentRate2, roomVolume);
+
+  double flow3 = convertFlowRate(double.parse(calculationState.ventrate3),
+      calculationState.unitVentRate3, roomVolume);
+
+  double flow4 = convertFlowRate(double.parse(calculationState.ventrate4),
+      calculationState.unitVentRate4, roomVolume);
+
+  List<double> flows =
+      [flow1, flow2, flow3, flow4].where((flow) => flow != 0).toList();
+  double totalFlow = flows.isNotEmpty ? flows.reduce((a, b) => a + b) : 0;
+
+  return totalFlow;
 }

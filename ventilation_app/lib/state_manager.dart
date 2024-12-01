@@ -67,6 +67,38 @@ class CalculationState with ChangeNotifier {
 
   //4m-input_mec_2
   String _ventrate = '0';
+  String _ventrate2 = '0';
+  String _ventrate3 = '0';
+  String _ventrate4 = '0';
+
+  String get ventrate => _ventrate;
+  String get ventrate2 => _ventrate2;
+  String get ventrate3 => _ventrate3;
+  String get ventrate4 => _ventrate4;
+
+  void updateVentRate(String w, Map unitW) {
+    _ventrate = w;
+    _unitVentRate = unitW.cast<String, bool>();
+    notifyListeners();
+  }
+
+  void updateVentRate2(String w, Map unitW) {
+    _ventrate2 = w;
+    _unitVentRate2 = unitW.cast<String, bool>();
+    notifyListeners();
+  }
+
+  void updateVentRate3(String w, Map unitW) {
+    _ventrate3 = w;
+    _unitVentRate3 = unitW.cast<String, bool>();
+    notifyListeners();
+  }
+
+  void updateVentRate4(String w, Map unitW) {
+    _ventrate4 = w;
+    _unitVentRate4 = unitW.cast<String, bool>();
+    notifyListeners();
+  }
 
   Map<String, bool> _unitVentRate = {
     'l/s': false,
@@ -76,14 +108,35 @@ class CalculationState with ChangeNotifier {
     'CFM': false
   };
 
-  String get ventrate => _ventrate;
-  Map<String, bool> get unitVentRate => _unitVentRate;
+  Map<String, bool> _unitVentRate2 = {
+    'l/s': false,
+    'm³/s': false,
+    'm³/h': false,
+    'ACH': false,
+    'CFM': false
+  };
 
-  void updateVentRate(String w, Map unitW) {
-    _ventrate = w;
-    _unitVentRate = unitW.cast<String, bool>();
-    notifyListeners();
-  }
+  Map<String, bool> _unitVentRate3 = {
+    'l/s': false,
+    'm³/s': false,
+    'm³/h': false,
+    'ACH': false,
+    'CFM': false
+  };
+
+  Map<String, bool> _unitVentRate4 = {
+    'l/s': false,
+    'm³/s': false,
+    'm³/h': false,
+    'ACH': false,
+    'CFM': false
+  };
+
+
+  Map<String, bool> get unitVentRate => _unitVentRate;
+  Map<String, bool> get unitVentRate2 => _unitVentRate2;
+  Map<String, bool> get unitVentRate3 => _unitVentRate3;
+  Map<String, bool> get unitVentRate4 => _unitVentRate4;
 
   //4n-input_nat_2 - first window type
   String _openingsnum = '0';
@@ -250,5 +303,3 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 }
-
-
