@@ -5,43 +5,24 @@ import 'package:ventilation_app/elements/slider_and_switch.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/state_manager.dart';
 
-class InputNat2 extends StatelessWidget {
+class InputNat3 extends StatelessWidget {
   // final String data;
-  // const InputNat2({Key key, this.data}) : super(key: key);
 
-  final GlobalKey<CustomInputWidgetState> _openingNumKey =
+  final GlobalKey<CustomInputWidgetState> _openingNumKey3 =
       GlobalKey<CustomInputWidgetState>();
 
-  final GlobalKey<Slider0To100State> _openingPercentage =
+  final GlobalKey<Slider0To100State> _openingPercentage3 =
       GlobalKey<Slider0To100State>();
 
-  final GlobalKey<DimensionInputRowState> _windowHeightKey =
+  final GlobalKey<DimensionInputRowState> _windowHeightKey3 =
       GlobalKey<DimensionInputRowState>();
 
-  final GlobalKey<DimensionInputRowState> _windowWidthKey =
+  final GlobalKey<DimensionInputRowState> _windowWidthKey3 =
       GlobalKey<DimensionInputRowState>();
-
-  final GlobalKey<SwitcherState> _mosquitoNetKey = GlobalKey<SwitcherState>();
-
-  final GlobalKey<CustomInputWidgetState> _openingNumKey2 =
-      GlobalKey<CustomInputWidgetState>();
-
-  final GlobalKey<Slider0To100State> _openingPercentage2 =
-      GlobalKey<Slider0To100State>();
-
-  final GlobalKey<DimensionInputRowState> _windowHeightKey2 =
-      GlobalKey<DimensionInputRowState>();
-
-  final GlobalKey<DimensionInputRowState> _windowWidthKey2 =
-      GlobalKey<DimensionInputRowState>();
-
-  final GlobalKey<SwitcherState> _mosquitoNetKey2 = GlobalKey<SwitcherState>();
 
   @override
   Widget build(BuildContext context) {
-    //final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    // final natValue = ModalRoute.of(context)?.settings.arguments as bool;
     final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
@@ -49,7 +30,7 @@ class InputNat2 extends StatelessWidget {
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
-            Navigator.of(context).pushNamed('/input_1');
+            Navigator.of(context).pushNamed('/input_nat_2');
           },
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
@@ -90,85 +71,41 @@ class InputNat2 extends StatelessWidget {
                       style: const TextStyle(fontSize: 24)),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildWindowInputWidget1Facade(),
-                  DividerWidget(screenWidth),
-                  const SizedBox(height: 20.0),
-                  _buildWindowInputWidget2Facade(),
+                  _buildWindowInputWidget3Facade(),
                   const SizedBox(height: 20.0),
                   NextButton(
                     onPressed: () {
-                      final openingNum =
-                          _openingNumKey.currentState?.currettext ?? '0';
+                      // COMPUTE THE SINGLE SIDE
+                      final openingNum3 =
+                          _openingNumKey3.currentState?.currettext ?? '0';
 
-                      calculationState.updateOpeningNum(openingNum);
+                      calculationState.updateOpeningNum3(openingNum3);
 
-                      final openingPercentage =
-                          _openingPercentage.currentState?.sliderValue ?? 0;
+                      final openingPercentage3 =
+                          _openingPercentage3.currentState?.sliderValue ?? 0;
 
                       calculationState
-                          .updateOpeningPercentage(openingPercentage);
+                          .updateOpeningPercentage3(openingPercentage3);
 
-                      final dataWindowWidth =
-                          _windowWidthKey.currentState?.dimensionData;
+                      final dataWindowWidth3 =
+                          _windowWidthKey3.currentState?.dimensionData;
 
-                      final dataWindowHeight =
-                          _windowHeightKey.currentState?.dimensionData;
+                      final dataWindowHeight3 =
+                          _windowHeightKey3.currentState?.dimensionData;
 
-                      final mosquitoNet =
-                          _mosquitoNetKey.currentState?.isOn ?? false;
-
-                      calculationState.updateMosquitoNet(mosquitoNet);
-
-                      if (dataWindowHeight != null && dataWindowWidth != null) {
-                        calculationState.updateWindowDimensions(
-                          dataWindowHeight['number'] ?? '0',
-                          dataWindowWidth['number'] ?? '0',
-                          createUnitMap(dataWindowHeight['unit']),
-                          createUnitMap(dataWindowWidth['unit']),
+                      if (dataWindowHeight3 != null &&
+                          dataWindowWidth3 != null) {
+                        calculationState.updateWindowDimensions3(
+                          dataWindowHeight3['number'] ?? '0',
+                          dataWindowWidth3['number'] ?? '0',
+                          createUnitMap(dataWindowHeight3['unit']),
+                          createUnitMap(dataWindowWidth3['unit']),
                         );
                       } else {
                         print('One or more dimensions are missing.');
                       }
 
-                      // COMPUTE THE CROSS SIDED
-                      
-                      final openingNum2 =
-                          _openingNumKey2.currentState?.currettext ?? '0';
-
-                      calculationState.updateOpeningNum2(openingNum2);
-
-                      final openingPercentage2 =
-                          _openingPercentage2.currentState?.sliderValue ?? 0;
-
-                      calculationState
-                          .updateOpeningPercentage2(openingPercentage2);
-
-                      final dataWindowWidth2 =
-                          _windowWidthKey2.currentState?.dimensionData;
-
-                      final dataWindowHeight2 =
-                          _windowHeightKey2.currentState?.dimensionData;
-
-                      final mosquitoNet2 =
-                          _mosquitoNetKey2.currentState?.isOn ?? false;
-
-                      calculationState.updateMosquitoNet2(mosquitoNet2);
-
-                      if (dataWindowHeight2 != null && dataWindowWidth2 != null) {
-                        calculationState.updateWindowDimensions2(
-                          dataWindowHeight2['number'] ?? '0',
-                          dataWindowWidth2['number'] ?? '0',
-                          createUnitMap(dataWindowHeight2['unit']),
-                          createUnitMap(dataWindowWidth2['unit']),
-                        );
-                      } else {
-                        print('One or more dimensions are missing.');
-                      }
-
-
-
-
-                      Navigator.of(context).pushNamed('/input_nat_3');
+                      Navigator.of(context).pushNamed('/nat_wind_speed');
                     },
                     text: 'Next',
                   ),
@@ -195,18 +132,17 @@ class InputNat2 extends StatelessWidget {
             myColor: Color.fromARGB(255, 255, 109, 29),
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
-            text: 'Opening Characteristics',
+            text: 'Opening Characteristics - Other Side',
           ),
           const SizedBox(height: 20.0),
           _buildRichTextContent(
-            'We are now referring to the ',
-            'facade toward the exterior. ',
-            'Note that several typologies of opening could be available on the same wall (i.e. two different types of window or one window and one door).',
+            'Now for the openings in the ',
+            'other side of the room. ',
+            'Usually, these are doors that lead to the inside of the room.',
           ),
           const SizedBox(height: 20.0),
           OpeningImage(
-              screenWidth: screenWidth,
-              filepath: 'assets/opening_natural_1.jpg'),
+              screenWidth: screenWidth, filepath: 'assets/other_wall.jpg'),
           const SizedBox(height: 20.0),
           _buildHyperLinkText('What does “typologies of opening “ mean? ',
               'Learn more', context),
@@ -282,23 +218,23 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildWindowInputWidget1Facade() {
+  Widget _buildWindowInputWidget3Facade() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const TextEntry(
           myColor: Color.fromARGB(255, 67, 150, 199),
-          text: 'Door/window number 1',
+          text: 'Door/window characteristics',
           fontSize: 17.0,
           fontWeight: FontWeight.bold,
         ),
         const SizedBox(height: 10.0),
         CustomInputWidget(
-            key: _openingNumKey,
+            key: _openingNumKey3,
             inputText: 'Number of openings with the same size: '),
         const SizedBox(height: 20.0),
         Slider0To100(
-            key: _openingPercentage,
+            key: _openingPercentage3,
             dragText: 'How much do you usually open it?'),
         const SizedBox(height: 20.0),
         const TextEntry(
@@ -308,91 +244,17 @@ class InputNat2 extends StatelessWidget {
             fontWeight: FontWeight.normal),
         const SizedBox(height: 20.0),
         DimensionInputRow(
-          key: _windowWidthKey,
+          key: _windowWidthKey3,
           labelText: 'Width',
           dropdownItems: ['meters', 'inches'],
         ),
         const SizedBox(height: 10.0),
         DimensionInputRow(
-            key: _windowHeightKey,
+            key: _windowHeightKey3,
             dropdownItems: ['meters', 'inches'],
             labelText: 'Height'),
         const SizedBox(height: 10.0),
-        Switcher(
-          key: _mosquitoNetKey,
-          switchText: 'Does it have a mosquito net?',
-        ),
       ],
-    );
-  }
-
-  Widget _buildWindowInputWidget2Facade() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const TextEntry(
-          myColor: Color.fromARGB(255, 67, 150, 199),
-          text: 'Door/window number 2 (i.e a door)',
-          fontSize: 17.0,
-          fontWeight: FontWeight.bold,
-        ),
-        const SizedBox(height: 10.0),
-        CustomInputWidget(
-            key: _openingNumKey2,
-            inputText: 'Number of openings with the same size: '),
-        const SizedBox(height: 20.0),
-        Slider0To100(
-            key: _openingPercentage2,
-            dragText: 'How much do you usually open it?'),
-        const SizedBox(height: 20.0),
-        const TextEntry(
-            myColor: Color.fromARGB(255, 102, 112, 133),
-            text: 'Enter dimensions',
-            fontSize: 15,
-            fontWeight: FontWeight.normal),
-        const SizedBox(height: 20.0),
-        DimensionInputRow(
-          key: _windowWidthKey2,
-          labelText: 'Width',
-          dropdownItems: ['meters', 'inches'],
-        ),
-        const SizedBox(height: 10.0),
-        DimensionInputRow(
-            key: _windowHeightKey2,
-            dropdownItems: ['meters', 'inches'],
-            labelText: 'Height'),
-        const SizedBox(height: 10.0),
-        Switcher(
-          key: _mosquitoNetKey2,
-          switchText: 'Does it have a mosquito net?',
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAddNewWindowButton(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          //TODO add new window
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          minimumSize: const Size(350, 55.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: const BorderSide(
-              color: Color.fromARGB(255, 45, 133, 185),
-            ),
-          ),
-        ),
-        child: const Text(
-          '+ Add new openning type',
-          style: TextStyle(
-            color: Color.fromARGB(255, 45, 133, 185),
-          ),
-        ),
-      ),
     );
   }
 }

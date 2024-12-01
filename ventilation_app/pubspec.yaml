@@ -75,6 +75,7 @@ flutter:
      - assets/typology/slide.jpg
      - assets/typology/tilt_and_turn.jpg
      - assets/typology/top_bottom.jpg
+     - assets/other_wall.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

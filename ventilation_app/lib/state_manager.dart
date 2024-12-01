@@ -85,7 +85,7 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 
-  //4n-input_nat_2 - single sided
+  //4n-input_nat_2 - first window type
   String _openingsnum = '0';
   double _openpercentage = 0;
   bool _mosquitonet = false;
@@ -128,8 +128,8 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 
-  // 4n-input_nat_2 - two sided
-  
+  // 4n-input_nat_2 - other type of window
+
   String _openingsnum2 = '0';
   double _openpercentage2 = 0;
   bool _mosquitonet2 = false;
@@ -169,6 +169,43 @@ class CalculationState with ChangeNotifier {
     _windowwidth2 = w;
     _unitWindowHeight2 = unitH.cast<String, bool>();
     _unitWindowWidth2 = unitW.cast<String, bool>();
+    notifyListeners();
+  }
+
+  // 4n-input_nat_3 - Other side of the room
+
+  String _openingsnum3 = '0';
+  double _openpercentage3 = 0;
+
+  String get openingsnum3 => _openingsnum3;
+  double get openpercentage3 => _openpercentage3;
+
+  void updateOpeningNum3(String w) {
+    _openingsnum3 = w;
+    notifyListeners();
+  }
+
+  void updateOpeningPercentage3(double p) {
+    _openpercentage3 = p;
+    notifyListeners();
+  }
+
+  String _windowheight3 = '0';
+  String _windowwidth3 = '0';
+
+  Map<String, bool> _unitWindowHeight3 = {'meters': false, 'inches': false};
+  Map<String, bool> _unitWindowWidth3 = {'meters': false, 'inches': false};
+
+  String get windowheight3 => _windowheight3;
+  String get windowwidth3 => _windowwidth3;
+  Map<String, bool> get unitWindowHeight3 => _unitWindowHeight3;
+  Map<String, bool> get unitWindowWidth3 => _unitWindowWidth3;
+
+  void updateWindowDimensions3(String h, String w, Map unitH, Map unitW) {
+    _windowheight3 = h;
+    _windowwidth3 = w;
+    _unitWindowHeight3 = unitH.cast<String, bool>();
+    _unitWindowWidth3 = unitW.cast<String, bool>();
     notifyListeners();
   }
 
