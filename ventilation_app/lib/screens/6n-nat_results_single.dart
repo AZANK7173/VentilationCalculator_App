@@ -70,7 +70,8 @@ class NatResultsSingle extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildResult('Estimated Ventilation:', 0, 'l/s'),
+                  _buildResult('Estimated Ventilation:',
+                      computerVentilationSingle(calculationState), 'l/s'),
                   _buildResult('WHO recommendation:', 0, 'l/s'),
                   _buildResult('Possible Occupancy:', 0, 'people'),
                   const SizedBox(height: 10.0),
@@ -106,7 +107,7 @@ class NatResultsSingle extends StatelessWidget {
     );
   }
 
-  Widget _buildResult(String boldText, int number, String unit) {
+  Widget _buildResult(String boldText, double number, String unit) {
     return Row(
       children: [
         TextEntry(
@@ -187,9 +188,11 @@ class NatResultsSingle extends StatelessWidget {
   }
 }
 
-double ComputerVentilationSingle(CalculationState calculationState) {
-  double windspeed = convertToMetersPerSecond(
-      double.parse(calculationState.windspeed), calculationState.unitWindSpeed);
+double computerVentilationSingle(CalculationState calculationState) {
+  double temperatureIn = convertTemperature(
+      double.parse(calculationState.tempIn), calculationState.unitTempIn);
+  double temperatureOut = convertTemperature(
+      double.parse(calculationState.tempout), calculationState.unitTempOut);
 
   double windowheight = convertToMeters(
       double.parse(calculationState.windowheight),
@@ -219,7 +222,15 @@ double ComputerVentilationSingle(CalculationState calculationState) {
   double totalOpening2 = calculateOpeningArea(
       windowwidth2, windowheight2, openingsnum2, openingpercent2);
 
-  double minOpening = min(totalOpening1,totalOpening2);
+  double minOpening = min(totalOpening1, totalOpening2);
 
-  return 0.65 * windspeed * minOpening * 1000;
+  double minOpeningHeight =
+      (minOpening == totalOpening1) ? windowheight : windowheight2;
+
+  return 0.25 *
+      minOpening *
+      sqrt(9.81 *
+          (minOpeningHeight * (temperatureOut - temperatureIn)) /
+          temperatureIn) *
+      1000;
 }

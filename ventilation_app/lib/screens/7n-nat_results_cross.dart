@@ -59,7 +59,7 @@ class NatResultsCross extends StatelessWidget {
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
                   _buildResult('Estimated Ventilation:',
-                      ComputerVentilationCross(calculationState), 'l/s'),
+                      computerVentilationCross(calculationState), 'l/s'),
                   _buildResult('WHO recommendation:', 0, 'l/s'),
                   _buildResult('Possible Occupancy:', 0, 'people'),
                   const SizedBox(height: 10.0),
@@ -176,7 +176,7 @@ Widget _buildAccomodatePeopleButton(BuildContext context) {
   );
 }
 
-double ComputerVentilationCross(CalculationState calculationState) {
+double computerVentilationCross(CalculationState calculationState) {
   double windspeed = convertToMetersPerSecond(
       double.parse(calculationState.windspeed), calculationState.unitWindSpeed);
 

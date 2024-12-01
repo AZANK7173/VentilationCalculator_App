@@ -113,7 +113,6 @@ double convertTemperature(double value, Map<String, bool> unit) {
 /// 1 - ONE SIDED
 // Estimated Ventilation for one sided (surface in m^2, windspeed in m/s, temperature in K, height in m, result in l/s)
 double computeEstimatedVentilationSingleNat(
-    double surface,
     double openingSurface,
     double temperatureIn,
     double height,
@@ -122,7 +121,7 @@ double computeEstimatedVentilationSingleNat(
   double deltaT = (temperatureIn - temperatureOut).abs();
 
   return 0.25 *
-      surface *
+      openingSurface *
       sqrt(9.81 * (height * deltaT) / temperatureIn) *
       1000;
 }
