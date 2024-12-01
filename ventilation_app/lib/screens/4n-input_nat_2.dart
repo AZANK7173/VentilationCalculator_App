@@ -23,6 +23,20 @@ class InputNat2 extends StatelessWidget {
 
   final GlobalKey<SwitcherState> _mosquitoNetKey = GlobalKey<SwitcherState>();
 
+  final GlobalKey<CustomInputWidgetState> _openingNumKey2 =
+      GlobalKey<CustomInputWidgetState>();
+
+  final GlobalKey<Slider0To100State> _openingPercentage2 =
+      GlobalKey<Slider0To100State>();
+
+  final GlobalKey<DimensionInputRowState> _windowHeightKey2 =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _windowWidthKey2 =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<SwitcherState> _mosquitoNetKey2 = GlobalKey<SwitcherState>();
+
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
@@ -76,9 +90,10 @@ class InputNat2 extends StatelessWidget {
                       style: const TextStyle(fontSize: 24)),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildWindowInputWidget(),
+                  _buildWindowInputWidget1Facade(),
+                  DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildAddNewWindowButton(context),
+                  _buildWindowInputWidget2Facade(),
                   const SizedBox(height: 20.0),
                   NextButton(
                     onPressed: () {
@@ -101,7 +116,7 @@ class InputNat2 extends StatelessWidget {
 
                       final mosquitoNet =
                           _mosquitoNetKey.currentState?.isOn ?? false;
-                      
+
                       calculationState.updateMosquitoNet(mosquitoNet);
 
                       if (dataWindowHeight != null && dataWindowWidth != null) {
@@ -114,6 +129,43 @@ class InputNat2 extends StatelessWidget {
                       } else {
                         print('One or more dimensions are missing.');
                       }
+
+                      // COMPUTE THE CROSS SIDED
+                      final openingNum2 =
+                          _openingNumKey2.currentState?.currettext ?? '0';
+
+                      calculationState.updateOpeningNum2(openingNum2);
+
+                      final openingPercentage2 =
+                          _openingPercentage2.currentState?.sliderValue ?? 0;
+
+                      calculationState
+                          .updateOpeningPercentage2(openingPercentage2);
+
+                      final dataWindowWidth2 =
+                          _windowWidthKey2.currentState?.dimensionData;
+
+                      final dataWindowHeight2 =
+                          _windowHeightKey2.currentState?.dimensionData;
+
+                      final mosquitoNet2 =
+                          _mosquitoNetKey2.currentState?.isOn ?? false;
+
+                      calculationState.updateMosquitoNet2(mosquitoNet2);
+
+                      if (dataWindowHeight2 != null && dataWindowWidth2 != null) {
+                        calculationState.updateWindowDimensions2(
+                          dataWindowHeight2['number'] ?? '0',
+                          dataWindowWidth2['number'] ?? '0',
+                          createUnitMap(dataWindowHeight2['unit']),
+                          createUnitMap(dataWindowWidth2['unit']),
+                        );
+                      } else {
+                        print('One or more dimensions are missing.');
+                      }
+
+
+
 
                       Navigator.of(context).pushNamed('/nat_wind_speed');
                     },
@@ -229,7 +281,7 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildWindowInputWidget() {
+  Widget _buildWindowInputWidget1Facade() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -267,6 +319,50 @@ class InputNat2 extends StatelessWidget {
         const SizedBox(height: 10.0),
         Switcher(
           key: _mosquitoNetKey,
+          switchText: 'Does it have a mosquito net?',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWindowInputWidget2Facade() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const TextEntry(
+          myColor: Color.fromARGB(255, 67, 150, 199),
+          text: 'Door/window number 2 (i.e a door)',
+          fontSize: 17.0,
+          fontWeight: FontWeight.bold,
+        ),
+        const SizedBox(height: 10.0),
+        CustomInputWidget(
+            key: _openingNumKey2,
+            inputText: 'Number of openings with the same size: '),
+        const SizedBox(height: 20.0),
+        Slider0To100(
+            key: _openingPercentage2,
+            dragText: 'How much do you usually open it?'),
+        const SizedBox(height: 20.0),
+        const TextEntry(
+            myColor: Color.fromARGB(255, 102, 112, 133),
+            text: 'Enter dimensions',
+            fontSize: 15,
+            fontWeight: FontWeight.normal),
+        const SizedBox(height: 20.0),
+        DimensionInputRow(
+          key: _windowWidthKey2,
+          labelText: 'Width',
+          dropdownItems: ['meters', 'inches'],
+        ),
+        const SizedBox(height: 10.0),
+        DimensionInputRow(
+            key: _windowHeightKey2,
+            dropdownItems: ['meters', 'inches'],
+            labelText: 'Height'),
+        const SizedBox(height: 10.0),
+        Switcher(
+          key: _mosquitoNetKey2,
           switchText: 'Does it have a mosquito net?',
         ),
       ],
