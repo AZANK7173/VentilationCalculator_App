@@ -163,6 +163,16 @@ Map<String, bool> createTempUnitMap(String? unit) {
   };
 }
 
+String getSelectedSetting(Map<String, bool> settings) {
+  // Find the first key with a value of true, or default to null
+  return settings.entries
+      .firstWhere(
+        (entry) => entry.value == true,
+        orElse: () => MapEntry("No setting selected", false),
+      )
+      .key;
+}
+
 class NextButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;

@@ -101,7 +101,7 @@ class CalculationState with ChangeNotifier {
   }
 
   Map<String, bool> _unitVentRate = {
-    'l/s': false,
+    'l/s': true,
     'm³/s': false,
     'm³/h': false,
     'ACH': false,
@@ -109,7 +109,7 @@ class CalculationState with ChangeNotifier {
   };
 
   Map<String, bool> _unitVentRate2 = {
-    'l/s': false,
+    'l/s': true,
     'm³/s': false,
     'm³/h': false,
     'ACH': false,
@@ -117,7 +117,7 @@ class CalculationState with ChangeNotifier {
   };
 
   Map<String, bool> _unitVentRate3 = {
-    'l/s': false,
+    'l/s': true,
     'm³/s': false,
     'm³/h': false,
     'ACH': false,
@@ -125,7 +125,7 @@ class CalculationState with ChangeNotifier {
   };
 
   Map<String, bool> _unitVentRate4 = {
-    'l/s': false,
+    'l/s': true,
     'm³/s': false,
     'm³/h': false,
     'ACH': false,

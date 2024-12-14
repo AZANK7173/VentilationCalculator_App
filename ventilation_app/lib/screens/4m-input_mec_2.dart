@@ -47,21 +47,33 @@ class InputMec2 extends StatelessWidget {
                   DimensionInputRow(
                       key: _dimensionVentRate,
                       labelText: 'ventilator 1',
+                      initialNumber: calculationState.ventrate,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate),
                       dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
                   DimensionInputRow(
                       key: _dimensionVentRate2,
+                      initialNumber: calculationState.ventrate2,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate2),
                       labelText: 'ventilator 2',
                       dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
                   DimensionInputRow(
                       key: _dimensionVentRate3,
                       labelText: 'ventilator 3',
+                      initialNumber: calculationState.ventrate3,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate3),
                       dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
                   DimensionInputRow(
                       key: _dimensionVentRate4,
                       labelText: 'ventilator 4',
+                      initialNumber: calculationState.ventrate4,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate4),
                       dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),

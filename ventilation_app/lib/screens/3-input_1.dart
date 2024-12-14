@@ -181,16 +181,6 @@ class Input1 extends StatelessWidget {
     );
   }
 
-  String getSelectedSetting(Map<String, bool> settings) {
-    // Find the first key with a value of true, or default to null
-    return settings.entries
-        .firstWhere(
-          (entry) => entry.value == true,
-          orElse: () => MapEntry("No setting selected", false),
-        )
-        .key;
-  }
-
   Widget _buildGreetingRow(double screenHeight) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
