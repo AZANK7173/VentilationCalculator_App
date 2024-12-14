@@ -66,7 +66,7 @@ class InputNat2 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildInstructionsContent(context),
+                  _buildInstructionsContent(context, calculationState),
                   const SizedBox(height: 20.0),
                   Text("INTEREST: ${calculationState.settingOfInterest}",
                       style: const TextStyle(fontSize: 24)),
@@ -190,7 +190,8 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildInstructionsContent(BuildContext context) {
+  Widget _buildInstructionsContent(
+      BuildContext context, CalculationState calculationState) {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Padding(
@@ -214,6 +215,7 @@ class InputNat2 extends StatelessWidget {
           const SizedBox(height: 20.0),
           Switcher(
             key: _crossKey,
+            initialValue: calculationState.sideofroom,
             switchText:
                 'Are there openings available in \n other side of the room?',
           ),
@@ -315,6 +317,7 @@ class InputNat2 extends StatelessWidget {
         const SizedBox(height: 20.0),
         Slider0To100(
             key: _openingPercentage,
+            initialValue: calculationState.openpercentage,
             dragText: 'How much do you usually open it?'),
         const SizedBox(height: 20.0),
         const TextEntry(
@@ -325,17 +328,24 @@ class InputNat2 extends StatelessWidget {
         const SizedBox(height: 20.0),
         DimensionInputRow(
           key: _windowWidthKey,
+          initialNumber: calculationState.windowwidth,
+          initialDropdownValue:
+              getSelectedSetting(calculationState.unitWindowWidth),
           labelText: 'Width',
           dropdownItems: ['meters', 'inches'],
         ),
         const SizedBox(height: 10.0),
         DimensionInputRow(
             key: _windowHeightKey,
+            initialNumber: calculationState.windowheight,
+            initialDropdownValue:
+                getSelectedSetting(calculationState.unitWindowHeight),
             dropdownItems: ['meters', 'inches'],
             labelText: 'Height'),
         const SizedBox(height: 10.0),
         Switcher(
           key: _mosquitoNetKey,
+          initialValue: calculationState.mosquitonets,
           switchText: 'Does it have a mosquito net?',
         ),
       ],
@@ -361,6 +371,7 @@ class InputNat2 extends StatelessWidget {
         const SizedBox(height: 20.0),
         Slider0To100(
             key: _openingPercentage2,
+            initialValue: calculationState.openpercentage2,
             dragText: 'How much do you usually open it?'),
         const SizedBox(height: 20.0),
         const TextEntry(
@@ -371,17 +382,24 @@ class InputNat2 extends StatelessWidget {
         const SizedBox(height: 20.0),
         DimensionInputRow(
           key: _windowWidthKey2,
+          initialNumber: calculationState.windowwidth2,
+          initialDropdownValue:
+              getSelectedSetting(calculationState.unitWindowWidth2),
           labelText: 'Width',
           dropdownItems: ['meters', 'inches'],
         ),
         const SizedBox(height: 10.0),
         DimensionInputRow(
             key: _windowHeightKey2,
+            initialNumber: calculationState.windowheight2,
+            initialDropdownValue:
+                getSelectedSetting(calculationState.unitWindowHeight2),
             dropdownItems: ['meters', 'inches'],
             labelText: 'Height'),
         const SizedBox(height: 10.0),
         Switcher(
           key: _mosquitoNetKey2,
+          initialValue: calculationState.mosquitonets2,
           switchText: 'Does it have a mosquito net?',
         ),
       ],

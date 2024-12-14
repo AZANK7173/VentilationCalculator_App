@@ -164,8 +164,8 @@ class CalculationState with ChangeNotifier {
   String _windowheight = '0';
   String _windowwidth = '0';
 
-  Map<String, bool> _unitWindowHeight = {'meters': false, 'inches': false};
-  Map<String, bool> _unitWindowWidth = {'meters': false, 'inches': false};
+  Map<String, bool> _unitWindowHeight = {'meters': true, 'inches': false};
+  Map<String, bool> _unitWindowWidth = {'meters': true, 'inches': false};
 
   String get windowheight => _windowheight;
   String get windowwidth => _windowwidth;
@@ -208,8 +208,8 @@ class CalculationState with ChangeNotifier {
   String _windowheight2 = '0';
   String _windowwidth2 = '0';
 
-  Map<String, bool> _unitWindowHeight2 = {'meters': false, 'inches': false};
-  Map<String, bool> _unitWindowWidth2 = {'meters': false, 'inches': false};
+  Map<String, bool> _unitWindowHeight2 = {'meters': true, 'inches': false};
+  Map<String, bool> _unitWindowWidth2 = {'meters': true, 'inches': false};
 
   String get windowheight2 => _windowheight2;
   String get windowwidth2 => _windowwidth2;
@@ -294,6 +294,7 @@ class CalculationState with ChangeNotifier {
     notifyListeners();
   }
 
+  //bool that defines if single or cross ventilation
   bool _sideofroom = false;
   bool get sideofroom => _sideofroom;
 
