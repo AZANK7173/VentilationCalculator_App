@@ -15,3 +15,10 @@ After that, you access the folder `ventilation_app` and run the application:
 ``` 
 flutter run
 ```
+
+## TODOS hackathon
+
+- Adicionar os dados de ventilação recomendado pela ONU
+- Decidir como colocar as informações de ventilação
+- Garantir tipo de entrada
+- Fazer com que os dados continuam sendo informados mesmo quando volta a tela
