@@ -90,16 +90,25 @@ class Input1 extends StatelessWidget {
                   const SizedBox(height: 15.0),
                   DimensionInputRow(
                       key: _dimensionLengthKey,
+                      initialNumber: calculationState.lenght,
                       labelText: 'Length',
+                      initialDropdownValue: getSelectedSetting(
+                          calculationState.unitLeght), // New attribute
                       dropdownItems: ['meters', 'inches']),
                   const SizedBox(height: 10.0),
                   DimensionInputRow(
                       key: _dimensionHeightKey,
+                      initialNumber: calculationState.height,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitHeight),
                       labelText: 'Height',
                       dropdownItems: ['meters', 'inches']),
                   const SizedBox(height: 10.0),
                   DimensionInputRow(
                       key: _dimensionWidthKey,
+                      initialNumber: calculationState.width,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitWidth),
                       labelText: 'Width',
                       dropdownItems: ['meters', 'inches']),
                   const SizedBox(height: 20.0),
@@ -110,7 +119,10 @@ class Input1 extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: 10.0),
-                  MecOrNatToggleButtons(key: _toggleButtonKey),
+                  MecOrNatToggleButtons(
+                    key: _toggleButtonKey,
+                    initialNat: calculationState.ventType['nat'] ?? false,
+                  ),
                   const SizedBox(height: 20.0),
                   NextButton(
                     text: 'Next',

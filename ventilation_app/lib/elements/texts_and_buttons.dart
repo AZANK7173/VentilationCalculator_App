@@ -46,12 +46,16 @@ class DividerWidget extends StatelessWidget {
 class DimensionInputRow extends StatefulWidget {
   final String labelText;
   final List<String> dropdownItems;
+  final String? initialNumber; // New field for initial number
+  final String? initialDropdownValue; // New field for initial dropdown value
   final Function(String?, String?)? onChanged; // Callback for the parent
 
   const DimensionInputRow({
     super.key,
     required this.labelText,
     required this.dropdownItems,
+    this.initialNumber, // Initialize the number
+    this.initialDropdownValue, // Initialize the dropdown value
     this.onChanged,
   });
 
@@ -62,6 +66,14 @@ class DimensionInputRow extends StatefulWidget {
 class DimensionInputRowState extends State<DimensionInputRow> {
   String? selectedDimensionValue;
   String? enteredNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set initial values from the widget's properties
+    selectedDimensionValue = widget.initialDropdownValue;
+    enteredNumber = widget.initialNumber;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +88,7 @@ class DimensionInputRowState extends State<DimensionInputRow> {
               labelText: widget.labelText,
             ),
             keyboardType: TextInputType.number,
+            controller: TextEditingController(text: enteredNumber),
             onChanged: (value) {
               setState(() {
                 enteredNumber = value;

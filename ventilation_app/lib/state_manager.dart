@@ -11,13 +11,13 @@ class CalculationState with ChangeNotifier {
   String _height = '0';
   String _width = '0';
 
-  Map<String, bool> _unitLeght = {'meters': false, 'inches': false};
+  Map<String, bool> _unitLeght = {'meters': true, 'inches': false};
 
-  Map<String, bool> _unitHeight = {'meters': false, 'inches': false};
+  Map<String, bool> _unitHeight = {'meters': true, 'inches': false};
 
-  Map<String, bool> _unitWidth = {'meters': false, 'inches': false};
+  Map<String, bool> _unitWidth = {'meters': true, 'inches': false};
 
-  Map<String, bool> _ventType = {'nat': false, 'mec': false};
+  Map<String, bool> _ventType = {'nat': true, 'mec': false};
 
   Map<String, bool> get settingOfInterest => _settingOfInterest;
   String get lenght => _lenght;
