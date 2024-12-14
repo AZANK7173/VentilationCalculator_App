@@ -66,11 +66,17 @@ class NatTemperature extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   DimensionInputRow(
                       key: _insideTempKey,
+                      initialNumber: calculationState.tempIn,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitTempIn),
                       labelText: 'Inside Temp',
                       dropdownItems: ['°C', '°F']),
                   const SizedBox(height: 20.0),
                   DimensionInputRow(
                       key: _outsideTempKey,
+                      initialNumber: calculationState.tempout,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitTempOut),
                       labelText: 'Outside Temp',
                       dropdownItems: ['°C', '°F']),
                   const SizedBox(height: 50.0),

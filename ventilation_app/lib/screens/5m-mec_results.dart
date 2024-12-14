@@ -59,12 +59,6 @@ class MecResults extends StatelessWidget {
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 20.0),
-                  Text("RATE NUM: ${calculationState.ventrate}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("RATE UNIT: ${calculationState.unitVentRate}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
                   _buildResult('Estimated Ventilation:',
                       computerVentilationMecanical(calculationState), 'l/s'),
                   ...[

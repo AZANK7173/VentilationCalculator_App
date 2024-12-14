@@ -8,12 +8,6 @@ class NatWindSpeed extends StatelessWidget {
   final GlobalKey<DimensionInputRowState> _windSpeedKey =
       GlobalKey<DimensionInputRowState>();
 
-  final GlobalKey<DimensionInputRowState> _insideTempKey =
-      GlobalKey<DimensionInputRowState>();
-
-  final GlobalKey<DimensionInputRowState> _outsideTempKey =
-      GlobalKey<DimensionInputRowState>();
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -68,35 +62,14 @@ class NatWindSpeed extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   DimensionInputRow(
                       key: _windSpeedKey,
+                      initialNumber: calculationState.windspeed,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitWindSpeed),
                       labelText: 'Wind Speed',
                       dropdownItems: ['m/s', 'km/h']),
                   const SizedBox(height: 50.0),
                   NextButton(
                     onPressed: () {
-                      final dataInsideTemp =
-                          _insideTempKey.currentState?.dimensionData;
-
-                      if (dataInsideTemp != null) {
-                        calculationState.updateTempIn(
-                          dataInsideTemp['number'] ?? '0',
-                          createTempUnitMap(dataInsideTemp['unit']),
-                        );
-                      } else {
-                        print('One or more dimensions are missing.');
-                      }
-
-                      final dataOutsideTemp =
-                          _outsideTempKey.currentState?.dimensionData;
-
-                      if (dataOutsideTemp != null) {
-                        calculationState.updateTempOut(
-                          dataOutsideTemp['number'] ?? '0',
-                          createTempUnitMap(dataOutsideTemp['unit']),
-                        );
-                      } else {
-                        print('One or more dimensions are missing.');
-                      }
-
                       final dataWindSpeed =
                           _windSpeedKey.currentState?.dimensionData;
 

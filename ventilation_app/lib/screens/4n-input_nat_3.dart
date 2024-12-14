@@ -47,31 +47,7 @@ class InputNat3 extends StatelessWidget {
                 children: [
                   _buildInstructionsContent(context),
                   const SizedBox(height: 20.0),
-                  Text("VENT TYPE: ${calculationState.ventType}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("VENT TYPE: ${calculationState.settingOfInterest}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("LEN NUM: ${calculationState.lenght}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("HEI NUM: ${calculationState.height}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("WID NUM: ${calculationState.width}",
-                      style: const TextStyle(fontSize: 24)),
-                  Text("LEN UNIT: ${calculationState.unitLeght}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("HEI UNIT: ${calculationState.unitHeight}",
-                      style: const TextStyle(fontSize: 24)),
-                  const SizedBox(height: 20.0),
-                  Text("WID UNIT: ${calculationState.unitWidth}",
-                      style: const TextStyle(fontSize: 24)),
-                  DividerWidget(screenWidth),
-                  const SizedBox(height: 20.0),
-                  _buildWindowInputWidget3Facade(),
+                  _buildWindowInputWidget3Facade(calculationState),
                   const SizedBox(height: 20.0),
                   NextButton(
                     onPressed: () {
@@ -218,7 +194,7 @@ class InputNat3 extends StatelessWidget {
     );
   }
 
-  Widget _buildWindowInputWidget3Facade() {
+  Widget _buildWindowInputWidget3Facade(CalculationState calculationState) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -231,10 +207,12 @@ class InputNat3 extends StatelessWidget {
         const SizedBox(height: 10.0),
         CustomInputWidget(
             key: _openingNumKey3,
+            initialValue: calculationState.openingsnum3,
             inputText: 'Number of openings with the same size: '),
         const SizedBox(height: 20.0),
         Slider0To100(
             key: _openingPercentage3,
+            initialValue: calculationState.openpercentage3,
             dragText: 'How much do you usually open it?'),
         const SizedBox(height: 20.0),
         const TextEntry(
@@ -245,12 +223,18 @@ class InputNat3 extends StatelessWidget {
         const SizedBox(height: 20.0),
         DimensionInputRow(
           key: _windowWidthKey3,
+          initialNumber: calculationState.windowwidth3,
+          initialDropdownValue:
+              getSelectedSetting(calculationState.unitWindowWidth3),
           labelText: 'Width',
           dropdownItems: ['meters', 'inches'],
         ),
         const SizedBox(height: 10.0),
         DimensionInputRow(
             key: _windowHeightKey3,
+            initialNumber: calculationState.windowheight3,
+            initialDropdownValue:
+                getSelectedSetting(calculationState.unitWindowHeight3),
             dropdownItems: ['meters', 'inches'],
             labelText: 'Height'),
         const SizedBox(height: 10.0),

@@ -245,8 +245,8 @@ class CalculationState with ChangeNotifier {
   String _windowheight3 = '0';
   String _windowwidth3 = '0';
 
-  Map<String, bool> _unitWindowHeight3 = {'meters': false, 'inches': false};
-  Map<String, bool> _unitWindowWidth3 = {'meters': false, 'inches': false};
+  Map<String, bool> _unitWindowHeight3 = {'meters': true, 'inches': false};
+  Map<String, bool> _unitWindowWidth3 = {'meters': true, 'inches': false};
 
   String get windowheight3 => _windowheight3;
   String get windowwidth3 => _windowwidth3;
@@ -265,9 +265,9 @@ class CalculationState with ChangeNotifier {
   String _tempIn = '0';
   String _tempout = '0';
   String _windspeed = '0';
-  Map<String, bool> _unitWindSpeed = {'m/s': false, 'km/h': false};
-  Map<String, bool> _unitTempIn = {'C': false, 'F': false};
-  Map<String, bool> _unitTempOut = {'C': false, 'F': false};
+  Map<String, bool> _unitWindSpeed = {'m/s': true, 'km/h': false};
+  Map<String, bool> _unitTempIn = {'°C': true, '°F': false};
+  Map<String, bool> _unitTempOut = {'°C': true, '°F': false};
 
   String get tempIn => _tempIn;
   String get tempout => _tempout;
