@@ -77,7 +77,7 @@ class InputNat3 extends StatelessWidget {
                     onPressed: () {
                       // COMPUTE THE SINGLE SIDE
                       final openingNum3 =
-                          _openingNumKey3.currentState?.currettext ?? '0';
+                          _openingNumKey3.currentState?.currentText ?? '0';
 
                       calculationState.updateOpeningNum3(openingNum3);
 

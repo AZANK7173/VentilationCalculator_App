@@ -248,11 +248,13 @@ class OpeningImage extends StatelessWidget {
 
 class CustomInputWidget extends StatefulWidget {
   final String inputText;
+  final String? initialValue; // New attribute for initial value
   final Function(String)? onTextChanged; // Callback for text input change
 
   const CustomInputWidget({
     super.key,
     required this.inputText,
+    this.initialValue,
     this.onTextChanged,
   });
 
@@ -261,7 +263,21 @@ class CustomInputWidget extends StatefulWidget {
 }
 
 class CustomInputWidgetState extends State<CustomInputWidget> {
-  String? enteredText;
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the controller with the initial value, if provided
+    _controller = TextEditingController(text: widget.initialValue);
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is removed
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -279,8 +295,12 @@ class CustomInputWidgetState extends State<CustomInputWidget> {
           width: 60,
           height: 30,
           child: TextField(
+            controller: _controller, // Attach the controller
             style: const TextStyle(
-                fontSize: 12.0, height: 2.0, color: Colors.black),
+              fontSize: 12.0,
+              height: 2.0,
+              color: Colors.black,
+            ),
             textAlign: TextAlign.center,
             decoration: const InputDecoration(
               border: OutlineInputBorder(
@@ -295,9 +315,6 @@ class CustomInputWidgetState extends State<CustomInputWidget> {
             ),
             keyboardType: TextInputType.number,
             onChanged: (value) {
-              setState(() {
-                enteredText = value;
-              });
               if (widget.onTextChanged != null) {
                 widget.onTextChanged!(value);
               }
@@ -307,5 +324,6 @@ class CustomInputWidgetState extends State<CustomInputWidget> {
       ],
     );
   }
-  String? get currettext => enteredText;
+
+  String? get currentText => _controller.text;
 }

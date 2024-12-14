@@ -92,15 +92,15 @@ class InputNat2 extends StatelessWidget {
                       style: const TextStyle(fontSize: 24)),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildWindowInputWidget1Facade(),
+                  _buildWindowInputWidget1Facade(context, calculationState),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  _buildWindowInputWidget2Facade(),
+                  _buildWindowInputWidget2Facade(context, calculationState),
                   const SizedBox(height: 20.0),
                   NextButton(
                     onPressed: () {
                       final openingNum =
-                          _openingNumKey.currentState?.currettext ?? '0';
+                          _openingNumKey.currentState?.currentText ?? '0';
 
                       calculationState.updateOpeningNum(openingNum);
 
@@ -135,7 +135,7 @@ class InputNat2 extends StatelessWidget {
                       // COMPUTE OTHER TYPE OF OPENING
 
                       final openingNum2 =
-                          _openingNumKey2.currentState?.currettext ?? '0';
+                          _openingNumKey2.currentState?.currentText ?? '0';
 
                       calculationState.updateOpeningNum2(openingNum2);
 
@@ -296,7 +296,8 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildWindowInputWidget1Facade() {
+  Widget _buildWindowInputWidget1Facade(
+      BuildContext context, CalculationState calculationState) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -309,6 +310,7 @@ class InputNat2 extends StatelessWidget {
         const SizedBox(height: 10.0),
         CustomInputWidget(
             key: _openingNumKey,
+            initialValue: calculationState.openingsnum,
             inputText: 'Number of openings with the same size: '),
         const SizedBox(height: 20.0),
         Slider0To100(
@@ -340,7 +342,8 @@ class InputNat2 extends StatelessWidget {
     );
   }
 
-  Widget _buildWindowInputWidget2Facade() {
+  Widget _buildWindowInputWidget2Facade(
+      BuildContext context, CalculationState calculationState) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -353,6 +356,7 @@ class InputNat2 extends StatelessWidget {
         const SizedBox(height: 10.0),
         CustomInputWidget(
             key: _openingNumKey2,
+            initialValue: calculationState.openingsnum2,
             inputText: 'Number of openings with the same size: '),
         const SizedBox(height: 20.0),
         Slider0To100(
