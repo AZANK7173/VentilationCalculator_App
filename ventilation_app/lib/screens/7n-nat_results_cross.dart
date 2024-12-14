@@ -18,7 +18,7 @@ class NatResultsCross extends StatelessWidget {
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
-            Navigator.of(context).pushNamed('/nat_results_single');
+            Navigator.of(context).pushNamed('/nat_wind_speed');
           },
           onPressed2: () {
             Navigator.of(context).pushNamed('/');

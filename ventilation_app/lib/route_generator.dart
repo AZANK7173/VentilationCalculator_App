@@ -10,6 +10,7 @@ import 'package:ventilation_app/screens/7n-nat_results_cross.dart';
 import 'package:ventilation_app/screens/4m-input_mec_2.dart';
 import 'package:ventilation_app/screens/5m-mec_results.dart';
 import 'package:ventilation_app/screens/4n2-input_nat_more_opens.dart';
+import 'package:ventilation_app/screens/5n2-nat_temp.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -30,6 +31,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => InputNat3());
       case '/nat_wind_speed':
         return MaterialPageRoute(builder: (_) => NatWindSpeed());
+      case '/nat_temperature':
+        return MaterialPageRoute(builder: (_) => NatTemperature());
       case '/nat_results_single':
         return MaterialPageRoute(builder: (_) => NatResultsSingle());
       case '/nat_results_cross':

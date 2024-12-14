@@ -37,6 +37,8 @@ class InputNat2 extends StatelessWidget {
 
   final GlobalKey<SwitcherState> _mosquitoNetKey2 = GlobalKey<SwitcherState>();
 
+  final GlobalKey<SwitcherState> _crossKey = GlobalKey<SwitcherState>();
+
   @override
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
@@ -130,8 +132,8 @@ class InputNat2 extends StatelessWidget {
                         print('One or more dimensions are missing.');
                       }
 
-                      // COMPUTE THE CROSS SIDED
-                      
+                      // COMPUTE OTHER TYPE OF OPENING
+
                       final openingNum2 =
                           _openingNumKey2.currentState?.currettext ?? '0';
 
@@ -154,7 +156,8 @@ class InputNat2 extends StatelessWidget {
 
                       calculationState.updateMosquitoNet2(mosquitoNet2);
 
-                      if (dataWindowHeight2 != null && dataWindowWidth2 != null) {
+                      if (dataWindowHeight2 != null &&
+                          dataWindowWidth2 != null) {
                         calculationState.updateWindowDimensions2(
                           dataWindowHeight2['number'] ?? '0',
                           dataWindowWidth2['number'] ?? '0',
@@ -165,10 +168,15 @@ class InputNat2 extends StatelessWidget {
                         print('One or more dimensions are missing.');
                       }
 
+                      final crossKey = _crossKey.currentState?.isOn ?? false;
 
+                      calculationState.updateSideOfTheRoom(crossKey);
 
-
-                      Navigator.of(context).pushNamed('/input_nat_3');
+                      if (crossKey) {
+                        Navigator.of(context).pushNamed('/input_nat_3');
+                      } else {
+                        Navigator.of(context).pushNamed('/nat_temperature');
+                      }
                     },
                     text: 'Next',
                   ),
@@ -202,6 +210,12 @@ class InputNat2 extends StatelessWidget {
             'We are now referring to the ',
             'facade toward the exterior. ',
             'Note that several typologies of opening could be available on the same wall (i.e. two different types of window or one window and one door).',
+          ),
+          const SizedBox(height: 20.0),
+          Switcher(
+            key: _crossKey,
+            switchText:
+                'Are there openings available in \n other side of the room?',
           ),
           const SizedBox(height: 20.0),
           OpeningImage(

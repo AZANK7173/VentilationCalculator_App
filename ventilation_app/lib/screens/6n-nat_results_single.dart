@@ -18,7 +18,7 @@ class NatResultsSingle extends StatelessWidget {
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
-            Navigator.of(context).pushNamed('/nat_wind_speed');
+            Navigator.of(context).pushNamed('/nat_temperature');
           },
           onPressed2: () {
             Navigator.of(context).pushNamed('/');
@@ -110,9 +110,9 @@ class NatResultsSingle extends StatelessWidget {
                   ),
                   const SizedBox(height: 30.0),
                   NextButton(
-                    text: 'Proceed to Cross Ventilation',
+                    text: 'Restart',
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/nat_results_cross');
+                      Navigator.of(context).pushNamed('/second');
                     },
                   ),
                   const SizedBox(height: 30.0),
