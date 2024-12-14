@@ -22,3 +22,63 @@ flutter run
 - Decidir como colocar as informações de ventilação
 - Garantir tipo de entrada
 - Fazer com que os dados continuam sendo informados mesmo quando volta a tela
+- Fazer a lógica da "Other Side"
+
+
+
+
+“non-residential setting’’ refers
+to public and private indoor spaces characterized
+by a heterogeneous occupancy rate with people
+not belonging to the same household, such as
+workplaces (26), schools (19) and universities,
+accommodation sector buildings (27), and religious
+and commercial spaces.
+
+
+
+
+
+
+Health care settings including quarantine facilities
+
+Ventilation
+rate minimum
+requirements
+(32):
+• 160 L/s/patient
+or 12 ACH
+where AGP are
+performed
+• 60 L/s/patient
+or 6 ACH othe
+
+
+
+Non-residential settings
+
+Minimum
+recommended
+ventilation rate:
+•10 L/s/person
+(EN 16798-1)
+(42, 43)
+
+
+
+Residential Setting
+
+Minimum
+recommended
+ventilation rate:
+• 10 L/s/person
+(42) (EN 16798-
+1)
+within the
+isolation area
+
+
+
+
+
+

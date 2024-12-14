@@ -78,7 +78,8 @@ double computeVolume(String? width, String? height, String? length) {
 // THAT INCLUDES WINDSPEED, TEMPERATURE, HEIGHT, ETC.
 
 /// Opening calculations
-double calculateOpeningArea(double width, double height, int numberOfOpenings, double openingPercentage) {
+double calculateOpeningArea(double width, double height, int numberOfOpenings,
+    double openingPercentage) {
   return width * height * numberOfOpenings * openingPercentage / 100;
 }
 
@@ -112,12 +113,8 @@ double convertTemperature(double value, Map<String, bool> unit) {
 
 /// 1 - ONE SIDED
 // Estimated Ventilation for one sided (surface in m^2, windspeed in m/s, temperature in K, height in m, result in l/s)
-double computeEstimatedVentilationSingleNat(
-    double openingSurface,
-    double temperatureIn,
-    double height,
-    double temperatureOut) {
-
+double computeEstimatedVentilationSingleNat(double openingSurface,
+    double temperatureIn, double height, double temperatureOut) {
   double deltaT = (temperatureIn - temperatureOut).abs();
 
   return 0.25 *
@@ -155,6 +152,11 @@ double convertFlowRate(double value, Map<String, bool> unit, double volume) {
 // compute estimated occupancy
 int computeEstimatedOccupancy(
     double estimatedVentilation, double whoRecommendation) {
+  if (whoRecommendation == 0 ||
+      estimatedVentilation.isNaN ||
+      estimatedVentilation == 0) {
+    return 1;
+  }
   return estimatedVentilation ~/ whoRecommendation;
 }
 

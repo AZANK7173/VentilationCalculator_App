@@ -9,6 +9,7 @@ class MecResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    int people;
 
     final calculationState = Provider.of<CalculationState>(context);
 
@@ -66,8 +67,26 @@ class MecResults extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   _buildResult('Estimated Ventilation:',
                       computerVentilationMecanical(calculationState), 'l/s'),
-                  _buildResult('WHO recommendation:', 0, 'l/s'),
-                  _buildResult('Requirement:', 0, 'people'),
+                  ...[
+                    if (calculationState.settingOfInterest['hospital'] ==
+                        true) ...[
+                      _buildResult('WHO recommendation:', 60, 'l/s per person'),
+                      (() {
+                        people = computeEstimatedOccupancy(
+                            computerVentilationMecanical(calculationState), 60);
+                        return _buildResultInt(
+                            'Possible Occupancy:', people, 'people');
+                      })(), // Use a closure to compute and include the widget.
+                    ] else ...[
+                      _buildResult('WHO recommendation:', 10, 'l/s per person'),
+                      (() {
+                        people = computeEstimatedOccupancy(
+                            computerVentilationMecanical(calculationState), 10);
+                        return _buildResultInt(
+                            'Possible Occupancy:', people, 'people');
+                      })(), // Use a closure here as well.
+                    ],
+                  ],
                   const SizedBox(height: 10.0),
                   _buildAccomodatePeopleButton(context),
                   const SizedBox(height: 20.0),
@@ -102,6 +121,28 @@ class MecResults extends StatelessWidget {
   }
 
   Widget _buildResult(String boldText, double number, String unit) {
+    return Row(
+      children: [
+        TextEntry(
+          myColor: const Color.fromARGB(255, 102, 112, 133),
+          text: boldText,
+          fontSize: 15.0,
+          fontWeight: FontWeight.normal,
+        ),
+        const SizedBox(width: 5.0),
+        Text(
+          '${number.toString()} $unit',
+          style: const TextStyle(
+            fontSize: 15.0,
+            color: Color.fromARGB(255, 102, 112, 133),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildResultInt(String boldText, int number, String unit) {
     return Row(
       children: [
         TextEntry(

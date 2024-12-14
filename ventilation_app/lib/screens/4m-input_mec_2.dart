@@ -64,8 +64,6 @@ class InputMec2 extends StatelessWidget {
                       labelText: 'ventilator 4',
                       dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
-                  _buildManualCalcButton(context),
-                  const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
                   const TextEntry(

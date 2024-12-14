@@ -10,7 +10,7 @@ class NatResultsSingle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
+    int people;
     final calculationState = Provider.of<CalculationState>(context);
 
     return MaterialApp(
@@ -72,8 +72,26 @@ class NatResultsSingle extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   _buildResult('Estimated Ventilation:',
                       computerVentilationSingle(calculationState), 'l/s'),
-                  _buildResult('WHO recommendation:', 0, 'l/s'),
-                  _buildResult('Possible Occupancy:', 0, 'people'),
+                  ...[
+                    if (calculationState.settingOfInterest['hospital'] ==
+                        true) ...[
+                      _buildResult('WHO recommendation:', 60, 'l/s per person'),
+                      (() {
+                        people = computeEstimatedOccupancy(
+                            computerVentilationSingle(calculationState), 60);
+                        return _buildResultInt(
+                            'Possible Occupancy:', people, 'people');
+                      })(), // Use a closure to compute and include the widget.
+                    ] else ...[
+                      _buildResult('WHO recommendation:', 10, 'l/s per person'),
+                      (() {
+                        people = computeEstimatedOccupancy(
+                            computerVentilationSingle(calculationState), 10);
+                        return _buildResultInt(
+                            'Possible Occupancy:', people, 'people');
+                      })(), // Use a closure here as well.
+                    ],
+                  ],
                   const SizedBox(height: 10.0),
                   _buildAccomodatePeopleButton(context),
                   const SizedBox(height: 20.0),
@@ -108,6 +126,28 @@ class NatResultsSingle extends StatelessWidget {
   }
 
   Widget _buildResult(String boldText, double number, String unit) {
+    return Row(
+      children: [
+        TextEntry(
+          myColor: const Color.fromARGB(255, 102, 112, 133),
+          text: boldText,
+          fontSize: 15.0,
+          fontWeight: FontWeight.normal,
+        ),
+        const SizedBox(width: 5.0),
+        Text(
+          '${number.toString()} $unit',
+          style: const TextStyle(
+            fontSize: 15.0,
+            color: Color.fromARGB(255, 102, 112, 133),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildResultInt(String boldText, int number, String unit) {
     return Row(
       children: [
         TextEntry(
@@ -227,10 +267,28 @@ double computerVentilationSingle(CalculationState calculationState) {
   double minOpeningHeight =
       (minOpening == totalOpening1) ? windowheight : windowheight2;
 
-  return 0.25 *
+  double result = 0.25 *
       minOpening *
       sqrt(9.81 *
           (minOpeningHeight * (temperatureOut - temperatureIn)) /
           temperatureIn) *
       1000;
+
+  print('temperatureIn: $temperatureIn');
+  print('temperatureOut: $temperatureOut');
+  print('windowheight: $windowheight');
+  print('windowwidth: $windowwidth');
+  print('windowheight2: $windowheight2');
+  print('windowwidth2: $windowwidth2');
+  print('openingsnum: $openingsnum');
+  print('openingsnum2: $openingsnum2');
+  print('openingpercent1: $openingpercent1');
+  print('openingpercent2: $openingpercent2');
+  print('totalOpening1: $totalOpening1');
+  print('totalOpening2: $totalOpening2');
+  print('minOpening: $minOpening');
+  print('minOpeningHeight: $minOpeningHeight');
+  print('result: $result');
+
+  return result;
 }
