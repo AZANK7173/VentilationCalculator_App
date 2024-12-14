@@ -13,6 +13,13 @@ class NatResultsCross extends StatelessWidget {
     int people;
     final calculationState = Provider.of<CalculationState>(context);
 
+    int whoRecommendation =
+        calculationState.settingOfInterest['Hospital Setting'] == true
+            ? 60
+            : 10;
+    people = computeEstimatedOccupancy(
+        computerVentilationCross(calculationState), whoRecommendation);
+
     return MaterialApp(
       title: 'Results Page - Natural Ventilation Cross Sided',
       home: Scaffold(
@@ -60,42 +67,15 @@ class NatResultsCross extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   _buildResult('Estimated Ventilation:',
                       computerVentilationCross(calculationState), 'l/s'),
-                  ...[
-                    if (calculationState
-                            .settingOfInterest['Hospital Setting'] == 
-                        true) ...[
-                      _buildResult('WHO recommendation:', 60, 'l/s per person'),
-                      (() {
-                        people = computeEstimatedOccupancy(
-                            computerVentilationCross(calculationState), 60);
-                        return _buildResultInt(
-                            'Possible Occupancy:', people, 'people');
-                      })(), // Use a closure to compute and include the widget.
-                    ] else ...[
-                      _buildResult('WHO recommendation:', 10, 'l/s per person'),
-                      (() {
-                        people = computeEstimatedOccupancy(
-                            computerVentilationCross(calculationState), 10);
-                        return _buildResultInt(
-                            'Possible Occupancy:', people, 'people');
-                      })(), // Use a closure here as well.
-                    ],
-                  ],
-                  const SizedBox(height: 10.0),
-                  _buildAccomodatePeopleButton(context),
+                  _buildResultInt('WHO recommendation:', whoRecommendation,
+                      'l/s per person'),
+                  _buildResultInt('Possible Occupancy:', people, 'people'),
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
-                  const TextEntry(
-                      myColor: Color.fromARGB(255, 102, 112, 133),
-                      text:
-                          'You need this much more ventilation for your desired number of people:',
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                  const SizedBox(height: 20.0),
-                  const DisplayVentilationInprovement(
-                    labelText: '[Calculated Value]',
-                    dropdownItems: ['l/s', 'm³/s'],
+                  MultiplyByInput(
+                    multiplier: whoRecommendation,
+                    ventilation: computerVentilationCross(calculationState),
                   ),
                   const SizedBox(height: 30.0),
                   NextButton(
@@ -187,32 +167,6 @@ Widget _buildRichTextContent(
           ),
         ),
       ],
-    ),
-  );
-}
-
-Widget _buildAccomodatePeopleButton(BuildContext context) {
-  return Center(
-    child: ElevatedButton(
-      onPressed: () {
-        //TODO add new window
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        minimumSize: const Size(350, 55.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: const BorderSide(
-            color: Color.fromARGB(255, 45, 133, 185),
-          ),
-        ),
-      ),
-      child: const Text(
-        '+ Accomodate more people',
-        style: TextStyle(
-          color: Color.fromARGB(255, 45, 133, 185),
-        ),
-      ),
     ),
   );
 }

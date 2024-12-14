@@ -19,11 +19,13 @@ flutter run
 ## TODOS hackathon
 
 - Adicionar os dados de ventilação recomendado pela ONU       DONE
-- Decidir como colocar as informações de ventilação
+- Decidir como colocar as informações de ventilação           DONE 
 - Garantir tipo de entrada               
-- Fazer com que os dados continuam sendo informados mesmo quando volta a tela
+- Fazer com que os dados continuam sendo informados mesmo quando volta a tela  DONE
 - Fazer a lógica da "Other Side"                              DONE  
 - refatorar essa merda q ta horrivel
+- calculated value 
+- API de vento e temperatura
 
 
 

@@ -210,11 +210,9 @@ class NextButton extends StatelessWidget {
 
 class DisplayVentilationInprovement extends StatelessWidget {
   final String labelText;
-  final List<String> dropdownItems;
 
   const DisplayVentilationInprovement({
     required this.labelText,
-    required this.dropdownItems,
   });
 
   @override
@@ -223,8 +221,8 @@ class DisplayVentilationInprovement extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          width: 150.0,
-          height: 50.0,
+          width: 100.0,
+          height: 45.0,
           child: Container(
             alignment: Alignment.center, // Add this line
             padding: const EdgeInsets.all(8.0),
@@ -236,7 +234,6 @@ class DisplayVentilationInprovement extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20.0),
-        //DropdownButtonExample(items: dropdownItems),
       ],
     );
   }
@@ -349,4 +346,94 @@ class CustomInputWidgetState extends State<CustomInputWidget> {
   }
 
   String? get currentText => _controller.text;
+}
+
+class MultiplyByInput extends StatefulWidget {
+  final int multiplier; // Accept the multiplier as an argument
+  final double ventilation; // New argument for ventilation value
+
+  const MultiplyByInput({
+    Key? key,
+    required this.multiplier,
+    required this.ventilation,
+  }) : super(key: key);
+
+  @override
+  _MultiplyByInputState createState() => _MultiplyByInputState();
+}
+
+class _MultiplyByInputState extends State<MultiplyByInput> {
+  final TextEditingController _controller = TextEditingController();
+  double _result = 0.0; // To store the result of the calculation
+
+  // Function to handle the input and update the result
+  void _calculateResult(String value) {
+    setState(() {
+      // Parse the value, calculate the result, and subtract ventilation
+      _result = double.tryParse(value) != null
+          ? (double.parse(value) * widget.multiplier) - widget.ventilation
+          : 0.0;
+      _result = _result < 0 ? 0.0 : _result;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Text(
+              'How many people do you \n want to fit in the room?',
+              style: TextStyle(
+                fontSize: 15,
+                color: Color.fromARGB(255, 102, 112, 133),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 15),
+            Container(
+              width: 60,
+              height: 30,
+              child: TextField(
+                controller: _controller,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 214, 220, 220),
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
+                  isDense: true,
+                  labelText: '',
+                ),
+                onChanged:
+                    _calculateResult, // Call the calculation function on input change
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        DividerWidget(screenWidth),
+        const TextEntry(
+          myColor: Color.fromARGB(255, 102, 112, 133),
+          text:
+              'This is how much you need to improve the ventilation to meet WHO standards.',
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+        const SizedBox(height: 20.0),
+        DisplayVentilationInprovement(
+          labelText: '${_result.round()} l/s',
+        ),
+        const SizedBox(height: 20),
+      ],
+    );
+  }
 }

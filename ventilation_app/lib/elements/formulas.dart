@@ -151,7 +151,7 @@ double convertFlowRate(double value, Map<String, bool> unit, double volume) {
 /// GENERAL OUTPUT FORMULAS
 // compute estimated occupancy
 int computeEstimatedOccupancy(
-    double estimatedVentilation, double whoRecommendation) {
+    double estimatedVentilation, int whoRecommendation) {
   if (whoRecommendation == 0 ||
       estimatedVentilation.isNaN ||
       estimatedVentilation == 0) {
