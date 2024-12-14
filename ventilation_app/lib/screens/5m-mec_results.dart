@@ -68,7 +68,8 @@ class MecResults extends StatelessWidget {
                   _buildResult('Estimated Ventilation:',
                       computerVentilationMecanical(calculationState), 'l/s'),
                   ...[
-                    if (calculationState.settingOfInterest['hospital'] ==
+                    if (calculationState
+                            .settingOfInterest['Hospital Setting'] ==
                         true) ...[
                       _buildResult('WHO recommendation:', 60, 'l/s per person'),
                       (() {

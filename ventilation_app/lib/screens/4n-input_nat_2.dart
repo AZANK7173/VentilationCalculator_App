@@ -68,7 +68,7 @@ class InputNat2 extends StatelessWidget {
                 children: [
                   _buildInstructionsContent(context),
                   const SizedBox(height: 20.0),
-                  Text("VENT TYPE: ${calculationState.ventType}",
+                  Text("INTEREST: ${calculationState.settingOfInterest}",
                       style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 20.0),
                   Text("VENT TYPE: ${calculationState.settingOfInterest}",

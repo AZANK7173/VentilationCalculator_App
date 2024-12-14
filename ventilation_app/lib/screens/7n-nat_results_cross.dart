@@ -61,7 +61,8 @@ class NatResultsCross extends StatelessWidget {
                   _buildResult('Estimated Ventilation:',
                       computerVentilationCross(calculationState), 'l/s'),
                   ...[
-                    if (calculationState.settingOfInterest['hospital'] ==
+                    if (calculationState
+                            .settingOfInterest['Hospital Setting'] == 
                         true) ...[
                       _buildResult('WHO recommendation:', 60, 'l/s per person'),
                       (() {

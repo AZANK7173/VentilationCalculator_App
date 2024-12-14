@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CalculationState with ChangeNotifier {
   //3-input_1
   Map<String, bool> _settingOfInterest = {
-    'residential': false,
-    'hospital': false
+    'Residential/Comercial': true,
+    'Hospital Setting': false
   };
 
   String _lenght = '0';
@@ -29,8 +29,8 @@ class CalculationState with ChangeNotifier {
   Map<String, bool> get ventType => _ventType;
 
   void updateSetOfInterest(bool res) {
-    _settingOfInterest['residential'] = res;
-    _settingOfInterest['hospital'] = !res;
+    _settingOfInterest['Residential/Comercial'] = res;
+    _settingOfInterest['Hospital Setting'] = !res;
     notifyListeners();
   }
 
@@ -131,7 +131,6 @@ class CalculationState with ChangeNotifier {
     'ACH': false,
     'CFM': false
   };
-
 
   Map<String, bool> get unitVentRate => _unitVentRate;
   Map<String, bool> get unitVentRate2 => _unitVentRate2;

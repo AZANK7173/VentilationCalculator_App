@@ -73,7 +73,8 @@ class NatResultsSingle extends StatelessWidget {
                   _buildResult('Estimated Ventilation:',
                       computerVentilationSingle(calculationState), 'l/s'),
                   ...[
-                    if (calculationState.settingOfInterest['hospital'] ==
+                    if (calculationState
+                            .settingOfInterest['Hospital Setting'] ==
                         true) ...[
                       _buildResult('WHO recommendation:', 60, 'l/s per person'),
                       (() {

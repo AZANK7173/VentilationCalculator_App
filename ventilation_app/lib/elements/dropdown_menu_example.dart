@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class DropdownButtonExample extends StatefulWidget {
   final List<String> items;
+  final String? initialValue; // New attribute for initial selected value
 
   const DropdownButtonExample({
     super.key,
     required this.items,
+    this.initialValue,
   });
 
   @override
@@ -13,28 +15,29 @@ class DropdownButtonExample extends StatefulWidget {
 }
 
 class DropdownButtonExampleState extends State<DropdownButtonExample> {
-  String? selectedValue;
+  late String selectedValue;
 
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.items.first;
+    // Use the provided initial value if it exists, otherwise default to the first item
+    selectedValue = widget.initialValue ?? widget.items.first;
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(5.0),
       ),
-      //width: widget.dropdownWidth * screenWidth,
       child: DropdownButton<String>(
         value: selectedValue,
         alignment: Alignment.center,
         underline: Container(),
         elevation: 16,
         onChanged: (String? value) {
-          // This is called when the user selects an item.
+          // Update the selected value
           setState(() {
             selectedValue = value!;
           });
@@ -44,9 +47,7 @@ class DropdownButtonExampleState extends State<DropdownButtonExample> {
             value: value,
             child: Text(
               value,
-              style: const TextStyle(
-                  fontWeight:
-                      FontWeight.normal), // Set the font weight to normal
+              style: const TextStyle(fontWeight: FontWeight.normal),
             ),
           );
         }).toList(),
@@ -54,5 +55,5 @@ class DropdownButtonExampleState extends State<DropdownButtonExample> {
     );
   }
 
-  String get dropValue => selectedValue!;
+  String get dropValue => selectedValue;
 }

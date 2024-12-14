@@ -68,7 +68,9 @@ class Input1 extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   DropdownButtonExample(
                     key: _dropdownButtonKey,
-                    items: [' Residential/Comercial', 'Hospital Setting'],
+                    initialValue:
+                        getSelectedSetting(calculationState.settingOfInterest),
+                    items: ['Residential/Comercial', 'Hospital Setting'],
                   ),
                   const SizedBox(height: 30.0),
                   const TextEntry(
@@ -139,7 +141,7 @@ class Input1 extends StatelessWidget {
                       // Access dropdown value using the GlobalKey
                       final dropdownValue =
                           _dropdownButtonKey.currentState?.dropValue;
-                      bool res = dropdownValue == ' Residential/Comercial';
+                      bool res = dropdownValue == 'Residential/Comercial';
                       calculationState.updateSetOfInterest(res);
 
                       // Access the nat variable using the GlobalKey
@@ -165,6 +167,16 @@ class Input1 extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getSelectedSetting(Map<String, bool> settings) {
+    // Find the first key with a value of true, or default to null
+    return settings.entries
+        .firstWhere(
+          (entry) => entry.value == true,
+          orElse: () => MapEntry("No setting selected", false),
+        )
+        .key;
   }
 
   Widget _buildGreetingRow(double screenHeight) {
