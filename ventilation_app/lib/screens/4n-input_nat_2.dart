@@ -77,86 +77,114 @@ class InputNat2 extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   NextButton(
                     onPressed: () {
+                      // Validate data for the first opening
                       final openingNum =
                           _openingNumKey.currentState?.currentText ?? '0';
-
-                      calculationState.updateOpeningNum(openingNum);
-
                       final openingPercentage =
                           _openingPercentage.currentState?.sliderValue ?? 0;
-
-                      calculationState
-                          .updateOpeningPercentage(openingPercentage);
-
                       final dataWindowWidth =
                           _windowWidthKey.currentState?.dimensionData;
-
                       final dataWindowHeight =
                           _windowHeightKey.currentState?.dimensionData;
-
                       final mosquitoNet =
                           _mosquitoNetKey.currentState?.isOn ?? false;
 
-                      calculationState.updateMosquitoNet(mosquitoNet);
+                      bool canProceed1 = false;
+                      bool canProceed2 = false;
 
+                      // Check if the data for the first opening is valid
                       if (dataWindowHeight != null && dataWindowWidth != null) {
-                        calculationState.updateWindowDimensions(
-                          dataWindowHeight['number'] ?? '0',
-                          dataWindowWidth['number'] ?? '0',
-                          createUnitMap(dataWindowHeight['unit']),
-                          createUnitMap(dataWindowWidth['unit']),
-                        );
+                        final height = dataWindowHeight['number'] ?? '0';
+                        final width = dataWindowWidth['number'] ?? '0';
+
+                        // Validate that height and width are numbers no 0 allowed
+                        if (isValidDouble(height, false) &&
+                            isValidDouble(width, false) &&
+                            isValidInt(openingNum, false) &&
+                            openingPercentage != 0) {
+                          calculationState.updateOpeningNum(openingNum);
+                          calculationState
+                              .updateOpeningPercentage(openingPercentage);
+                          calculationState.updateMosquitoNet(mosquitoNet);
+
+                          calculationState.updateWindowDimensions(
+                            height,
+                            width,
+                            createUnitMap(dataWindowHeight['unit']),
+                            createUnitMap(dataWindowWidth['unit']),
+                          );
+
+                          canProceed1 = true;
+                        } else {
+                          print(
+                              'Invalid window dimensions. Ensure they are numeric.');
+                        }
                       } else {
-                        print('One or more dimensions are missing.');
+                        print(
+                            'One or more dimensions are missing for the first opening.');
                       }
 
-                      // COMPUTE OTHER TYPE OF OPENING
-
+                      // Validate data for the second opening
                       final openingNum2 =
                           _openingNumKey2.currentState?.currentText ?? '0';
-
-                      calculationState.updateOpeningNum2(openingNum2);
-
                       final openingPercentage2 =
                           _openingPercentage2.currentState?.sliderValue ?? 0;
-
-                      calculationState
-                          .updateOpeningPercentage2(openingPercentage2);
-
                       final dataWindowWidth2 =
                           _windowWidthKey2.currentState?.dimensionData;
-
                       final dataWindowHeight2 =
                           _windowHeightKey2.currentState?.dimensionData;
-
                       final mosquitoNet2 =
                           _mosquitoNetKey2.currentState?.isOn ?? false;
 
-                      calculationState.updateMosquitoNet2(mosquitoNet2);
-
+                      // Check if the data for the second opening is valid
                       if (dataWindowHeight2 != null &&
                           dataWindowWidth2 != null) {
-                        calculationState.updateWindowDimensions2(
-                          dataWindowHeight2['number'] ?? '0',
-                          dataWindowWidth2['number'] ?? '0',
-                          createUnitMap(dataWindowHeight2['unit']),
-                          createUnitMap(dataWindowWidth2['unit']),
-                        );
+                        final height2 = dataWindowHeight2['number'] ?? '0';
+                        final width2 = dataWindowWidth2['number'] ?? '0';
+
+                        // Validate that height and width are numbers
+                        if (isValidDouble(height2, true) &&
+                            isValidDouble(width2, true) &&
+                            isValidInt(openingNum2, true)) {
+                          calculationState.updateOpeningNum2(openingNum2);
+                          calculationState
+                              .updateOpeningPercentage2(openingPercentage2);
+                          calculationState.updateMosquitoNet2(mosquitoNet2);
+
+                          calculationState.updateWindowDimensions2(
+                            height2,
+                            width2,
+                            createUnitMap(dataWindowHeight2['unit']),
+                            createUnitMap(dataWindowWidth2['unit']),
+                          );
+
+                          canProceed2 = true;
+                        } else {
+                          print(
+                              'Invalid window dimensions for the second opening. Ensure they are numeric.');
+                        }
                       } else {
-                        print('One or more dimensions are missing.');
+                        print(
+                            'One or more dimensions are missing for the second opening.');
                       }
 
+                      // Validate crossKey value
                       final crossKey = _crossKey.currentState?.isOn ?? false;
-
                       calculationState.updateSideOfTheRoom(crossKey);
 
-                      if (crossKey) {
-                        Navigator.of(context).pushNamed('/input_nat_3');
+                      if (canProceed1 && canProceed2) {
+                        if (crossKey) {
+                          Navigator.of(context).pushNamed('/input_nat_3');
+                        } else {
+                          Navigator.of(context).pushNamed('/nat_temperature');
+                        }
                       } else {
-                        Navigator.of(context).pushNamed('/nat_temperature');
+                        print("Cannot proceed, invalid data.");
                       }
                     },
                     text: 'Next',
+                    displayMessage:
+                        "Invalid dimension values, please \n correct them before proceeding",
                   ),
                   const SizedBox(height: 30.0),
                 ],
@@ -379,32 +407,6 @@ class InputNat2 extends StatelessWidget {
           switchText: 'Does it have a mosquito net?',
         ),
       ],
-    );
-  }
-
-  Widget _buildAddNewWindowButton(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          //TODO add new window
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          minimumSize: const Size(350, 55.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: const BorderSide(
-              color: Color.fromARGB(255, 45, 133, 185),
-            ),
-          ),
-        ),
-        child: const Text(
-          '+ Add new openning type',
-          style: TextStyle(
-            color: Color.fromARGB(255, 45, 133, 185),
-          ),
-        ),
-      ),
     );
   }
 }

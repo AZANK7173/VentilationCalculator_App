@@ -183,6 +183,16 @@ bool isValidDouble(String? value, bool zeroAllowed) {
   return doubleRegex.hasMatch(value);
 }
 
+bool isValidInt(String? value, bool zeroAllowed) {
+  if (value == null) {
+    return false;
+  } else if (value == '0' && !zeroAllowed) {
+    return false;
+  }
+  final intRegex = RegExp(r'^\d+$'); // Matches valid integers.
+  return intRegex.hasMatch(value);
+}
+
 class NextButton extends StatefulWidget {
   final String text;
   final VoidCallback onPressed;

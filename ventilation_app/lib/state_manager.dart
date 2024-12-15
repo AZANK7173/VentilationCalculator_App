@@ -138,7 +138,7 @@ class CalculationState with ChangeNotifier {
   Map<String, bool> get unitVentRate4 => _unitVentRate4;
 
   //4n-input_nat_2 - first window type
-  String _openingsnum = '0';
+  String _openingsnum = '1';
   double _openpercentage = 0;
   bool _mosquitonet = false;
 
