@@ -226,7 +226,7 @@ class CalculationState with ChangeNotifier {
 
   // 4n-input_nat_3 - Other side of the room
 
-  String _openingsnum3 = '0';
+  String _openingsnum3 = '1';
   double _openpercentage3 = 0;
 
   String get openingsnum3 => _openingsnum3;

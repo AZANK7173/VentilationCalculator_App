@@ -81,35 +81,48 @@ class NatTemperature extends StatelessWidget {
                       dropdownItems: ['°C', '°F']),
                   const SizedBox(height: 50.0),
                   NextButton(
+                    displayMessage:
+                        "Invalid temperature values, please \n correct them before proceeding",
                     onPressed: () {
                       final dataInsideTemp =
                           _insideTempKey.currentState?.dimensionData;
-
-                      if (dataInsideTemp != null) {
-                        calculationState.updateTempIn(
-                          dataInsideTemp['number'] ?? '0',
-                          createTempUnitMap(dataInsideTemp['unit']),
-                        );
-                      } else {
-                        print('One or more dimensions are missing.');
-                      }
-
                       final dataOutsideTemp =
                           _outsideTempKey.currentState?.dimensionData;
 
-                      if (dataOutsideTemp != null) {
-                        calculationState.updateTempOut(
-                          dataOutsideTemp['number'] ?? '0',
-                          createTempUnitMap(dataOutsideTemp['unit']),
-                        );
+                      bool canProceed = false;
+
+                      // Validate inside and outside temperature data
+                      if (dataInsideTemp != null && dataOutsideTemp != null) {
+                        final insideTemp = dataInsideTemp['number'] ?? '0';
+                        final outsideTemp = dataOutsideTemp['number'] ?? '0';
+                        if (isValidDouble(insideTemp, true) &&
+                            isValidDouble(outsideTemp, true)) {
+                          calculationState.updateTempIn(
+                            insideTemp,
+                            createTempUnitMap(dataInsideTemp['unit']),
+                          );
+                          calculationState.updateTempOut(
+                            outsideTemp,
+                            createTempUnitMap(dataOutsideTemp['unit']),
+                          );
+                          canProceed = true;
+                        } else {
+                          print(
+                              'Invalid temperature value. Ensure both are numeric.');
+                        }
                       } else {
-                        print('One or more dimensions are missing.');
+                        print('Outside temperature data is missing.');
                       }
 
-                      Navigator.of(context).pushNamed('/nat_results_single');
+                      // Proceed to the results screen if all data is valid
+                      if (canProceed) {
+                        Navigator.of(context).pushNamed('/nat_results_single');
+                      } else {
+                        print("Cannot proceed, invalid data.");
+                      }
                     },
                     text: 'See Result for Single Opening',
-                  )
+                  ),
                 ],
               ),
             ),

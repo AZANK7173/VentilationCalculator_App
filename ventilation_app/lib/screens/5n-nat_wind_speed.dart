@@ -69,23 +69,41 @@ class NatWindSpeed extends StatelessWidget {
                       dropdownItems: ['m/s', 'km/h']),
                   const SizedBox(height: 50.0),
                   NextButton(
+                    displayMessage:
+                        "Invalid data. Wind can´t be \n null and must be a number",
                     onPressed: () {
                       final dataWindSpeed =
                           _windSpeedKey.currentState?.dimensionData;
+                      bool canProceed = false;
 
+                      // Validate wind speed data
                       if (dataWindSpeed != null) {
-                        calculationState.updateWindSpeed(
-                          dataWindSpeed['number'] ?? '0',
-                          createWindSpeedUnitMap(dataWindSpeed['unit']),
-                        );
+                        final windSpeed = dataWindSpeed['number'] ?? '0';
+
+                        // Check if wind speed is a valid number
+                        if (isValidDouble(windSpeed, false)) {
+                          calculationState.updateWindSpeed(
+                            windSpeed,
+                            createWindSpeedUnitMap(dataWindSpeed['unit']),
+                          );
+                          canProceed = true;
+                        } else {
+                          print(
+                              'Invalid wind speed value. Ensure it is numeric.');
+                        }
                       } else {
-                        print('One or more dimensions are missing.');
+                        print('Wind speed data is missing.');
                       }
 
-                      Navigator.of(context).pushNamed('/nat_results_cross');
+                      // Proceed to the next screen if data is valid
+                      if (canProceed) {
+                        Navigator.of(context).pushNamed('/nat_results_cross');
+                      } else {
+                        print("Cannot proceed, invalid data.");
+                      }
                     },
                     text: 'See Results for Cross Ventilation',
-                  )
+                  ),
                 ],
               ),
             ),

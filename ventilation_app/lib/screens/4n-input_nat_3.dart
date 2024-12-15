@@ -50,38 +50,59 @@ class InputNat3 extends StatelessWidget {
                   _buildWindowInputWidget3Facade(calculationState),
                   const SizedBox(height: 20.0),
                   NextButton(
+                    displayMessage:
+                        "Invalid data. All fields are \n required and must be not null",
                     onPressed: () {
-                      // COMPUTE THE SINGLE SIDE
+                      // Retrieve and validate data for the single side
                       final openingNum3 =
                           _openingNumKey3.currentState?.currentText ?? '0';
-
-                      calculationState.updateOpeningNum3(openingNum3);
-
                       final openingPercentage3 =
                           _openingPercentage3.currentState?.sliderValue ?? 0;
-
-                      calculationState
-                          .updateOpeningPercentage3(openingPercentage3);
-
                       final dataWindowWidth3 =
                           _windowWidthKey3.currentState?.dimensionData;
-
                       final dataWindowHeight3 =
                           _windowHeightKey3.currentState?.dimensionData;
 
+                      bool canProceed = false;
+
+                      // Validate dimensions for the single side
                       if (dataWindowHeight3 != null &&
                           dataWindowWidth3 != null) {
-                        calculationState.updateWindowDimensions3(
-                          dataWindowHeight3['number'] ?? '0',
-                          dataWindowWidth3['number'] ?? '0',
-                          createUnitMap(dataWindowHeight3['unit']),
-                          createUnitMap(dataWindowWidth3['unit']),
-                        );
+                        final height3 = dataWindowHeight3['number'] ?? '0';
+                        final width3 = dataWindowWidth3['number'] ?? '0';
+
+                        // Check if height and width are valid numbers
+                        if (isValidDouble(height3, false) &&
+                            isValidDouble(width3, false) &&
+                            isValidInt(openingNum3, false) &&
+                            openingPercentage3 != 0) {
+                          calculationState.updateOpeningNum3(openingNum3);
+                          calculationState
+                              .updateOpeningPercentage3(openingPercentage3);
+
+                          calculationState.updateWindowDimensions3(
+                            height3,
+                            width3,
+                            createUnitMap(dataWindowHeight3['unit']),
+                            createUnitMap(dataWindowWidth3['unit']),
+                          );
+
+                          canProceed = true;
+                        } else {
+                          print(
+                              'Invalid window dimensions for the single side. Ensure they are numeric.');
+                        }
                       } else {
-                        print('One or more dimensions are missing.');
+                        print(
+                            'One or more dimensions are missing for the single side.');
                       }
 
-                      Navigator.of(context).pushNamed('/nat_wind_speed');
+                      // Proceed to the next screen if data is valid
+                      if (canProceed) {
+                        Navigator.of(context).pushNamed('/nat_wind_speed');
+                      } else {
+                        print("Cannot proceed, invalid data.");
+                      }
                     },
                     text: 'Next',
                   ),
