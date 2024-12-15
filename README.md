@@ -20,11 +20,11 @@ flutter run
 
 - Adicionar os dados de ventilação recomendado pela ONU       DONE
 - Decidir como colocar as informações de ventilação           DONE 
-- Garantir tipo de entrada               
+- Garantir tipo de entrada                                    DONE\
 - Fazer com que os dados continuam sendo informados mesmo quando volta a tela  DONE
 - Fazer a lógica da "Other Side"                              DONE  
-- refatorar essa merda q ta horrivel
-- calculated value 
+- refatorar essa merda q ta horrivel                          DONE 
+- calculated value                                            DONE 
 - API de vento e temperatura
 
 
