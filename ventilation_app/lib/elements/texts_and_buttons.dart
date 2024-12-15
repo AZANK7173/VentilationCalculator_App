@@ -173,10 +173,12 @@ String getSelectedSetting(Map<String, bool> settings) {
       .key;
 }
 
-bool isValidDouble(String? value) {
-  if (value == null || value == '0') {
+bool isValidDouble(String? value, bool zeroAllowed) {
+  if (value == null) {
     return false;
-  } // Null or '0' values are invalid.
+  } else if (value == '0' && !zeroAllowed) {
+    return false;
+  }
   final doubleRegex = RegExp(r'^\d+(\.\d+)?$'); // Matches valid doubles.
   return doubleRegex.hasMatch(value);
 }

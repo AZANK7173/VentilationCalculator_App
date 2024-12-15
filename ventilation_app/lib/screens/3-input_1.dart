@@ -146,9 +146,9 @@ class Input1 extends StatelessWidget {
                         final lengthNumber = dataLength['number'] ?? '0';
                         final widthNumber = dataWidth['number'] ?? '0';
 
-                        if (isValidDouble(heightNumber) &&
-                            isValidDouble(lengthNumber) &&
-                            isValidDouble(widthNumber)) {
+                        if (isValidDouble(heightNumber, false) &&
+                            isValidDouble(lengthNumber, false) &&
+                            isValidDouble(widthNumber, false)) {
                           calculationState.updateRoomDimensions(
                             dataHeight['number'] ?? '0',
                             dataLength['number'] ?? '0',
