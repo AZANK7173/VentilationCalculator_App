@@ -85,6 +85,9 @@ class InputMec2 extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 30.0),
                   NextButton(
+                    text: 'See Results',
+                    displayMessage:
+                        "Invalid vent rate values, please \n correct them before proceeding",
                     onPressed: () {
                       final dataVentRate =
                           _dimensionVentRate.currentState?.dimensionData;
@@ -95,33 +98,53 @@ class InputMec2 extends StatelessWidget {
                       final dataVentRate4 =
                           _dimensionVentRate4.currentState?.dimensionData;
 
-                      if (dataVentRate != null) {
-                        calculationState.updateVentRate(
+                      bool canProceed = false;
+
+                      if (dataVentRate != null &&
+                          dataVentRate2 != null &&
+                          dataVentRate3 != null &&
+                          dataVentRate4 != null) {
+                        final ventRate1 = dataVentRate['number'] ?? '0';
+                        final ventRate2 = dataVentRate2['number'] ?? '0';
+                        final ventRate3 = dataVentRate3['number'] ?? '0';
+                        final ventRate4 = dataVentRate4['number'] ?? '0';
+
+                        if (isValidDouble(ventRate1, true) &&
+                            isValidDouble(ventRate2, true) &&
+                            isValidDouble(ventRate3, true) &&
+                            isValidDouble(ventRate4, true)) {
+                          calculationState.updateVentRate(
                             dataVentRate['number'] ?? '0',
-                            createVentRateUnitMap(dataVentRate['unit']));
-                      }
-
-                      if (dataVentRate2 != null) {
-                        calculationState.updateVentRate2(
+                            createVentRateUnitMap(dataVentRate['unit']),
+                          );
+                          calculationState.updateVentRate2(
                             dataVentRate2['number'] ?? '0',
-                            createVentRateUnitMap(dataVentRate2['unit']));
-                      }
-
-                      if (dataVentRate3 != null) {
-                        calculationState.updateVentRate3(
+                            createVentRateUnitMap(dataVentRate2['unit']),
+                          );
+                          calculationState.updateVentRate3(
                             dataVentRate3['number'] ?? '0',
-                            createVentRateUnitMap(dataVentRate3['unit']));
-                      }
-
-                      if (dataVentRate4 != null) {
-                        calculationState.updateVentRate4(
+                            createVentRateUnitMap(dataVentRate3['unit']),
+                          );
+                          calculationState.updateVentRate4(
                             dataVentRate4['number'] ?? '0',
-                            createVentRateUnitMap(dataVentRate4['unit']));
+                            createVentRateUnitMap(dataVentRate4['unit']),
+                          );
+                          canProceed = true;
+                        } else {
+                          print(
+                              'Invalid vent rate values. Ensure they are numeric.');
+                        }
+                      } else {
+                        print('One or more vent rates are null');
                       }
 
-                      Navigator.of(context).pushNamed('/mec_results');
+                      if (canProceed) {
+                        Navigator.of(context).pushNamed('/mec_results');
+                      } else {
+                        print(
+                            "Cannot proceed to the results screen, invalid data");
+                      }
                     },
-                    text: 'See Results',
                   ),
                   const SizedBox(height: 30.0),
                 ],
