@@ -126,6 +126,8 @@ class Input1 extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   NextButton(
                     text: 'Next',
+                    displayMessage:
+                        "Invalid dimension values, please \n correct them before proceeding",
                     onPressed: () {
                       // length data
                       final dataLength =
@@ -135,19 +137,33 @@ class Input1 extends StatelessWidget {
                       final dataWidth =
                           _dimensionWidthKey.currentState?.dimensionData;
 
+                      bool canProceed = false;
+
                       if (dataLength != null &&
                           dataHeight != null &&
                           dataWidth != null) {
-                        calculationState.updateRoomDimensions(
-                          dataHeight['number'] ?? '0', // Default to '0' if null
-                          dataLength['number'] ?? '0',
-                          dataWidth['number'] ?? '0',
-                          createUnitMap(dataHeight['unit']),
-                          createUnitMap(dataLength['unit']),
-                          createUnitMap(dataWidth['unit']),
-                        );
+                        final heightNumber = dataHeight['number'] ?? '0';
+                        final lengthNumber = dataLength['number'] ?? '0';
+                        final widthNumber = dataWidth['number'] ?? '0';
+
+                        if (isValidDouble(heightNumber) &&
+                            isValidDouble(lengthNumber) &&
+                            isValidDouble(widthNumber)) {
+                          calculationState.updateRoomDimensions(
+                            dataHeight['number'] ?? '0',
+                            dataLength['number'] ?? '0',
+                            dataWidth['number'] ?? '0',
+                            createUnitMap(dataHeight['unit']),
+                            createUnitMap(dataLength['unit']),
+                            createUnitMap(dataWidth['unit']),
+                          );
+                          canProceed = true;
+                        } else {
+                          print(
+                              'Invalid dimension values. Ensure they are numeric.');
+                        }
                       } else {
-                        print('One or more dimensions are missing.');
+                        print('One or more dimensions are null');
                       }
 
                       // Access dropdown value using the GlobalKey
@@ -162,12 +178,15 @@ class Input1 extends StatelessWidget {
                       calculationState.updateVentType(natValue);
 
                       // Navigate to the next screen
-                      if (natValue) {
+                      if (natValue && canProceed) {
                         Navigator.of(context).pushNamed('/input_nat_2');
-                      } else {
+                      } else if (!natValue && canProceed) {
                         Navigator.of(context).pushNamed(
                           '/input_mech_2',
                         );
+                      } else {
+                        print(
+                            'Cannot proceed to the next screen, something is wrong');
                       }
                     },
                   ),

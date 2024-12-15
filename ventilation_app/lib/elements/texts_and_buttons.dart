@@ -173,37 +173,77 @@ String getSelectedSetting(Map<String, bool> settings) {
       .key;
 }
 
-class NextButton extends StatelessWidget {
+bool isValidDouble(String? value) {
+  if (value == null || value == '0') {
+    return false;
+  } // Null or '0' values are invalid.
+  final doubleRegex = RegExp(r'^\d+(\.\d+)?$'); // Matches valid doubles.
+  return doubleRegex.hasMatch(value);
+}
+
+class NextButton extends StatefulWidget {
   final String text;
   final VoidCallback onPressed;
   final Color myColor;
+  final String displayMessage;
 
   const NextButton({
     Key? key,
     required this.text,
     required this.onPressed,
     this.myColor = const Color.fromARGB(255, 45, 133, 185),
+    this.displayMessage = 'Button pressed!',
   }) : super(key: key);
 
   @override
+  _NextButtonState createState() => _NextButtonState();
+}
+
+class _NextButtonState extends State<NextButton> {
+  String? displayText;
+
+  void _handlePress() {
+    setState(() {
+      displayText = widget.displayMessage;
+    });
+    widget.onPressed();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: myColor,
-          minimumSize: const Size(double.infinity, 55.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (displayText != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              displayText!,
+              style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red),
+            ),
+          ),
+        Center(
+          child: ElevatedButton(
+            onPressed: _handlePress,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: widget.myColor,
+              minimumSize: const Size(double.infinity, 55.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            child: Text(
+              widget.text,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 242, 244, 247),
+              ),
+            ),
           ),
         ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 242, 244, 247),
-          ),
-        ),
-      ),
+      ],
     );
   }
 }
