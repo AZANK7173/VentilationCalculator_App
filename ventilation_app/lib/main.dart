@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ventilation_app/route_generator.dart';
 import 'package:ventilation_app/state_manager.dart';
 
+
 void main() {
   runApp(MyApp());
 }

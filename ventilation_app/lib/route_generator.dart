@@ -11,6 +11,7 @@ import 'package:ventilation_app/screens/4m-input_mec_2.dart';
 import 'package:ventilation_app/screens/5m-mec_results.dart';
 import 'package:ventilation_app/screens/4n2-input_nat_more_opens.dart';
 import 'package:ventilation_app/screens/5n2-nat_temp.dart';
+import 'package:ventilation_app/screens/weather-screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -20,6 +21,7 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => SplashScreen());
+        // return MaterialPageRoute(builder: (_) => WeatherScreen());
       case '/second':
         // Validation of correct data type
         return MaterialPageRoute(builder: (_) => const Instructions());

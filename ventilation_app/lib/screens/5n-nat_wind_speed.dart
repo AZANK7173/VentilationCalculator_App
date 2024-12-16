@@ -3,10 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/state_manager.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:ventilation_app/geolocation.dart';
+import 'package:ventilation_app/weather.dart';
 
 class NatWindSpeed extends StatelessWidget {
   final GlobalKey<DimensionInputRowState> _windSpeedKey =
       GlobalKey<DimensionInputRowState>();
+
+  final LocationService locationService = LocationService();
+  final WeatherService weatherService = WeatherService();
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +66,48 @@ class NatWindSpeed extends StatelessWidget {
                       myColor: Color.fromARGB(255, 152, 162, 179),
                       fontWeight: FontWeight.normal),
                   const SizedBox(height: 20.0),
-                  DimensionInputRow(
-                      key: _windSpeedKey,
-                      initialNumber: calculationState.windspeed,
-                      initialDropdownValue:
-                          getSelectedSetting(calculationState.unitWindSpeed),
-                      labelText: 'Wind Speed',
-                      dropdownItems: ['m/s', 'km/h']),
+
+                  FutureBuilder<Position>(
+                    future: locationService.getCurrentLocation(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        final position = snapshot.data!;
+                        return FutureBuilder<Map<String, dynamic>>(
+                          future: weatherService.getWeatherData(position),
+                          builder: (context, weatherSnapshot) {
+                            if (weatherSnapshot.connectionState == ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (weatherSnapshot.hasError) {
+                              return Center(child: Text('Error: ${weatherSnapshot.error}'));
+                            } else if (weatherSnapshot.hasData) {
+                              final weatherData = weatherSnapshot.data!;
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                  DimensionInputRow(
+                                      key: _windSpeedKey,
+                                      initialNumber: weatherData['wind']['speed'].toString(),
+                                      initialDropdownValue:
+                                          getSelectedSetting(calculationState.unitWindSpeed),
+                                      labelText: 'Wind Speed',
+                                      dropdownItems: ['m/s', 'km/h']
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                            return Center(child: Text('No Data'));
+                          },
+                        );
+                      }
+                      return Center(child: Text('Unable to get location.'));
+                    },
+                  ),
                   const SizedBox(height: 50.0),
                   NextButton(
                     displayMessage:

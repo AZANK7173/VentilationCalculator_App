@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
 import 'package:ventilation_app/state_manager.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:ventilation_app/geolocation.dart';
+import 'package:ventilation_app/weather.dart';
 
 class NatTemperature extends StatelessWidget {
   final GlobalKey<DimensionInputRowState> _insideTempKey =
@@ -10,6 +13,9 @@ class NatTemperature extends StatelessWidget {
 
   final GlobalKey<DimensionInputRowState> _outsideTempKey =
       GlobalKey<DimensionInputRowState>();
+
+  final LocationService locationService = LocationService();
+  final WeatherService weatherService = WeatherService();
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +78,48 @@ class NatTemperature extends StatelessWidget {
                       labelText: 'Inside Temp',
                       dropdownItems: ['°C', '°F']),
                   const SizedBox(height: 20.0),
-                  DimensionInputRow(
-                      key: _outsideTempKey,
-                      initialNumber: calculationState.tempout,
-                      initialDropdownValue:
-                          getSelectedSetting(calculationState.unitTempOut),
-                      labelText: 'Outside Temp',
-                      dropdownItems: ['°C', '°F']),
+
+                  FutureBuilder<Position>(
+                    future: locationService.getCurrentLocation(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        final position = snapshot.data!;
+                        return FutureBuilder<Map<String, dynamic>>(
+                          future: weatherService.getWeatherData(position),
+                          builder: (context, weatherSnapshot) {
+                            if (weatherSnapshot.connectionState == ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (weatherSnapshot.hasError) {
+                              return Center(child: Text('Error: ${weatherSnapshot.error}'));
+                            } else if (weatherSnapshot.hasData) {
+                              final weatherData = weatherSnapshot.data!;
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    DimensionInputRow(
+                                      key: _outsideTempKey,
+                                      initialNumber: weatherData['main']['temp'].toString(),
+                                      initialDropdownValue:
+                                          getSelectedSetting(calculationState.unitTempOut),
+                                      labelText: 'Outside Temp',
+                                      dropdownItems: ['°C', '°F']
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                            return Center(child: Text('No Data'));
+                          },
+                        );
+                      }
+                      return Center(child: Text('Unable to get location.'));
+                    },
+                  ),
                   const SizedBox(height: 50.0),
                   NextButton(
                     displayMessage:
