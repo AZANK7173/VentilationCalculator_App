@@ -34,6 +34,10 @@ Create a file in `/lib/` called `api_key.dart`.In the file, add just the followi
 - calculated value                                            DONE 
 - API de vento e temperatura                                  DONE
 
+- debug do text entry e texto aparecendo (tipo Pressed Buttom) (azank)
+- Arrumar UI pra multi-devide support (azank)
+- campanha de testes (bagni)
+
 
 
 
