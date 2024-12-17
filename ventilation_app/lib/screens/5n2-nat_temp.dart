@@ -85,7 +85,23 @@ class NatTemperature extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
+                        return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Location permission denied: enter manually the Outside Temperature.'),
+                                    // Text('Error: ${snapshot.error}'),
+                                    DimensionInputRow(
+                                      key: _outsideTempKey,
+                                      initialNumber: calculationState.tempout,
+                                      initialDropdownValue:
+                                          getSelectedSetting(calculationState.unitTempOut),
+                                      labelText: 'Outside Temp',
+                                      dropdownItems: ['°C', '°F']
+                                    ),
+                                  ],
+                                ),
+                              );
                       } else if (snapshot.hasData) {
                         final position = snapshot.data!;
                         return FutureBuilder<Map<String, dynamic>>(
@@ -94,13 +110,29 @@ class NatTemperature extends StatelessWidget {
                             if (weatherSnapshot.connectionState == ConnectionState.waiting) {
                               return Center(child: CircularProgressIndicator());
                             } else if (weatherSnapshot.hasError) {
-                              return Center(child: Text('Error: ${weatherSnapshot.error}'));
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Error: ${weatherSnapshot.error}'),
+                                    DimensionInputRow(
+                                      key: _outsideTempKey,
+                                      initialNumber: calculationState.tempout,
+                                      initialDropdownValue:
+                                          getSelectedSetting(calculationState.unitTempOut),
+                                      labelText: 'Outside Temp',
+                                      dropdownItems: ['°C', '°F']
+                                    ),
+                                  ],
+                                ),
+                              );
                             } else if (weatherSnapshot.hasData) {
                               final weatherData = weatherSnapshot.data!;
                               return Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    Text('Outside Temperature of station at ${weatherData['name']}, ${weatherData['sys']['country']}.'),
                                     DimensionInputRow(
                                       key: _outsideTempKey,
                                       initialNumber: weatherData['main']['temp'].toString(),
@@ -113,11 +145,41 @@ class NatTemperature extends StatelessWidget {
                                 ),
                               );
                             }
-                            return Center(child: Text('No Data'));
+                            return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('No Data'),
+                                    DimensionInputRow(
+                                      key: _outsideTempKey,
+                                      initialNumber: calculationState.tempout,
+                                      initialDropdownValue:
+                                          getSelectedSetting(calculationState.unitTempOut),
+                                      labelText: 'Outside Temp',
+                                      dropdownItems: ['°C', '°F']
+                                    ),
+                                  ],
+                                ),
+                              );
                           },
                         );
                       }
-                      return Center(child: Text('Unable to get location.'));
+                      return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Unable to get location.'),
+                                    DimensionInputRow(
+                                      key: _outsideTempKey,
+                                      initialNumber: calculationState.tempout,
+                                      initialDropdownValue:
+                                          getSelectedSetting(calculationState.unitTempOut),
+                                      labelText: 'Outside Temp',
+                                      dropdownItems: ['°C', '°F']
+                                    ),
+                                  ],
+                                ),
+                              );
                     },
                   ),
                   const SizedBox(height: 50.0),

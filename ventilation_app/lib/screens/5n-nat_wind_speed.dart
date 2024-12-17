@@ -73,7 +73,22 @@ class NatWindSpeed extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
+                        return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                  Text('Location permission denied: enter manually the Wind Speed.'),
+                                  DimensionInputRow(
+                                key: _windSpeedKey,
+                                initialNumber: calculationState.windspeed,
+                                initialDropdownValue:
+                                    getSelectedSetting(calculationState.unitWindSpeed),
+                                labelText: 'Wind Speed',
+                                dropdownItems: ['m/s', 'km/h']
+                                    ),
+                                  ],
+                                ),
+                              );
                       } else if (snapshot.hasData) {
                         final position = snapshot.data!;
                         return FutureBuilder<Map<String, dynamic>>(
@@ -82,13 +97,29 @@ class NatWindSpeed extends StatelessWidget {
                             if (weatherSnapshot.connectionState == ConnectionState.waiting) {
                               return Center(child: CircularProgressIndicator());
                             } else if (weatherSnapshot.hasError) {
-                              return Center(child: Text('Error: ${weatherSnapshot.error}'));
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                  Text('Error: ${weatherSnapshot.error}'),
+                                  DimensionInputRow(
+                                key: _windSpeedKey,
+                                initialNumber: calculationState.windspeed,
+                                initialDropdownValue:
+                                    getSelectedSetting(calculationState.unitWindSpeed),
+                                labelText: 'Wind Speed',
+                                dropdownItems: ['m/s', 'km/h']
+                                    ),
+                                  ],
+                                ),
+                              );
                             } else if (weatherSnapshot.hasData) {
                               final weatherData = weatherSnapshot.data!;
                               return Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                  Text('Wind Speed of station at ${weatherData['name']}, ${weatherData['sys']['country']}.'),
                                   DimensionInputRow(
                                       key: _windSpeedKey,
                                       initialNumber: weatherData['wind']['speed'].toString(),
@@ -101,13 +132,45 @@ class NatWindSpeed extends StatelessWidget {
                                 ),
                               );
                             }
-                            return Center(child: Text('No Data'));
+                            return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                  Text('No Data'),
+                                  DimensionInputRow(
+                                      key: _windSpeedKey,
+                                      initialNumber: calculationState.windspeed,
+                                      initialDropdownValue:
+                                          getSelectedSetting(calculationState.unitWindSpeed),
+                                      labelText: 'Wind Speed',
+                                      dropdownItems: ['m/s', 'km/h']
+                                    ),
+                                  ],
+                                ),
+                              );
                           },
                         );
                       }
-                      return Center(child: Text('Unable to get location.'));
+                      return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                            Text('Unable to get location.'),
+                            DimensionInputRow(
+                                key: _windSpeedKey,
+                                initialNumber: calculationState.windspeed,
+                                initialDropdownValue:
+                                    getSelectedSetting(calculationState.unitWindSpeed),
+                                labelText: 'Wind Speed',
+                                dropdownItems: ['m/s', 'km/h']
+                              ),
+                            ],
+                          ),
+                        );
                     },
                   ),
+
+
                   const SizedBox(height: 50.0),
                   NextButton(
                     displayMessage:
