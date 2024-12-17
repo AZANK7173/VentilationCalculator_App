@@ -16,6 +16,13 @@ After that, you access the folder `ventilation_app` and run the application:
 flutter run
 ```
 
+## API Access
+
+Create a file in `/lib/` called `api_key.dart`.In the file, add just the following line substituting the `[API_KEY]` with yours.
+
+`const String apiKey ='[API_KEY]';`
+
+
 ## TODOS hackathon
 
 - Adicionar os dados de ventilação recomendado pela ONU       DONE
@@ -25,7 +32,7 @@ flutter run
 - Fazer a lógica da "Other Side"                              DONE  
 - refatorar essa merda q ta horrivel                          DONE 
 - calculated value                                            DONE 
-- API de vento e temperatura
+- API de vento e temperatura                                  DONE
 
 
 
