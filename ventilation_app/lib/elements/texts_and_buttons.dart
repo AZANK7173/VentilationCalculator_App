@@ -46,33 +46,40 @@ class DividerWidget extends StatelessWidget {
 class DimensionInputRow extends StatefulWidget {
   final String labelText;
   final List<String> dropdownItems;
-  final String? initialNumber; // New field for initial number
-  final String? initialDropdownValue; // New field for initial dropdown value
-  final Function(String?, String?)? onChanged; // Callback for the parent
+  final String? initialNumber; // Initial value for the text field
+  final String? initialDropdownValue; // Initial value for the dropdown
+  final Function(String?, String?)? onChanged; // Callback for value changes
 
   const DimensionInputRow({
-    super.key,
+    Key? key,
     required this.labelText,
     required this.dropdownItems,
-    this.initialNumber, // Initialize the number
-    this.initialDropdownValue, // Initialize the dropdown value
+    this.initialNumber,
+    this.initialDropdownValue,
     this.onChanged,
-  });
+  }) : super(key: key);
 
   @override
   DimensionInputRowState createState() => DimensionInputRowState();
 }
 
 class DimensionInputRowState extends State<DimensionInputRow> {
+  late TextEditingController
+      _textController; // Persistent controller for the text field
   String? selectedDimensionValue;
-  String? enteredNumber;
 
   @override
   void initState() {
     super.initState();
-    // Set initial values from the widget's properties
+    // Initialize the text controller and dropdown value
+    _textController = TextEditingController(text: widget.initialNumber);
     selectedDimensionValue = widget.initialDropdownValue;
-    enteredNumber = widget.initialNumber;
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose(); // Clean up the controller
+    super.dispose();
   }
 
   @override
@@ -88,14 +95,11 @@ class DimensionInputRowState extends State<DimensionInputRow> {
               labelText: widget.labelText,
             ),
             keyboardType: TextInputType.number,
-            controller: TextEditingController(text: enteredNumber),
+            controller: _textController, // Use the persistent controller
             onChanged: (value) {
-              setState(() {
-                enteredNumber = value;
-              });
-              // Notify parent whenever either value changes
+              // Notify parent whenever the text changes
               if (widget.onChanged != null) {
-                widget.onChanged!(enteredNumber, selectedDimensionValue);
+                widget.onChanged!(value, selectedDimensionValue);
               }
             },
           ),
@@ -114,9 +118,9 @@ class DimensionInputRowState extends State<DimensionInputRow> {
               setState(() {
                 selectedDimensionValue = value;
               });
-              // Notify parent whenever either value changes
+              // Notify parent whenever the dropdown value changes
               if (widget.onChanged != null) {
-                widget.onChanged!(enteredNumber, selectedDimensionValue);
+                widget.onChanged!(_textController.text, selectedDimensionValue);
               }
             },
           ),
@@ -127,7 +131,7 @@ class DimensionInputRowState extends State<DimensionInputRow> {
 
   // Method to get both the number and the unit
   Map<String, String?> get dimensionData => {
-        'number': enteredNumber,
+        'number': _textController.text,
         'unit': selectedDimensionValue,
       };
 }
