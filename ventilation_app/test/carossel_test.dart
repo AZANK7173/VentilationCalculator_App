@@ -4,49 +4,59 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ventilation_app/elements/carossel.dart';
 
 void main() {
+// testWidgets('CarouselImageSlider displays images and texts', (WidgetTester tester) async {
+//   // Test data
+//   final imagePaths = [
+//     'assets/typology/horizontal_vertical.jpg',
+//     'assets/typology/slide.jpg',
+//   ];
+//   final imageTexts = [
+//     'Horizontal and Vertical',
+//     'Slide',
+//   ];
 
-  // testWidgets('CarouselImageSlider displays images and texts', (WidgetTester tester) async {
-  //   // Test data
-  //   final imagePaths = [
-  //             '/assets/typology/horizontal_vertical.jpg',
-  //             '/assets/typology/slide.jpg'
-  //           ];
-  //   final imageTexts = [
-  //             'Horizontal and Vertical',
-  //             'Slide'
-  //           ];
-  //   // Build the widget
-  //   await tester.pumpWidget(
-  //     MaterialApp(
-  //       home: Scaffold(
-  //         body: CarouselImageSlider(
-  //           imageAssetPaths: imagePaths,
-  //           imageTexts: imageTexts,
-  //           height: 200.0,
-  //           borderRadius: 10.0,
-  //         ),
-  //       ),
-  //     ),
-  //   );
+//   // Build the widget
+//   await tester.pumpWidget(
+//     MaterialApp(
+//       home: Scaffold(
+//         body: CarouselImageSlider(
+//           imageAssetPaths: imagePaths,
+//           imageTexts: imageTexts,
+//           height: 200.0,
+//           borderRadius: 10.0,
+//         ),
+//       ),
+//     ),
+//   );
 
-  //   // Verify the images and texts
-  //   for (var i = 0; i < imagePaths.length; i++) {
-  //     expect(find.text(imageTexts[i]), findsOneWidget);
-  //   }
+//   // Allow widgets to settle
+//   await tester.pumpAndSettle();
 
-  //   // Simulate a page change to the second image
-  //   final carouselFinder = find.byType(CarouselSlider);
-  //   final carousel = tester.widget<CarouselSlider>(carouselFinder);
+//   // Verify each image and its corresponding text
+//   for (var i = 0; i < imagePaths.length; i++) {
+//     // Check if the image matches
+//     expect(find.byWidgetPredicate(
+//       (widget) => widget is Image && widget.image == AssetImage(imagePaths[i]),
+//     ), findsOneWidget);
 
-  //   // Trigger the callback for the second image
-  //   carousel.options.onPageChanged!(1, CarouselPageChangedReason.manual);
+//     // Check if the text matches
+//     expect(find.text(imageTexts[i]), findsOneWidget);
+//   }
 
-  //   // Allow the carousel to settle
-  //   await tester.pumpAndSettle(); // Ensure widgets settle after page change
+//   // Simulate a page change to the second image
+//   final carouselFinder = find.byType(CarouselSlider);
+//   final carousel = tester.widget<CarouselSlider>(carouselFinder);
 
-  //   // Verify the second image and text are displayed
-  //   expect(find.text(imageTexts[1]), findsOneWidget);
-  // });
+//   // Trigger the callback for the second image
+//   carousel.options.onPageChanged!(1, CarouselPageChangedReason.manual);
+
+//   // Allow the carousel to settle
+//   await tester.pumpAndSettle(); // Ensure widgets settle after page change
+
+//   // Verify the second image and text are displayed
+//   expect(find.text(imageTexts[1]), findsOneWidget);
+// });
+
 
   testWidgets('CarouselImageSlider handles image loading errors', (WidgetTester tester) async {
     // Test data

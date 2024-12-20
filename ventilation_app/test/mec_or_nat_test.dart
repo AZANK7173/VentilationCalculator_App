@@ -6,7 +6,6 @@ void main() {
   group('MecOrNatToggleButtons Widget', () {
     testWidgets('should initialize with correct selection', (WidgetTester tester) async {
       bool? selectedValue;
-
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
