@@ -78,7 +78,6 @@ class NatTemperature extends StatelessWidget {
                       labelText: 'Inside Temp',
                       dropdownItems: ['°C', '°F']),
                   const SizedBox(height: 20.0),
-
                   FutureBuilder<Position>(
                     future: locationService.getCurrentLocation(),
                     builder: (context, snapshot) {
@@ -86,28 +85,30 @@ class NatTemperature extends StatelessWidget {
                         return Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
                         return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('Location permission denied: enter manually the Outside Temperature.'),
-                                    // Text('Error: ${snapshot.error}'),
-                                    DimensionInputRow(
-                                      key: _outsideTempKey,
-                                      initialNumber: calculationState.tempout,
-                                      initialDropdownValue:
-                                          getSelectedSetting(calculationState.unitTempOut),
-                                      labelText: 'Outside Temp',
-                                      dropdownItems: ['°C', '°F']
-                                    ),
-                                  ],
-                                ),
-                              );
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  'Location permission denied: enter manually the Outside Temperature.'),
+                              const SizedBox(height: 10.0),
+                              // Text('Error: ${snapshot.error}'),
+                              DimensionInputRow(
+                                  key: _outsideTempKey,
+                                  initialNumber: calculationState.tempout,
+                                  initialDropdownValue: getSelectedSetting(
+                                      calculationState.unitTempOut),
+                                  labelText: 'Outside Temp',
+                                  dropdownItems: ['°C', '°F']),
+                            ],
+                          ),
+                        );
                       } else if (snapshot.hasData) {
                         final position = snapshot.data!;
                         return FutureBuilder<Map<String, dynamic>>(
                           future: weatherService.getWeatherData(position),
                           builder: (context, weatherSnapshot) {
-                            if (weatherSnapshot.connectionState == ConnectionState.waiting) {
+                            if (weatherSnapshot.connectionState ==
+                                ConnectionState.waiting) {
                               return Center(child: CircularProgressIndicator());
                             } else if (weatherSnapshot.hasError) {
                               return Center(
@@ -116,13 +117,13 @@ class NatTemperature extends StatelessWidget {
                                   children: [
                                     Text('Error: ${weatherSnapshot.error}'),
                                     DimensionInputRow(
-                                      key: _outsideTempKey,
-                                      initialNumber: calculationState.tempout,
-                                      initialDropdownValue:
-                                          getSelectedSetting(calculationState.unitTempOut),
-                                      labelText: 'Outside Temp',
-                                      dropdownItems: ['°C', '°F']
-                                    ),
+                                        key: _outsideTempKey,
+                                        initialNumber: calculationState.tempout,
+                                        initialDropdownValue:
+                                            getSelectedSetting(
+                                                calculationState.unitTempOut),
+                                        labelText: 'Outside Temp',
+                                        dropdownItems: ['°C', '°F']),
                                   ],
                                 ),
                               );
@@ -132,54 +133,55 @@ class NatTemperature extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('Outside Temperature of station at ${weatherData['name']}, ${weatherData['sys']['country']}.'),
+                                    Text(
+                                        'Outside Temperature of station at ${weatherData['name']}, ${weatherData['sys']['country']}.'),
                                     DimensionInputRow(
-                                      key: _outsideTempKey,
-                                      initialNumber: weatherData['main']['temp'].toString(),
-                                      initialDropdownValue:
-                                          getSelectedSetting(calculationState.unitTempOut),
-                                      labelText: 'Outside Temp',
-                                      dropdownItems: ['°C', '°F']
-                                    ),
+                                        key: _outsideTempKey,
+                                        initialNumber: weatherData['main']
+                                                ['temp']
+                                            .toString(),
+                                        initialDropdownValue:
+                                            getSelectedSetting(
+                                                calculationState.unitTempOut),
+                                        labelText: 'Outside Temp',
+                                        dropdownItems: ['°C', '°F']),
                                   ],
                                 ),
                               );
                             }
                             return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('No Data'),
-                                    DimensionInputRow(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('No Data'),
+                                  DimensionInputRow(
                                       key: _outsideTempKey,
                                       initialNumber: calculationState.tempout,
-                                      initialDropdownValue:
-                                          getSelectedSetting(calculationState.unitTempOut),
+                                      initialDropdownValue: getSelectedSetting(
+                                          calculationState.unitTempOut),
                                       labelText: 'Outside Temp',
-                                      dropdownItems: ['°C', '°F']
-                                    ),
-                                  ],
-                                ),
-                              );
+                                      dropdownItems: ['°C', '°F']),
+                                ],
+                              ),
+                            );
                           },
                         );
                       }
                       return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('Unable to get location.'),
-                                    DimensionInputRow(
-                                      key: _outsideTempKey,
-                                      initialNumber: calculationState.tempout,
-                                      initialDropdownValue:
-                                          getSelectedSetting(calculationState.unitTempOut),
-                                      labelText: 'Outside Temp',
-                                      dropdownItems: ['°C', '°F']
-                                    ),
-                                  ],
-                                ),
-                              );
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Unable to get location.'),
+                            DimensionInputRow(
+                                key: _outsideTempKey,
+                                initialNumber: calculationState.tempout,
+                                initialDropdownValue: getSelectedSetting(
+                                    calculationState.unitTempOut),
+                                labelText: 'Outside Temp',
+                                dropdownItems: ['°C', '°F']),
+                          ],
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: 50.0),
