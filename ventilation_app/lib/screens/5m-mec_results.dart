@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ventilation_app/elements/formulas.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
+import 'package:ventilation_app/state_manager.dart';
 
 class MecResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    int people;
+
+    final calculationState = Provider.of<CalculationState>(context);
+    int whoRecommendation =
+        calculationState.settingOfInterest['Hospital Setting'] == true
+            ? 60
+            : 10;
+    people = computeEstimatedOccupancy(
+        computerVentilationMecanical(calculationState), whoRecommendation);
 
     return MaterialApp(
-      title: 'Results Page - Natural Ventilation',
+      title: 'Results Page - Mec Ventilation',
       home: Scaffold(
         appBar: MyAppBar(
           onPressed1: () {
@@ -53,26 +65,18 @@ class MecResults extends StatelessWidget {
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
                   const SizedBox(height: 20.0),
-                  _buildResult('Estimated Ventilation:', 0, 'I/s'),
-                  _buildResult('WHO recommendation:', 0, 'I/s'),
-                  _buildResult('Requirement:', 0, 'people'),
-                  const SizedBox(height: 10.0),
-                  _buildAccomodatePeopleButton(context),
+                  _buildResult('Estimated Ventilation:',
+                      computerVentilationMecanical(calculationState), 'l/s'),
+                  _buildResultInt('WHO recommendation:', whoRecommendation,
+                      'l/s per person'),
+                  _buildResultInt('Possible Occupancy:', people, 'people'),
                   const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
-                  const SizedBox(height: 20.0),
-                  const TextEntry(
-                      myColor: Color.fromARGB(255, 7, 59, 91),
-                      text:
-                          'How much you need to improve the ventilation to meet WHO standard.',
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                  const SizedBox(height: 20.0),
-                  const DisplayVentilationInprovement(
-                    labelText: '[Calculated Value]',
-                    dropdownItems: ['I/s', 'm³/s'],
-                  ),
                   const SizedBox(height: 30.0),
+                  MultiplyByInput(
+                    multiplier: whoRecommendation,
+                    ventilation: computerVentilationMecanical(calculationState),
+                  ),
                   NextButton(
                     text: 'Restart',
                     onPressed: () {
@@ -89,7 +93,29 @@ class MecResults extends StatelessWidget {
     );
   }
 
-  Widget _buildResult(String boldText, int number, String unit) {
+  Widget _buildResult(String boldText, double number, String unit) {
+    return Row(
+      children: [
+        TextEntry(
+          myColor: const Color.fromARGB(255, 102, 112, 133),
+          text: boldText,
+          fontSize: 15.0,
+          fontWeight: FontWeight.normal,
+        ),
+        const SizedBox(width: 5.0),
+        Text(
+          '${number.toString()} $unit',
+          style: const TextStyle(
+            fontSize: 15.0,
+            color: Color.fromARGB(255, 102, 112, 133),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildResultInt(String boldText, int number, String unit) {
     return Row(
       children: [
         TextEntry(
@@ -142,30 +168,33 @@ class MecResults extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildAccomodatePeopleButton(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          //TODO add new window
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          minimumSize: const Size(350, 55.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: const BorderSide(
-              color: Color.fromARGB(255, 45, 133, 185),
-            ),
-          ),
-        ),
-        child: const Text(
-          '+ Accomodate more people',
-          style: TextStyle(
-            color: Color.fromARGB(255, 45, 133, 185),
-          ),
-        ),
-      ),
-    );
-  }
+double computerVentilationMecanical(CalculationState calculationState) {
+  double roomheight = convertToMeters(
+      double.parse(calculationState.height), calculationState.unitHeight);
+  double roomwidth = convertToMeters(
+      double.parse(calculationState.width), calculationState.unitWidth);
+  double roomlength = convertToMeters(
+      double.parse(calculationState.lenght), calculationState.unitLeght);
+
+  double roomVolume = roomlength * roomwidth * roomheight;
+
+  double flow1 = convertFlowRate(double.parse(calculationState.ventrate),
+      calculationState.unitVentRate, roomVolume);
+
+  double flow2 = convertFlowRate(double.parse(calculationState.ventrate2),
+      calculationState.unitVentRate2, roomVolume);
+
+  double flow3 = convertFlowRate(double.parse(calculationState.ventrate3),
+      calculationState.unitVentRate3, roomVolume);
+
+  double flow4 = convertFlowRate(double.parse(calculationState.ventrate4),
+      calculationState.unitVentRate4, roomVolume);
+
+  List<double> flows =
+      [flow1, flow2, flow3, flow4].where((flow) => flow != 0).toList();
+  double totalFlow = flows.isNotEmpty ? flows.reduce((a, b) => a + b) : 0;
+
+  return totalFlow;
 }

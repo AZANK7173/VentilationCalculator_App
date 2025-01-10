@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
 
+// Slider widget for screen 4n-input_nat_2.dart
 class Slider0To100 extends StatefulWidget {
   final String dragText;
+  final double initialValue; // Initial value for the slider
+  final Function(double)? onValueChanged; // Callback for value changes
 
-  Slider0To100({required this.dragText});
+  const Slider0To100({
+    Key? key,
+    required this.dragText,
+    this.initialValue = 0.0, // Default to 0
+    this.onValueChanged,
+  }) : super(key: key);
 
   @override
-  _Slider0To100State createState() => _Slider0To100State();
+  Slider0To100State createState() => Slider0To100State();
 }
 
-class _Slider0To100State extends State<Slider0To100> {
-  double _value = 0;
+class Slider0To100State extends State<Slider0To100> {
+  late double value; // Current value of the slider
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the slider value based on the initial value
+    value = widget.initialValue;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // Add this line
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.dragText,
@@ -26,40 +41,65 @@ class _Slider0To100State extends State<Slider0To100> {
         ),
         Slider(
           activeColor: const Color.fromARGB(255, 67, 150, 199),
-          value: _value,
+          value: value,
           min: 0,
           max: 100,
+          divisions: 10,
+          label: '${value.round()}%',
           onChanged: (newValue) {
             setState(() {
-              _value = newValue;
+              value = newValue; // Update the slider value
             });
+            // Notify the parent widget of the value change
+            if (widget.onValueChanged != null) {
+              widget.onValueChanged!(value);
+            }
           },
-          divisions: 10,
-          label: '${_value.round()}%',
         ),
       ],
     );
   }
+
+  // Getter method to expose the current slider value
+  double get sliderValue => value;
 }
 
+
+// Switcher widget for screen 4n-input_nat_2.dart and 5n-nat_wind_speed.dart
 class Switcher extends StatefulWidget {
   final String switchText;
-  Switcher({required this.switchText});
+  final bool initialValue; // Initial value for the switch
+  final Function(bool)? onToggle; // Callback to notify parent widget of changes
+
+  const Switcher({
+    Key? key,
+    required this.switchText,
+    this.initialValue = false, // Default to "off"
+    this.onToggle,
+  }) : super(key: key);
+
   @override
-  _SwitcherState createState() => _SwitcherState();
+  SwitcherState createState() => SwitcherState();
 }
 
-class _SwitcherState extends State<Switcher> {
-  bool _isSwitched = false;
+class SwitcherState extends State<Switcher> {
+  late bool isSwitched; // Current state of the switch
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the state based on the initial value
+    isSwitched = widget.initialValue;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // Add this line
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround, // Add this line
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
               widget.switchText,
@@ -68,13 +108,17 @@ class _SwitcherState extends State<Switcher> {
                 color: Color.fromARGB(255, 102, 112, 133),
               ),
             ),
-            const Spacer(), // Add this line
+            const Spacer(),
             Switch(
-              value: _isSwitched,
+              value: isSwitched,
               onChanged: (value) {
                 setState(() {
-                  _isSwitched = value;
+                  isSwitched = value; // Update the state
                 });
+                // Notify the parent widget of the state change
+                if (widget.onToggle != null) {
+                  widget.onToggle!(isSwitched);
+                }
               },
             ),
           ],
@@ -82,4 +126,7 @@ class _SwitcherState extends State<Switcher> {
       ],
     );
   }
+
+  // Getter method to expose the current switch state
+  bool get isOn => isSwitched;
 }

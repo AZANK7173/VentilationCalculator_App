@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 
 class MecOrNatToggleButtons extends StatefulWidget {
-  const MecOrNatToggleButtons({Key? key}) : super(key: key);
+  final bool initialNat; // New field for the initial selection
+  final Function(bool)?
+      onSelectionChanged; // Callback to notify parent of changes
+
+  const MecOrNatToggleButtons({
+    Key? key,
+    this.initialNat = true, // Defaults to "Naturally"
+    this.onSelectionChanged,
+  }) : super(key: key);
 
   @override
   MecOrNatToggleButtonsState createState() => MecOrNatToggleButtonsState();
 }
 
 class MecOrNatToggleButtonsState extends State<MecOrNatToggleButtons> {
-  final List<bool> _selectedFruits = <bool>[
-    true,
-    false
-  ]; // Initial selection state
-  List<Widget> fruits = <Widget>[
+  late List<bool> _selectedFruits; // Selection state
+  final List<Widget> fruits = <Widget>[
     const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -48,8 +53,16 @@ class MecOrNatToggleButtonsState extends State<MecOrNatToggleButtons> {
       ],
     ),
   ];
+  late bool nat; // Variable to store the selected option
   bool vertical = false;
-  bool nat = true; // Variable to store the selected option
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize state based on the initialNat value
+    nat = widget.initialNat;
+    _selectedFruits = [nat, !nat];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +73,17 @@ class MecOrNatToggleButtonsState extends State<MecOrNatToggleButtons> {
         direction: vertical ? Axis.vertical : Axis.horizontal,
         onPressed: (int index) {
           setState(() {
-            // The button that is tapped is set to true, and the others to false.
+            // Update the selection state
             for (int i = 0; i < _selectedFruits.length; i++) {
               _selectedFruits[i] = i == index;
             }
-            // Update the value of nat based on the selected button
+            // Update the value of nat
             nat = index == 0;
+
+            // Notify parent widget of the selection change
+            if (widget.onSelectionChanged != null) {
+              widget.onSelectionChanged!(nat);
+            }
           });
         },
         borderRadius: const BorderRadius.all(Radius.circular(8)),

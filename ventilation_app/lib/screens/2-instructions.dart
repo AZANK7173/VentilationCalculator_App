@@ -58,6 +58,7 @@ class Instructions extends StatelessWidget {
           ),
           const SizedBox(height: 30.0),
           NextButton(
+              displayMessage: " ",
               text: 'Got it!',
               onPressed: () {
                 Navigator.of(context).pushNamed('/input_1');

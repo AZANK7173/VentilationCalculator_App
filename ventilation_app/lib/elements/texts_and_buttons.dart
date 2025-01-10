@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 
 class TextEntry extends StatelessWidget {
   final Color myColor;
@@ -47,20 +46,41 @@ class DividerWidget extends StatelessWidget {
 class DimensionInputRow extends StatefulWidget {
   final String labelText;
   final List<String> dropdownItems;
-  final Function(String?)? onChanged; // Callback for the parent
+  final String? initialNumber; // Initial value for the text field
+  final String? initialDropdownValue; // Initial value for the dropdown
+  final Function(String?, String?)? onChanged; // Callback for value changes
 
   const DimensionInputRow({
+    Key? key,
     required this.labelText,
     required this.dropdownItems,
+    this.initialNumber,
+    this.initialDropdownValue,
     this.onChanged,
-  });
+  }) : super(key: key);
 
   @override
-  _DimensionInputRowState createState() => _DimensionInputRowState();
+  DimensionInputRowState createState() => DimensionInputRowState();
 }
 
-class _DimensionInputRowState extends State<DimensionInputRow> {
-  String? _selectedDropdownValue;
+class DimensionInputRowState extends State<DimensionInputRow> {
+  late TextEditingController
+      _textController; // Persistent controller for the text field
+  String? selectedDimensionValue;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the text controller and dropdown value
+    _textController = TextEditingController(text: widget.initialNumber);
+    selectedDimensionValue = widget.initialDropdownValue;
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose(); // Clean up the controller
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +95,19 @@ class _DimensionInputRowState extends State<DimensionInputRow> {
               labelText: widget.labelText,
             ),
             keyboardType: TextInputType.number,
+            controller: _textController, // Use the persistent controller
+            onChanged: (value) {
+              // Notify parent whenever the text changes
+              if (widget.onChanged != null) {
+                widget.onChanged!(value, selectedDimensionValue);
+              }
+            },
           ),
         ),
         const SizedBox(width: 20.0),
         Flexible(
           child: DropdownButtonFormField<String>(
-            value: _selectedDropdownValue,
+            value: selectedDimensionValue,
             items: widget.dropdownItems.map((item) {
               return DropdownMenuItem(
                 value: item,
@@ -89,11 +116,11 @@ class _DimensionInputRowState extends State<DimensionInputRow> {
             }).toList(),
             onChanged: (value) {
               setState(() {
-                _selectedDropdownValue = value;
+                selectedDimensionValue = value;
               });
-              // Pass the value to the parent callback
+              // Notify parent whenever the dropdown value changes
               if (widget.onChanged != null) {
-                widget.onChanged!(value);
+                widget.onChanged!(_textController.text, selectedDimensionValue);
               }
             },
           ),
@@ -101,50 +128,147 @@ class _DimensionInputRowState extends State<DimensionInputRow> {
       ],
     );
   }
+
+  // Method to get both the number and the unit
+  Map<String, String?> get dimensionData => {
+        'number': _textController.text,
+        'unit': selectedDimensionValue,
+      };
 }
 
-class NextButton extends StatelessWidget {
+Map<String, bool> createUnitMap(String? unit) {
+  return {
+    'meters': unit == 'meters',
+    'inches': unit == 'inches',
+  };
+}
+
+Map<String, bool> createVentRateUnitMap(String? unit) {
+  return {
+    'l/s': unit == 'l/s',
+    'm³/s': unit == 'm³/s',
+    'm³/h': unit == 'm³/h',
+    'ACH': unit == 'ACH',
+    'CFM': unit == 'CFM',
+  };
+}
+
+Map<String, bool> createWindSpeedUnitMap(String? unit) {
+  return {
+    'm/s': unit == 'm/s',
+    'km/h': unit == 'km/h',
+  };
+}
+
+Map<String, bool> createTempUnitMap(String? unit) {
+  return {
+    '°C': unit == '°C',
+    '°F': unit == '°F',
+  };
+}
+
+String getSelectedSetting(Map<String, bool> settings) {
+  // Find the first key with a value of true, or default to null
+  return settings.entries
+      .firstWhere(
+        (entry) => entry.value == true,
+        orElse: () => MapEntry("No setting selected", false),
+      )
+      .key;
+}
+
+bool isValidDouble(String? value, bool zeroAllowed) {
+  if (value == null) {
+    return false;
+  } else if (value == '0' && !zeroAllowed) {
+    return false;
+  }
+  final doubleRegex = RegExp(r'^\d+(\.\d+)?$'); // Matches valid doubles.
+  return doubleRegex.hasMatch(value);
+}
+
+bool isValidInt(String? value, bool zeroAllowed) {
+  if (value == null) {
+    return false;
+  } else if (value == '0' && !zeroAllowed) {
+    return false;
+  }
+  final intRegex = RegExp(r'^\d+$'); // Matches valid integers.
+  return intRegex.hasMatch(value);
+}
+
+class NextButton extends StatefulWidget {
   final String text;
   final VoidCallback onPressed;
   final Color myColor;
+  final String displayMessage;
 
   const NextButton({
     Key? key,
     required this.text,
     required this.onPressed,
     this.myColor = const Color.fromARGB(255, 45, 133, 185),
+    this.displayMessage = 'Button pressed!',
   }) : super(key: key);
 
   @override
+  _NextButtonState createState() => _NextButtonState();
+}
+
+class _NextButtonState extends State<NextButton> {
+  String? displayText;
+
+  void _handlePress() {
+    setState(() {
+      displayText = widget.displayMessage;
+    });
+    widget.onPressed();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: myColor,
-          minimumSize: const Size(double.infinity, 55.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (displayText != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              displayText!,
+              style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red),
+            ),
+          ),
+        Center(
+          child: ElevatedButton(
+            onPressed: _handlePress,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: widget.myColor,
+              minimumSize: const Size(double.infinity, 55.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            child: Text(
+              widget.text,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 242, 244, 247),
+              ),
+            ),
           ),
         ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 242, 244, 247),
-          ),
-        ),
-      ),
+      ],
     );
   }
 }
 
 class DisplayVentilationInprovement extends StatelessWidget {
   final String labelText;
-  final List<String> dropdownItems;
 
   const DisplayVentilationInprovement({
     required this.labelText,
-    required this.dropdownItems,
   });
 
   @override
@@ -153,8 +277,8 @@ class DisplayVentilationInprovement extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          width: 150.0,
-          height: 50.0,
+          width: 100.0,
+          height: 45.0,
           child: Container(
             alignment: Alignment.center, // Add this line
             padding: const EdgeInsets.all(8.0),
@@ -166,7 +290,6 @@ class DisplayVentilationInprovement extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20.0),
-        DropdownButtonExample(items: dropdownItems),
       ],
     );
   }
@@ -193,6 +316,180 @@ class OpeningImage extends StatelessWidget {
         width: screenWidth * 0.90,
         fit: BoxFit.cover, // Adjust fit as needed
       ),
+    );
+  }
+}
+
+// second natural input screen
+
+class CustomInputWidget extends StatefulWidget {
+  final String inputText;
+  final String? initialValue; // New attribute for initial value
+  final Function(String)? onTextChanged; // Callback for text input change
+
+  const CustomInputWidget({
+    super.key,
+    required this.inputText,
+    this.initialValue,
+    this.onTextChanged,
+  });
+
+  @override
+  CustomInputWidgetState createState() => CustomInputWidgetState();
+}
+
+class CustomInputWidgetState extends State<CustomInputWidget> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the controller with the initial value, if provided
+    _controller = TextEditingController(text: widget.initialValue);
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is removed
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // Assuming TextEntry is a custom widget you have created
+        TextEntry(
+          myColor: const Color.fromARGB(255, 102, 112, 133),
+          text: widget.inputText,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+        const SizedBox(width: 10.0),
+        SizedBox(
+          width: 60,
+          height: 30,
+          child: TextField(
+            controller: _controller, // Attach the controller
+            style: const TextStyle(
+              fontSize: 12.0,
+              height: 2.0,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.center,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide: BorderSide(
+                  color: Color.fromARGB(255, 214, 220, 220),
+                ),
+              ),
+              contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
+              isDense: true,
+              labelText: '',
+            ),
+            keyboardType: TextInputType.number,
+            onChanged: (value) {
+              if (widget.onTextChanged != null) {
+                widget.onTextChanged!(value);
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  String? get currentText => _controller.text;
+}
+
+class MultiplyByInput extends StatefulWidget {
+  final int multiplier; // Accept the multiplier as an argument
+  final double ventilation; // New argument for ventilation value
+
+  const MultiplyByInput({
+    Key? key,
+    required this.multiplier,
+    required this.ventilation,
+  }) : super(key: key);
+
+  @override
+  _MultiplyByInputState createState() => _MultiplyByInputState();
+}
+
+class _MultiplyByInputState extends State<MultiplyByInput> {
+  final TextEditingController _controller = TextEditingController();
+  double _result = 0.0; // To store the result of the calculation
+
+  // Function to handle the input and update the result
+  void _calculateResult(String value) {
+    setState(() {
+      // Parse the value, calculate the result, and subtract ventilation
+      _result = double.tryParse(value) != null
+          ? (double.parse(value) * widget.multiplier) - widget.ventilation
+          : 0.0;
+      _result = _result < 0 ? 0.0 : _result;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Text(
+              'How many people do you \n want to fit in the room?',
+              style: TextStyle(
+                fontSize: 15,
+                color: Color.fromARGB(255, 102, 112, 133),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 15),
+            Container(
+              width: 60,
+              height: 30,
+              child: TextField(
+                controller: _controller,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 214, 220, 220),
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(0, 30, 0, 37),
+                  isDense: true,
+                  labelText: '',
+                ),
+                onChanged:
+                    _calculateResult, // Call the calculation function on input change
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        DividerWidget(screenWidth),
+        const TextEntry(
+          myColor: Color.fromARGB(255, 102, 112, 133),
+          text:
+              'This is how much you need to improve the ventilation to meet WHO standards.',
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+        const SizedBox(height: 20.0),
+        DisplayVentilationInprovement(
+          labelText: '${_result.round()} l/s',
+        ),
+        const SizedBox(height: 20),
+      ],
     );
   }
 }

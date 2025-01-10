@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
-import 'package:ventilation_app/elements/dropdown_menu_example.dart';
 import 'package:ventilation_app/state_manager.dart';
 
 class InputMec2 extends StatelessWidget {
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate2 =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate3 =
+      GlobalKey<DimensionInputRowState>();
+
+  final GlobalKey<DimensionInputRowState> _dimensionVentRate4 =
+      GlobalKey<DimensionInputRowState>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -33,13 +44,38 @@ class InputMec2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildInstructionsContent(context),
-                  const DimensionInputRow(
-                      labelText: '',
-                      dropdownItems: ['I/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
+                  DimensionInputRow(
+                      key: _dimensionVentRate,
+                      labelText: 'ventilator 1',
+                      initialNumber: calculationState.ventrate,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate),
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
-                  _buildManualCalcButton(context), 
+                  DimensionInputRow(
+                      key: _dimensionVentRate2,
+                      initialNumber: calculationState.ventrate2,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate2),
+                      labelText: 'ventilator 2',
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
                   const SizedBox(height: 20.0),
-                  Text("VENT TYPE: ${calculationState.ventType}", style: const TextStyle(fontSize: 24)),
+                  DimensionInputRow(
+                      key: _dimensionVentRate3,
+                      labelText: 'ventilator 3',
+                      initialNumber: calculationState.ventrate3,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate3),
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
+                  const SizedBox(height: 20.0),
+                  DimensionInputRow(
+                      key: _dimensionVentRate4,
+                      labelText: 'ventilator 4',
+                      initialNumber: calculationState.ventrate4,
+                      initialDropdownValue:
+                          getSelectedSetting(calculationState.unitVentRate4),
+                      dropdownItems: ['l/s', 'm³/s', 'm³/h', 'ACH', 'CFM']),
+                  const SizedBox(height: 20.0),
                   DividerWidget(screenWidth),
                   const SizedBox(height: 20.0),
                   const TextEntry(
@@ -47,16 +83,68 @@ class InputMec2 extends StatelessWidget {
                       text: 'Select your setting of interest',
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
-                  const SizedBox(height: 10.0),
-                  const DropdownButtonExample(
-                    items: [' Non-residential', 'Healthcare', 'Residential'],
-                  ),
                   const SizedBox(height: 30.0),
                   NextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/mec_results');
-                    },
                     text: 'See Results',
+                    displayMessage:
+                        "Invalid vent rate values, please \n correct them before proceeding",
+                    onPressed: () {
+                      final dataVentRate =
+                          _dimensionVentRate.currentState?.dimensionData;
+                      final dataVentRate2 =
+                          _dimensionVentRate2.currentState?.dimensionData;
+                      final dataVentRate3 =
+                          _dimensionVentRate3.currentState?.dimensionData;
+                      final dataVentRate4 =
+                          _dimensionVentRate4.currentState?.dimensionData;
+
+                      bool canProceed = false;
+
+                      if (dataVentRate != null &&
+                          dataVentRate2 != null &&
+                          dataVentRate3 != null &&
+                          dataVentRate4 != null) {
+                        final ventRate1 = dataVentRate['number'] ?? '0';
+                        final ventRate2 = dataVentRate2['number'] ?? '0';
+                        final ventRate3 = dataVentRate3['number'] ?? '0';
+                        final ventRate4 = dataVentRate4['number'] ?? '0';
+
+                        if (isValidDouble(ventRate1, true) &&
+                            isValidDouble(ventRate2, true) &&
+                            isValidDouble(ventRate3, true) &&
+                            isValidDouble(ventRate4, true)) {
+                          calculationState.updateVentRate(
+                            dataVentRate['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate['unit']),
+                          );
+                          calculationState.updateVentRate2(
+                            dataVentRate2['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate2['unit']),
+                          );
+                          calculationState.updateVentRate3(
+                            dataVentRate3['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate3['unit']),
+                          );
+                          calculationState.updateVentRate4(
+                            dataVentRate4['number'] ?? '0',
+                            createVentRateUnitMap(dataVentRate4['unit']),
+                          );
+                          canProceed = true;
+                        } else {
+                          print(
+                              'Invalid vent rate values. Ensure they are numeric.');
+                        }
+                      } else {
+                        print('One or more vent rates are null');
+                      }
+
+                      if (canProceed) {
+                        Navigator.of(context).pushNamed('/mec_results');
+                      } else {
+                        print(
+                            "Cannot proceed to the results screen, invalid data");
+                      }
+                    },
                   ),
                   const SizedBox(height: 30.0),
                 ],
