@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ventilation_app/elements/upper_navigation_bar.dart';
 import 'package:ventilation_app/elements/texts_and_buttons.dart';
-import 'package:ventilation_app/elements/carossel.dart';
+//import 'package:ventilation_app/elements/carossel.dart';
 
 class InputNatMoreOpens extends StatelessWidget {
   @override
@@ -82,20 +82,20 @@ class InputNatMoreOpens extends StatelessWidget {
             'How the opening operates, such as sliding, pivot, or hung windows.',
           ),
           const SizedBox(height: 20.0),
-          const CarouselImageSlider(
-            imageTexts: [
-              'Horizontal and Vertical',
-              'Slide',
-              'Tilt and Turn',
-              'Top and Bottom',
-            ],
-            imageAssetPaths: [
-              'assets/typology/horizontal_vertical.jpg',
-              'assets/typology/slide.jpg',
-              'assets/typology/tilt_and_turn.jpg',
-              'assets/typology/top_bottom.jpg'
-            ],
-          ),
+          // const CarouselImageSlider(
+          //   imageTexts: [
+          //     'Horizontal and Vertical',
+          //     'Slide',
+          //     'Tilt and Turn',
+          //     'Top and Bottom',
+          //   ],
+          //   imageAssetPaths: [
+          //     'assets/typology/horizontal_vertical.jpg',
+          //     'assets/typology/slide.jpg',
+          //     'assets/typology/tilt_and_turn.jpg',
+          //     'assets/typology/top_bottom.jpg'
+          //   ],
+          // ),
           const SizedBox(height: 20.0),
           _buildRichTextContent(
             '',
