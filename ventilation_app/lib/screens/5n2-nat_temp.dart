@@ -184,6 +184,7 @@ class _NatTemperatureState extends State<NatTemperature> {
         children: [
           Text(
               'Outside Temperature of station at ${_weatherData!['name']}, ${_weatherData!['sys']['country']}.'),
+          const SizedBox(height: 10.0),
           DimensionInputRow(
             key: _outsideTempKey,
             initialNumber: _weatherData!['main']['temp'].toString(),
