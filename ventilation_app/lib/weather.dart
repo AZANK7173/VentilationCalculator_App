@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:ventilation_app/api_key.dart';
 
 class WeatherService {
-  // final String apiKey = apiKey; // API key
 
   Future<Map<String, dynamic>> getWeatherData(Position position) async {
     String apiUrl = 'https://api.openweathermap.org/data/2.5/weather'

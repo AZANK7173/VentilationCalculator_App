@@ -237,5 +237,5 @@ double computerVentilationSingle(CalculationState calculationState) {
   print('minOpeningHeight: $minOpeningHeight');
   print('result: $result');
 
-  return result;
+  return double.parse(result.toStringAsFixed(2));
 }

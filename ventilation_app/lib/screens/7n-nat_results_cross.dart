@@ -218,5 +218,5 @@ double computerVentilationCross(CalculationState calculationState) {
 
   double minOpening = min(totalOpening1, min(totalOpening2, totalOpening3));
 
-  return 0.65 * windspeed * minOpening * 1000;
+  return  double.parse((0.65 * windspeed * minOpening * 1000).toStringAsFixed(2));
 }

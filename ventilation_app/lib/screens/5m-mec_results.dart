@@ -196,5 +196,5 @@ double computerVentilationMecanical(CalculationState calculationState) {
       [flow1, flow2, flow3, flow4].where((flow) => flow != 0).toList();
   double totalFlow = flows.isNotEmpty ? flows.reduce((a, b) => a + b) : 0;
 
-  return totalFlow;
+  return double.parse(totalFlow.toStringAsFixed(2));
 }
