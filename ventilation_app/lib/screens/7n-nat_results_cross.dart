@@ -216,7 +216,12 @@ double computerVentilationCross(CalculationState calculationState) {
   double totalOpening3 = calculateOpeningArea(
       windowwidth3, windowheight3, openingsnum3, openingpercent3);
 
-  double minOpening = min(totalOpening1, min(totalOpening2, totalOpening3));
+  double minOpening;
+  if (totalOpening2 == 0) {
+    minOpening = min(totalOpening1, totalOpening3);
+  } else {
+    minOpening = min(totalOpening1, min(totalOpening2, totalOpening3));
+  }
 
   return  double.parse((0.65 * windspeed * minOpening * 1000).toStringAsFixed(2));
 }
